@@ -263,6 +263,8 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 10px;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -273,12 +275,16 @@ code {
 
 .cust-info {
   min-width: 0;
-  flex: 1;
+  flex: 1 1 140px;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .cust-name {
   font-weight: 700;
   font-size: 1.05rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .cust-phone {
@@ -434,10 +440,11 @@ code {
   background: #000;
 }
 
-/* ---------- Responsive (375px minimum target width) ---------- */
-@media (max-width: 480px) {
+/* ---------- Responsive (320px – 768px) ---------- */
+@media (max-width: 768px) {
   main {
     padding: 12px;
+    gap: 12px;
   }
   .app-header {
     padding: 10px 14px;
@@ -447,22 +454,48 @@ code {
   }
   .outstanding {
     font-size: 0.95rem;
-  }
-  .app-nav {
-    padding: 6px 14px;
-  }
-  .nav-link {
-    padding: 7px 12px;
-    font-size: 0.85rem;
+    overflow-wrap: break-word;
   }
   .card {
     padding: 14px;
   }
+  .card > .btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  textarea {
+    min-height: 120px;
+  }
+  /* Customer cards: keep name + balance together, push actions to a new row */
   .customer-row {
     padding: 10px 12px;
+    align-items: flex-start;
   }
   .cust-balance {
     font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .cust-actions {
+    flex: 1 1 100%;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .cust-actions .btn {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    min-height: 40px;
+  }
+  /* Ledger */
+  .ledger-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ledger-head .btn {
+    align-self: flex-start;
+  }
+  .balance-badge {
+    width: 100%;
   }
   .tx-item {
     padding: 8px 10px;
@@ -470,20 +503,59 @@ code {
   }
   .tx-item .tx-date {
     min-width: 100%;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
   .tx-item .tx-type {
     width: auto;
   }
+  .tx-item .tx-amount {
+    font-size: 1rem;
+  }
   .tx-item .tx-note {
-    min-width: 100%;
-    padding: 6px 0 0;
+    flex: 1 1 100%;
+    min-width: 0;
+    padding: 4px 0 0;
     white-space: normal;
+    text-align: left;
   }
   .tx-item .shot-thumb {
     width: 48px;
     height: 48px;
     margin-top: 6px;
     align-self: flex-start;
+  }
+  /* Import options wrap on narrow screens */
+  .import-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+  .import-options label {
+    margin: 0;
+  }
+  #import-result,
+  #cust-error {
+    overflow-wrap: break-word;
+  }
+}
+
+/* Navigation: switch from horizontal scroll to wrapping grid on small screens */
+@media (max-width: 480px) {
+  .app-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    overflow-x: visible;
+  }
+  .nav-link {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    flex: 1 1 auto;
+    text-align: center;
+    min-height: 40px;
+    white-space: normal;
+  }
+  .nav-link.active {
+    color: #fff;
   }
 }
