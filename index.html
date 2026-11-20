@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hisaab – Digital Shop Ledger</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">Hisaab</div>
+    <div id="total-outstanding" class="outstanding">Total Outstanding: Rs 0</div>
+  </header>
+
+  <nav class="app-nav">
+    <a href="#view-home" class="nav-link active">Customers</a>
+    <a href="#view-add-customer" class="nav-link">Add Customer</a>
+    <a href="#view-import" class="nav-link">Import Data</a>
+    <a href="#view-backup" class="nav-link">Backup &amp; Restore</a>
+  </nav>
+
+  <main>
+    <!-- Home: customer list + total outstanding -->
+    <section id="view-home" class="view active">
+      <h2>All Customers</h2>
+      <div id="customer-list" class="customer-list"></div>
+    </section>
+
+    <!-- Add customer -->
+    <section id="view-add-customer" class="view card">
+      <h2>Add Customer</h2>
+      <form id="add-customer-form" novalidate>
+        <label>Full name</label>
+        <input type="text" id="cust-name" placeholder="e.g. Ravi Kumar" required maxlength="100">
+        <label>Mobile number</label>
+        <input type="tel" id="cust-phone" placeholder="10-digit Indian mobile" inputmode="numeric" maxlength="10" required>
+        <label>Opening Balance (Rs)</label>
+        <input type="number" id="cust-opening-balance" placeholder="0.00" min="0" step="0.01">
+        <p class="sub" style="margin-top:4px;">Positive value = customer owes this amount (auto-creates a credit entry).</p>
+        <div id="cust-error" class="error"></div>
+        <button type="submit" class="btn btn-primary">Add Customer</button>
+      </form>
+    </section>
+
+    <!-- JSON import -->
+    <section id="view-import" class="view card">
+      <h2>Import Data</h2>
+      <p class="sub">Paste JSON in the sample-data.json format: an array of customers, or an object with a <code>customers</code> array. Each customer needs <code>name</code>, <code>phone</code> and an optional <code>entries</code> array. Customers without entries are allowed.</p>
+      <textarea id="import-box" rows="10" placeholder='{
+  "customers": [
+    {
+      "name": "Ravi Kumar",
+      "phone": "9000000101",
+      "entries": [
+        { "type": "credit", "amount": 250, "date": "2026-10-23", "note": "Credit goods" },
+        { "type": "payment", "amount": 1500, "date": "2026-10-25", "note": "Cash payment" }
+      ]
+    }
+  ]
+}'></textarea>
+      <div class="import-options">
+        <label><input type="radio" name="import-mode" value="replace" checked> Replace all existing data</label>
+        <label><input type="radio" name="import-mode" value="merge"> Merge (skip duplicate phone numbers)</label>
+      </div>
+      <button id="import-go" class="btn btn-primary">Import</button>
+      <div id="import-result" class="msg"></div>
+    </section>
+
+    <!-- Backup & Restore -->
+    <section id="view-backup" class="view card">
+      <h2>Backup &amp; Restore</h2>
+
+      <div class="card" style="margin-top:12px;">
+        <h3 style="margin-top:0;">Download Full Backup</h3>
+        <p class="sub">Export all customers, transactions, and payment screenshots as a JSON file. Includes backup date and app version.</p>
+        <button id="download-backup" class="btn btn-primary">Download Backup JSON</button>
+        <div id="backup-info" class="msg ok" style="display:none;margin-top:10px;"></div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3 style="margin-top:0;">Restore from Backup</h3>
+        <p class="sub">Select a backup JSON file to preview and restore. Existing data is never overwritten without your explicit confirmation.</p>
+        <input type="file" id="restore-file" accept=".json">
+        <div id="restore-preview" style="margin-top:12px;"></div>
+        <div id="restore-actions" style="margin-top:12px;display:none;gap:8px;"></div>
+        <div id="restore-result" class="msg" style="margin-top:12px;"></div>
+      </div>
+    </section>
+
+    <!-- Individual customer ledger -->
+    <section id="view-ledger" class="view">
+      <header class="ledger-head">
+        <a id="back-home" class="btn ghost" href="#view-home">&larr; Back to customers</a>
+        <div>
+          <h2 id="ledger-title">Customer Ledger</h2>
+          <p id="ledger-sub" class="muted"></p>
+        </div>
+        <a id="whatsapp-btn" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp Reminder</a>
+      </header>
+      <div id="ledger-balance" class="balance-badge"></div>
+      <div id="tx-list" class="tx-list"></div>
+      <form id="entry-form" class="card entry-card" novalidate>
+        <h3>Add New Entry</h3>
+        <label>Type</label>
+        <select id="entry-type" required>
+          <option value="credit">Credit – goods given on credit</option>
+          <option value="payment">Payment – money received</option>
+        </select>
+        <label>Amount (Rs)</label>
+        <input type="number" id="entry-amount" placeholder="0.00" min="0" step="0.01" required>
+        <label>Date</label>
+        <input type="date" id="entry-date" required>
+        <label>Note</label>
+        <input type="text" id="entry-note" placeholder="Short note" required>
+        <label>Payment screenshot (optional)</label>
+        <input type="file" id="shot-input" accept="image/*">
+        <div id="shot-preview" class="shot-preview"></div>
+        <button type="submit" class="btn btn-primary">Save Entry</button>
+      </form>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

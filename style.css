@@ -1,0 +1,489 @@
+/* Hisaab – Digital Shop Ledger styles */
+/* Clean, professional, mobile-responsive design. Pure CSS. */
+
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #f7f5f0;
+  --card: #ffffff;
+  --text: #1f2933;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --primary: #0f766e;
+  --primary-hover: #0d5f57;
+  --accent: #d97706;
+  --danger: #dc2626;
+  --success: #059669;
+  --wa: #25d366;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Reset ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  background: var(--primary);
+  color: #fff;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.outstanding {
+  font-size: 1rem;
+  font-weight: 800;
+  padding-top: 4px;
+}
+
+/* ---------- Navigation ---------- */
+.app-nav {
+  display: flex;
+  gap: 6px;
+  padding: 8px 16px;
+  overflow-x: auto;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav-link {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.nav-link.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* ---------- Main layout ---------- */
+main {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ---------- Views ---------- */
+.view {
+  display: none;
+}
+
+.view.active {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+
+.sub,
+.muted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 8px 0 4px;
+  color: var(--muted);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--primary);
+  border-color: transparent;
+}
+
+textarea {
+  min-height: 140px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.error {
+  color: var(--danger);
+  font-size: 0.85rem;
+  margin-top: 6px;
+  min-height: 1.2em;
+}
+
+.msg {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.msg.ok {
+  background: #ecfdf5;
+  color: var(--success);
+  border: 1px solid #a7f3d0;
+}
+
+.msg.error {
+  background: #fef2f2;
+  color: var(--danger);
+  border: 1px solid #fecaca;
+}
+
+.code,
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85em;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.btn:hover {
+  background: #f3f4f6;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn.ghost:hover {
+  background: rgba(15, 118, 110, 0.08);
+}
+
+.btn-wa {
+  background: var(--wa);
+  color: #fff;
+  border-color: var(--wa);
+}
+
+.btn-wa:hover {
+  background: #1ebe59;
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}
+
+/* ---------- Customer list ---------- */
+.customer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.customer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+  min-width: 0;
+}
+
+.cust-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.cust-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.cust-phone {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.cust-balance {
+  font-weight: 800;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+.cust-balance.neg {
+  color: var(--danger);
+}
+
+.cust-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cust-actions .btn {
+  font-size: 0.8rem;
+  padding: 6px 10px;
+}
+
+.hint {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 20px;
+}
+
+/* ---------- Ledger ---------- */
+.ledger-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.balance-badge {
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid var(--border);
+  text-align: center;
+  min-width: 0;
+}
+
+.tx-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tx-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  min-width: 0;
+}
+
+.tx-item.payment {
+  border-left: 4px solid var(--success);
+}
+
+.tx-item.credit {
+  border-left: 4px solid var(--primary);
+}
+
+.tx-item .tx-date {
+  font-size: 0.85rem;
+  color: var(--muted);
+  min-width: 110px;
+}
+
+.tx-item .tx-type {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  width: 70px;
+}
+
+.tx-item.payment .tx-type {
+  color: var(--success);
+}
+
+.tx-item.credit .tx-type {
+  color: var(--primary);
+}
+
+.tx-item .tx-amount {
+  font-weight: 800;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.tx-item.payment .tx-amount {
+  color: var(--success);
+}
+
+.tx-item.credit .tx-amount {
+  color: var(--primary);
+}
+
+.tx-item .tx-note {
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 10px;
+}
+
+.shot-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #000;
+  flex-shrink: 0;
+}
+
+/* ---------- Entry form ---------- */
+.entry-card {
+  gap: 10px;
+}
+
+.shot-preview {
+  margin-top: 8px;
+}
+
+.shot-preview img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #000;
+}
+
+/* ---------- Responsive (375px minimum target width) ---------- */
+@media (max-width: 480px) {
+  main {
+    padding: 12px;
+  }
+  .app-header {
+    padding: 10px 14px;
+  }
+  .brand {
+    font-size: 1.25rem;
+  }
+  .outstanding {
+    font-size: 0.95rem;
+  }
+  .app-nav {
+    padding: 6px 14px;
+  }
+  .nav-link {
+    padding: 7px 12px;
+    font-size: 0.85rem;
+  }
+  .card {
+    padding: 14px;
+  }
+  .customer-row {
+    padding: 10px 12px;
+  }
+  .cust-balance {
+    font-size: 1rem;
+  }
+  .tx-item {
+    padding: 8px 10px;
+    flex-wrap: wrap;
+  }
+  .tx-item .tx-date {
+    min-width: 100%;
+    margin-bottom: 4px;
+  }
+  .tx-item .tx-type {
+    width: auto;
+  }
+  .tx-item .tx-note {
+    min-width: 100%;
+    padding: 6px 0 0;
+    white-space: normal;
+  }
+  .tx-item .shot-thumb {
+    width: 48px;
+    height: 48px;
+    margin-top: 6px;
+    align-self: flex-start;
+  }
+}
