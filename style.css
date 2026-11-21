@@ -121,6 +121,10 @@ h2 {
   font-size: 0.9rem;
 }
 
+.reminder-note {
+  margin-top: -4px;
+}
+
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -240,6 +244,16 @@ code {
 
 .btn-wa:hover {
   background: #1ebe59;
+}
+
+.btn-wa:disabled,
+.btn-wa.is-disabled,
+.btn-wa[aria-disabled="true"] {
+  background: #d1d5db;
+  color: #6b7280;
+  border-color: #d1d5db;
+  cursor: not-allowed;
+  opacity: 0.75;
 }
 
 .btn-danger {

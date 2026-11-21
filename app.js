@@ -61,6 +61,61 @@ function formatMoney(n) {
   return new Intl.NumberFormat('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(m || 0);
 }
 
+/* Indian currency with exactly two decimals, e.g. Rs 1,500.00 */
+function formatMoney2(n) {
+  const m = n < 0 ? -n : n;
+  return new Intl.NumberFormat('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(m || 0);
+}
+
+/* ---------- WhatsApp payment reminder ---------- */
+
+/* Personalised Hindi reminder. Placeholders are filled from real customer
+   data at render time; nothing here is hardcoded per customer. */
+const WHATSAPP_LANDING_URL = 'https://sugarresetblueprint.online/landing-page-541315';
+
+function buildReminderMessage(customerName, outstandingBalance) {
+  const name = String(customerName == null ? '' : customerName);
+  const amount = formatMoney2(outstandingBalance);
+  return `नमस्ते ${name} जी! 🙏\n` +
+    `\n` +
+    `आपके खाते में ₹${amount} का भुगतान अभी बकाया है। आपसे विनम्र अनुरोध है कि कृपया अपना शेष भुगतान पूरा कर दें।\n` +
+    `\n` +
+    `🎉 CONGRATULATIONS! 🎉\n` +
+    `\n` +
+    `आपके लिए एक विशेष उपहार! 🎁\n` +
+    `\n` +
+    `आज ही अपना बकाया भुगतान पूरा करें और Diabetes Reversal के लिए एक EXCLUSIVE 1:1 PERSONAL CONSULTATION CALL का विशेष अवसर प्राप्त करें। 🏆\n` +
+    `\n` +
+    `इस पर्सनल कंसल्टेशन में आपको अपनी Lifestyle, Indian Diet और Daily Routine को बेहतर बनाने के लिए मार्गदर्शन मिलेगा।\n` +
+    `\n` +
+    `📲 अपनी Personal Consultation Call बुक करने के लिए नीचे दिए गए लिंक पर क्लिक करें:\n` +
+    `\n` +
+    `👉 ${WHATSAPP_LANDING_URL}\n` +
+    `\n` +
+    `🌿 याद रखिए, बेहतर स्वास्थ्य की दिशा में उठाया गया हर छोटा कदम महत्वपूर्ण है।\n` +
+    `\n` +
+    `सादर धन्यवाद!\n` +
+    `Team Dr. Malik Usman`;
+}
+
+/* Normalise a stored phone to the 10-digit national number. */
+function normalizePhone(phone) {
+  let p = String(phone == null ? '' : phone).trim().replace(/\D/g, '');
+  if (p.length === 12 && p.startsWith('91')) p = p.slice(2);
+  return p;
+}
+
+/* Build the wa.me URL with country code 91. Works on mobile and desktop. */
+function buildWhatsAppUrl(phone, message) {
+  const national = normalizePhone(phone);
+  return `https://wa.me/91${national}?text=${encodeURIComponent(message)}`;
+}
+
+/* Reminders are only for customers with a positive outstanding balance. */
+function canSendReminder(balance) {
+  return Number.isFinite(balance) && balance > 0;
+}
+
 /* ---------- Balance calculations (never manually typed) ---------- */
 function balanceFor(phone) {
   let total = 0;
@@ -128,7 +183,13 @@ function renderHome() {
     row.className = 'customer-row';
     row.dataset.customer = c.phone;
 
-    const whatsappMsg = `${c.name}'s outstanding balance is Rs ${formatMoney(bal)}.`;
+    /* Reminder is generated dynamically from real customer data.
+       Only customers who actually owe money get a WhatsApp link. */
+    const waUrl = buildWhatsAppUrl(c.phone, buildReminderMessage(c.name, bal));
+    const waAction = canSendReminder(bal)
+      ? `<a href="${waUrl}"
+             data-remind="${escapeHtml(c.phone)}" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp</a>`
+      : `<button type="button" class="btn btn-wa" disabled title="No outstanding balance" aria-disabled="true">WhatsApp</button>`;
 
     row.innerHTML = `
       <div class="cust-info">
@@ -138,8 +199,7 @@ function renderHome() {
       <div class="cust-balance ${bal < 0 ? 'neg' : ''}" data-balance>${bal < 0 ? '-' : ''}Rs ${formatMoney(bal)}</div>
       <div class="cust-actions">
         <a href="#view-ledger?phone=${encodeURIComponent(c.phone)}" class="btn">View Ledger</a>
-        <a href="https://wa.me/91${c.phone}?text=${encodeURIComponent(whatsappMsg)}"
-           data-remind="${c.phone}" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp</a>
+        ${waAction}
       </div>
     `;
     list.appendChild(row);
@@ -206,14 +266,30 @@ function renderLedger(phone) {
 
   const bal = balanceFor(phone);
 
-  /* WhatsApp reminder link: user taps it, nothing is sent automatically. */
+  /* WhatsApp reminder link: user taps it, nothing is sent automatically.
+     Reminders are only enabled when the customer actually owes money. */
   const waBtn = document.getElementById('whatsapp-btn');
-  const whatsappMsg = `${c.name}'s outstanding balance is Rs ${formatMoney(bal)}.`;
-  waBtn.href = `https://wa.me/91${phone}?text=${encodeURIComponent(whatsappMsg)}`;
+  const whatsappMsg = buildReminderMessage(c.name, bal);
+  waBtn.href = buildWhatsAppUrl(phone, whatsappMsg);
   waBtn.dataset.remind = phone;
+  waBtn.dataset.hasDue = canSendReminder(bal) ? 'true' : 'false';
+  waBtn.classList.toggle('is-disabled', !canSendReminder(bal));
+  waBtn.setAttribute('aria-disabled', canSendReminder(bal) ? 'false' : 'true');
+  waBtn.title = canSendReminder(bal)
+    ? 'Open WhatsApp reminder (nothing is sent automatically)'
+    : 'No outstanding balance — reminder not needed';
 
   document.getElementById('ledger-balance').innerHTML =
     `Balance: <strong>${bal < 0 ? '-' : ''}Rs ${formatMoney(bal)}</strong>`;
+
+  const reminderNote = document.getElementById('ledger-reminder-note');
+  if (canSendReminder(bal)) {
+    reminderNote.textContent = 'Payment reminder ready — tap “WhatsApp Reminder” to open the pre-filled message (nothing is sent automatically).';
+  } else if (bal === 0) {
+    reminderNote.textContent = 'No outstanding balance — payment reminder is disabled.';
+  } else {
+    reminderNote.textContent = 'Customer has an advance balance — payment reminder is disabled.';
+  }
 
   const list = document.getElementById('tx-list');
   list.innerHTML = '';
@@ -682,6 +758,16 @@ document.querySelectorAll('.nav-link').forEach(link => {
 
 /* Backup & Restore wiring */
 document.getElementById('download-backup').addEventListener('click', downloadBackup);
+
+/* Ledger WhatsApp button: never navigate when there is no positive balance.
+   The link is still present (so it works on desktop and mobile), but a click
+   with nothing due is blocked. Nothing is ever sent automatically. */
+document.getElementById('whatsapp-btn').addEventListener('click', function (e) {
+  if (this.dataset.hasDue !== 'true') {
+    e.preventDefault();
+    alert('No outstanding balance — payment reminder is not needed for this customer.');
+  }
+});
 
 document.getElementById('restore-file').addEventListener('change', function () {
   const file = this.files[0];
