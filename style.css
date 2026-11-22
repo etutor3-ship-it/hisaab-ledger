@@ -1117,7 +1117,145 @@ code {
   font-size: 0.9rem;
 }
 
-/* RTL adjustments for seller details */
+/* ---------- Invoice styles ---------- */
+.invoice {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+}
+.invoice-header {
+  text-align: center;
+  margin-bottom: 24px;
+  border-bottom: 3px double var(--primary);
+  padding-bottom: 16px;
+}
+.invoice-header .brand {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0 0 6px;
+}
+.invoice-header .doc-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text);
+  text-transform: uppercase;
+  margin: 0;
+}
+.invoice-header .doc-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.invoice-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.invoice-meta .row { display:flex; gap:8px; }
+.invoice-meta .label { font-weight:700; color: var(--muted); min-width: 130px; }
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.invoice-table th, .invoice-table td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+}
+.invoice-table th { background: #f3f4f6; font-weight: 700; color: var(--text); }
+.invoice-table .amount { text-align: right; }
+.invoice-table .qty, .invoice-table .rate { text-align: center; }
+.invoice-totals {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 2px solid var(--primary);
+}
+.invoice-total-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+  font-size: 15px;
+}
+.invoice-total-row.final { font-weight: 800; font-size: 17px; color: var(--primary); margin-top: 10px; }
+.invoice-footer {
+  margin-top: 26px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+.invoice-qr {
+  text-align: center;
+  margin: 20px 0;
+}
+.invoice-qr img {
+  width: 140px;
+  height: 140px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+.invoice-qr-text {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+}
+.invoice-qr-sub {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.invoice-actions { margin-top: 20px; display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+.invoice-header-actions { margin-left:auto;display:flex;gap:6px;flex-wrap:wrap; }
+
+/* Invoice seller header */
+.invoice-seller {
+  text-align: center;
+  margin-bottom: 12px;
+}
+.invoice-seller-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+.invoice-seller-shop {
+  font-size: 1rem;
+  color: var(--muted);
+  margin: 0 0 2px;
+}
+.invoice-seller-address {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0;
+}
+.invoice-seller-empty {
+  text-align: center;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* RTL adjustments for invoice */
+[dir="rtl"] .invoice-seller-name,
+[dir="rtl"] .invoice-seller-shop,
+[dir="rtl"] .invoice-seller-address {
+  text-align: right;
+}
+[dir="rtl"] .invoice-meta {
+  direction: rtl;
+}
+
+/* ---------- RTL adjustments for seller details ---------- */
 [dir="rtl"] .seller-details-section label,
 [dir="rtl"] #seller-details-form label {
   text-align: right;

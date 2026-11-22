@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hisaab – Digital Shop Ledger</title>
 <link rel="stylesheet" href="style.css">
+<!-- QRCode.js for invoice QR code generation -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
 <body>
   <!-- Language selection overlay (shown on first visit) -->
@@ -262,6 +264,23 @@
       </div>
       <div id="statement-summary" style="margin-bottom:12px;"></div>
       <div id="statement-content"></div>
+    </section>
+
+    <!-- Invoice view -->
+    <section id="view-invoice" class="view card">
+      <header class="ledger-head">
+        <a id="invoice-back" class="btn ghost" href="#view-ledger">&larr; <span data-i18n="common.back">Back to ledger</span></a>
+        <div>
+          <h2 id="invoice-title" data-i18n="invoice.title">INVOICE</h2>
+          <p id="invoice-sub" class="muted"></p>
+        </div>
+        <div class="invoice-header-actions" style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;">
+          <button id="print-invoice-btn" class="btn" type="button" data-i18n="common.print">Print</button>
+          <button id="download-invoice-btn" class="btn btn-primary" type="button" data-i18n="common.download_pdf">Download PDF</button>
+          <button id="share-invoice-wa-btn" class="btn btn-wa" type="button" data-i18n="common.whatsapp">WhatsApp</button>
+        </div>
+      </header>
+      <div id="invoice-content" class="invoice"></div>
     </section>
   </main>
   <script src="app.js"></script>
