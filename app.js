@@ -1385,7 +1385,10 @@ function renderLedger(phone) {
 
   /* Wire invoice button */
   const invoiceBtn = document.getElementById('invoice-btn');
-  invoiceBtn.onclick = () => generateInvoice(phone);
+  invoiceBtn.onclick = () => {
+    generateInvoice(phone);
+    lastInvoicePhone = phone;
+  };
 }
 
 /* ---------- Invoice Generation ---------- */
@@ -2299,11 +2302,6 @@ document.getElementById('statement-btn').addEventListener('click', function () {
 
 /* Invoice button on ledger */
 let lastInvoicePhone = null;
-document.getElementById('invoice-btn').addEventListener('click', function () {
-  if (!currentPhone) return;
-  generateInvoice(currentPhone);
-  lastInvoicePhone = currentPhone;
-});
 
 /* Receipt actions: view / download the last generated receipt */
 document.getElementById('view-receipt-btn').addEventListener('click', function () {
