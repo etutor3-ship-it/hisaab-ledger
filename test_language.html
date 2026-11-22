@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Language Selection Tests</title>
+</head>
+<body>
+  <div id="lang-picker" class="lang-overlay" style="display:none;">
+    <div class="lang-card">
+      <div class="lang-title" data-i18n="lang.title">Choose language</div>
+      <div class="lang-sub" data-i18n="lang.sub">This choice applies to the whole app and is remembered.</div>
+      <div class="lang-options">
+        <button class="lang-btn" data-lang="en" type="button">English</button>
+        <button class="lang-btn" data-lang="hi" type="button">हिन्दी</button>
+        <button class="lang-btn" data-lang="ur" type="button">اردو</button>
+      </div>
+    </div>
+  </div>
+  <button id="lang-switcher" type="button">🌐</button>
+  <div id="total-outstanding" data-i18n="home.total_outstanding">Total Outstanding: Rs 0</div>
+  <div id="customer-list"></div>
+  <input id="cust-name" value="">
+  <input id="cust-phone" value="">
+  <div id="cust-suggestions"></div>
+  <button id="import-contacts-btn"></button>
+  <div id="contact-picker-notice"></div>
+  <div id="cust-error"></div>
+  <input id="cust-opening-balance" value="">
+  <form id="add-customer-form"></form>
+  <div id="contact-picker-modal" style="display:none;"></div>
+  <div id="contact-picker-backdrop"></div>
+  <button id="contact-picker-cancel"></button>
+  <button id="contact-picker-confirm" disabled></button>
+  <span id="contact-picker-name-display"></span>
+  <div id="contact-picker-list"></div>
+  <p id="contact-picker-empty"></p>
+  <button id="nav-change-language"></button>
+  <div id="view-home" class="view active"></div>
+  <div id="view-add-customer" class="view"></div>
+  <div id="view-ledger" class="view"></div>
+  <div id="view-import" class="view"></div>
+  <div id="view-backup" class="view"></div>
+  <div id="view-receipt" class="view"></div>
+  <div id="view-statement" class="view"></div>
+  <input id="shot-input" type="file">
+  <div id="shot-preview"></div>
+  <div id="restore-preview"></div>
+  <div id="restore-actions"></div>
+  <div id="restore-result"></div>
+  <input id="restore-file">
+  <input id="restore-merge">
+  <input id="restore-replace">
+  <div id="statement-summary"></div>
+  <div id="statement-content"></div>
+  <div id="receipt-content"></div>
+  <div id="tx-list"></div>
+  <div id="ledger-balance"></div>
+  <div id="ledger-reminder-note"></div>
+  <div id="entry-form"></div>
+  <div id="receipt-actions"></div>
+  <button id="print-receipt-btn"></button>
+  <button id="print-statement-btn"></button>
+  <button id="download-receipt-page-btn"></button>
+  <button id="download-statement-btn"></button>
+  <button id="share-receipt-wa-btn"></button>
+  <button id="share-statement-wa-btn"></button>
+  <button id="export-statement-csv-btn"></button>
+  <button id="invoice-btn"></button>
+  <button id="statement-btn"></button>
+  <button id="whatsapp-btn"></button>
+  <button id="view-receipt-btn"></button>
+  <button id="download-receipt-btn"></button>
+  <button id="back-home"></button>
+  <button id="receipt-back"></button>
+  <button id="statement-back"></button>
+  <button id="stmt-apply-custom"></button>
+  <select id="entry-type"></select>
+  <input id="entry-amount">
+  <input id="entry-date">
+  <input id="entry-note">
+  <select id="entry-payment-mode"></select>
+  <div id="custom-date-range"></div>
+  <input id="stmt-date-from">
+  <input id="stmt-date-to">
+  <div id="import-box"></div>
+  <div id="import-result"></div>
+  <div id="backup-info"></div>
+  <button id="download-backup"></button>
+  <input id="import-go">
+  <div id="ledger-title"></div>
+  <div id="ledger-sub"></div>
+  <div id="receipt-title"></div>
+  <div id="receipt-sub"></div>
+  <div id="statement-title"></div>
+  <div id="statement-sub"></div>
+
+  <div id="test-output"></div>
+
+<script>
+/* ============ TEST RUNNER ============ */
+const output = document.getElementById('test-output');
+var passed = 0, failed = 0, total = 0;
+var jsErrors = [];
+
+function log(msg) { output.textContent += msg + '\n'; console.log(msg); }
+function assert(condition, name) {
+  total++;
+  if (condition) { passed++; log('PASS: ' + name); }
+  else { failed++; log('FAIL: ' + name); }
+}
+
+window.addEventListener('error', function (e) {
+  jsErrors.push(e.message || e.error);
+  log('JS ERROR: ' + (e.message || e.error));
+});
+
+function resetLanguage() {
+  localStorage.removeItem('hisaab_lang');
+  window.currentLang = null;
+  document.documentElement.lang = 'en';
+  document.documentElement.dir = 'ltr';
+  document.body.classList.remove('rtl');
+  const picker = document.getElementById('lang-picker');
+  if (picker) picker.style.display = 'none';
+}
+
+function runLanguageTests() {
+  log('=== Language Selection Tests ===\n');
+
+  /* --- Test Group 1: setLanguage for all 3 languages --- */
+  log('\n--- 1. setLanguage: English ---');
+  resetLanguage();
+  window.setLanguage('en');
+  assert(window.currentLang === 'en', 'currentLang is en');
+  assert(localStorage.getItem('hisaab_lang') === 'en', 'localStorage saved en');
+  assert(document.documentElement.lang === 'en', 'html lang is en');
+  assert(document.documentElement.dir === 'ltr', 'html dir is ltr for en');
+  assert(document.body.classList.contains('rtl') === false, 'body not rtl for en');
+  const totalEn = document.getElementById('total-outstanding');
+  assert(totalEn.textContent === 'Total Outstanding: Rs 0', 'English text correct');
+
+  log('\n--- 2. setLanguage: Hindi ---');
+  resetLanguage();
+  window.setLanguage('hi');
+  assert(window.currentLang === 'hi', 'currentLang is hi');
+  assert(localStorage.getItem('hisaab_lang') === 'hi', 'localStorage saved hi');
+  assert(document.documentElement.lang === 'hi', 'html lang is hi');
+  assert(document.documentElement.dir === 'ltr', 'html dir is ltr for hi');
+  assert(document.body.classList.contains('rtl') === false, 'body not rtl for hi');
+  const totalHi = document.getElementById('total-outstanding');
+  assert(totalHi.textContent === 'कुल बकाया: रु 0', 'Hindi text correct: ' + totalHi.textContent);
+
+  log('\n--- 3. setLanguage: Urdu ---');
+  resetLanguage();
+  window.setLanguage('ur');
+  assert(window.currentLang === 'ur', 'currentLang is ur');
+  assert(localStorage.getItem('hisaab_lang') === 'ur', 'localStorage saved ur');
+  assert(document.documentElement.lang === 'ur', 'html lang is ur');
+  assert(document.documentElement.dir === 'rtl', 'html dir is rtl for ur');
+  assert(document.body.classList.contains('rtl') === true, 'body is rtl for ur');
+  const totalUr = document.getElementById('total-outstanding');
+  assert(totalUr.textContent === 'کل بکایا: Rs 0', 'Urdu text correct: ' + totalUr.textContent);
+
+  /* --- Test Group 2: loadLanguage persistence --- */
+  log('\n--- 4. loadLanguage: returns saved language ---');
+  resetLanguage();
+  localStorage.setItem('hisaab_lang', 'hi');
+  assert(window.loadLanguage() === 'hi', 'loadLanguage returns hi');
+  localStorage.setItem('hisaab_lang', 'ur');
+  assert(window.loadLanguage() === 'ur', 'loadLanguage returns ur');
+  localStorage.setItem('hisaab_lang', 'en');
+  assert(window.loadLanguage() === 'en', 'loadLanguage returns en');
+
+  log('\n--- 5. loadLanguage: invalid value returns null ---');
+  resetLanguage();
+  localStorage.setItem('hisaab_lang', 'xx');
+  assert(window.loadLanguage() === null, 'loadLanguage returns null for invalid');
+
+  log('\n--- 6. loadLanguage: nothing saved returns null ---');
+  resetLanguage();
+  localStorage.removeItem('hisaab_lang');
+  assert(window.loadLanguage() === null, 'loadLanguage returns null when unset');
+
+  /* --- Test Group 3: chooseLanguage closes modal --- */
+  log('\n--- 7. chooseLanguage hides picker ---');
+  resetLanguage();
+  const picker = document.getElementById('lang-picker');
+  picker.style.display = 'flex';
+  assert(picker.style.display === 'flex', 'Picker visible before chooseLanguage');
+  window.chooseLanguage('hi');
+  assert(picker.style.display === 'none', 'Picker hidden after chooseLanguage(hi)');
+  assert(localStorage.getItem('hisaab_lang') === 'hi', 'localStorage set after chooseLanguage');
+
+  log('\n--- 8. chooseLanguage with ur ---');
+  resetLanguage();
+  picker.style.display = 'flex';
+  window.chooseLanguage('ur');
+  assert(picker.style.display === 'none', 'Picker hidden after chooseLanguage(ur)');
+  assert(document.documentElement.dir === 'rtl', 'html dir rtl after ur');
+
+  log('\n--- 9. chooseLanguage with en ---');
+  resetLanguage();
+  picker.style.display = 'flex';
+  window.chooseLanguage('en');
+  assert(picker.style.display === 'none', 'Picker hidden after chooseLanguage(en)');
+  assert(document.documentElement.dir === 'ltr', 'html dir ltr after en');
+
+  /* --- Test Group 4: t() function for contact_picker --- */
+  log('\n--- 10. t(): contact_picker keys in all languages ---');
+  resetLanguage();
+  window.setLanguage('en');
+  assert(window.t('contact_picker.title') === 'Select Phone Number', 'EN: contact_picker.title');
+  assert(window.t('contact_picker.no_phones') === 'No phone number found for this contact. Please enter manually.', 'EN: contact_picker.no_phones');
+  assert(window.t('contact_picker.confirm') === 'Confirm Selection', 'EN: contact_picker.confirm');
+  assert(window.t('contact_picker.cancel') === 'Cancel', 'EN: contact_picker.cancel');
+
+  resetLanguage();
+  window.setLanguage('hi');
+  assert(window.t('contact_picker.title') === 'फोन नंबर चुनें', 'HI: contact_picker.title');
+  assert(window.t('contact_picker.no_phones') === 'इस संपर्क के लिए कोई फोन नंबर नहीं मिला। कृपया मैन्युअली दर्ज करें।', 'HI: contact_picker.no_phones');
+
+  resetLanguage();
+  window.setLanguage('ur');
+  assert(window.t('contact_picker.title') === 'فون نمبر منتخب کریں', 'UR: contact_picker.title');
+  assert(window.t('contact_picker.no_phones') === 'اس رابطے کے لیے کوئی فون نمبر نہیں ملا۔ براہ کرم دستیاب درج کریں۔', 'UR: contact_picker.no_phones');
+
+  /* --- Test Group 5: Change Language nav item reopens picker --- */
+  log('\n--- 11. Change Language nav item reopens picker ---');
+  resetLanguage();
+  const picker2 = document.getElementById('lang-picker');
+  picker2.style.display = 'none';
+  const navBtn = document.getElementById('nav-change-language');
+  navBtn.click();
+  assert(picker2.style.display === 'flex', 'Picker reopened by Change Language nav item');
+
+  /* --- Test Group 6: translatePage updates [data-i18n] elements --- */
+  log('\n--- 12. translatePage: nav change_language key translated ---');
+  resetLanguage();
+  window.setLanguage('hi');
+  const navEl = document.getElementById('nav-change-language');
+  assert(navEl.textContent === 'भाषा बदलें', 'Nav change_language translated to Hindi: ' + navEl.textContent);
+
+  resetLanguage();
+  window.setLanguage('ur');
+  const navEl2 = document.getElementById('nav-change-language');
+  assert(navEl2.textContent === 'زبان بدلیں', 'Nav change_language translated to Urdu: ' + navEl2.textContent);
+
+  /* --- Test Group 7: Click handler on .lang-btn --- */
+  log('\n--- 13. Click handler on lang-btn closes picker ---');
+  resetLanguage();
+  const picker3 = document.getElementById('lang-picker');
+  picker3.style.display = 'flex';
+  const hiBtn = document.querySelector('.lang-btn[data-lang="hi"]');
+  hiBtn.click();
+  // Note: click may be async; check after a tick
+  setTimeout(() => {
+    assert(picker3.style.display === 'none', 'Picker hidden after clicking Hindi button (async)');
+    assert(localStorage.getItem('hisaab_lang') === 'hi', 'localStorage set after button click');
+    
+    /* --- Summary --- */
+    log('\n=== Language Test Results: ' + passed + ' passed, ' + failed + ' failed out of ' + total + ' ===');
+    if (failed === 0 && jsErrors.length === 0) {
+      log('ALL LANGUAGE TESTS PASSED, NO JS ERRORS');
+    } else {
+      if (failed > 0) log('SOME LANGUAGE TESTS FAILED');
+      if (jsErrors.length > 0) log('JS ERRORS DETECTED: ' + jsErrors.length);
+      jsErrors.forEach(e => log('  ERROR: ' + e));
+    }
+  }, 100);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    // Load app.js
+    const fs = null; // not available in browser
+    // app.js is loaded as external script in test runner
+  }, 100);
+  
+  // app.js loads as <script src="app.js"></script> in the test runner
+  // We need to wait for it, then run tests
+  setTimeout(runLanguageTests, 500);
+});
+</script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -53,6 +53,7 @@ const TRANSLATIONS = {
       add_customer: 'Add Customer',
       import_data: 'Import Data',
       backup_restore: 'Backup & Restore',
+      change_language: 'Change Language',
     },
     home: {
       all_customers: 'All Customers',
@@ -202,6 +203,7 @@ const TRANSLATIONS = {
       add_customer: 'ग्राहक जोड़ें',
       import_data: 'डेटा आयात करें',
       backup_restore: 'बैकअप और पुनर्स्थापना',
+      change_language: 'भाषा बदलें',
     },
     home: {
       all_customers: 'सभी ग्राहक',
@@ -351,6 +353,7 @@ const TRANSLATIONS = {
       add_customer: 'نया گراہک شامل کریں',
       import_data: 'ڈیٹا درآمد کریں',
       backup_restore: 'بیک اپ اور بحالی',
+      change_language: 'زبان بدلیں',
     },
     home: {
       all_customers: 'تمام گراہک',
@@ -2099,16 +2102,45 @@ function bootApp() {
 }
 function chooseLanguage(lang) {
   const picker = document.getElementById('lang-picker');
-  picker.style.display = 'none';
-  setLanguage(lang);
-  if (!appBooted) bootApp();
+  if (picker) picker.style.display = 'none';
+  try {
+    setLanguage(lang);
+  } catch (e) {
+    console.error('Language set failed:', e);
+  }
+  if (typeof appBooted !== 'undefined' && !appBooted) bootApp();
 }
 
+/* Language picker button clicks (individual + event delegation fallback). */
 document.querySelectorAll('.lang-btn').forEach((btn) => {
-  btn.addEventListener('click', function () {
-    chooseLanguage(this.getAttribute('data-lang'));
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    const lang = this.getAttribute('data-lang');
+    if (lang) chooseLanguage(lang);
   });
 });
+
+const pickerEl = document.getElementById('lang-picker');
+if (pickerEl) {
+  pickerEl.addEventListener('click', function (e) {
+    const btn = e.target.closest('.lang-btn');
+    if (btn) {
+      e.preventDefault();
+      const lang = btn.getAttribute('data-lang');
+      if (lang) chooseLanguage(lang);
+    }
+  });
+}
+
+/* Change Language nav item: reopen the picker. */
+const navChangeLang = document.getElementById('nav-change-language');
+if (navChangeLang) {
+  navChangeLang.addEventListener('click', function (e) {
+    e.preventDefault();
+    const picker = document.getElementById('lang-picker');
+    if (picker) picker.style.display = 'flex';
+  });
+}
 
 /* ---------- Boot: gate on language selection ---------- */
 const persistedLang = loadLanguage();
