@@ -32,8 +32,20 @@
       <form id="add-customer-form" novalidate>
         <label>Full name</label>
         <input type="text" id="cust-name" placeholder="e.g. Ravi Kumar" required maxlength="100">
+        <!-- Smart customer search suggestions dropdown -->
+        <div id="cust-suggestions" class="suggestions" style="display:none;"></div>
         <label>Mobile number</label>
-        <input type="tel" id="cust-phone" placeholder="10-digit Indian mobile" inputmode="numeric" maxlength="10" required>
+        <input type="tel" id="cust-phone" placeholder="e.g. 9876543210 or +919876543210" inputmode="tel" maxlength="15" required>
+        <p class="sub" style="margin-top:4px;">Accepts 10-digit mobile, or with +91 / 91 prefix. Stored as 10-digit number.</p>
+        <!-- Import from contacts -->
+        <div class="contact-import" style="margin-top:10px;">
+          <button type="button" id="import-contacts-btn" class="btn btn-wa" style="width:auto;padding:8px 14px;font-size:0.9rem;">
+            <span style="margin-right:6px;">&#128102;</span>Import from Contacts
+          </button>
+          <div id="contact-picker-notice" class="msg error" style="display:none;margin-top:6px;font-size:0.85rem;">
+            Contact import is not supported in this browser. Please enter the mobile number manually.
+          </div>
+        </div>
         <label>Opening Balance (Rs)</label>
         <input type="number" id="cust-opening-balance" placeholder="0.00" min="0" step="0.01">
         <p class="sub" style="margin-top:4px;">Positive value = customer owes this amount (auto-creates a credit entry).</p>
@@ -95,7 +107,15 @@
           <h2 id="ledger-title">Customer Ledger</h2>
           <p id="ledger-sub" class="muted"></p>
         </div>
-        <a id="whatsapp-btn" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp Reminder</a>
+        <div class="ledger-actions">
+          <a id="whatsapp-btn" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp Reminder</a>
+          <button id="invoice-btn" class="btn" type="button">Generate Invoice</button>
+          <button id="statement-btn" class="btn" type="button">Statement</button>
+          <div id="receipt-actions" style="display:none;gap:6px;">
+            <button id="view-receipt-btn" class="btn btn-primary" type="button">View Receipt</button>
+            <button id="download-receipt-btn" class="btn" type="button">Download PDF</button>
+          </div>
+        </div>
       </header>
       <div id="ledger-balance" class="balance-badge"></div>
       <p id="ledger-reminder-note" class="sub reminder-note"></p>
@@ -116,8 +136,68 @@
         <label>Payment screenshot (optional)</label>
         <input type="file" id="shot-input" accept="image/*">
         <div id="shot-preview" class="shot-preview"></div>
+        <!-- Payment mode (used for receipts) -->
+        <label>Payment Mode</label>
+        <select id="entry-payment-mode" style="width:auto;min-width:160px;display:inline-block;">
+          <option value="Cash">Cash</option>
+          <option value="UPI">UPI</option>
+          <option value="Bank Transfer">Bank Transfer</option>
+          <option value="Other">Other</option>
+        </select>
         <button type="submit" class="btn btn-primary">Save Entry</button>
       </form>
+    </section>
+
+    <!-- Receipt view -->
+    <section id="view-receipt" class="view card">
+      <header class="ledger-head">
+        <a id="receipt-back" class="btn ghost" href="#view-ledger">&larr; Back to ledger</a>
+        <div>
+          <h2 id="receipt-title">Payment Receipt</h2>
+          <p id="receipt-sub" class="muted"></p>
+        </div>
+        <div class="receipt-header-actions" style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;">
+          <button id="print-receipt-btn" class="btn" type="button">Print</button>
+          <button id="download-receipt-page-btn" class="btn btn-primary" type="button">Download PDF</button>
+          <button id="share-receipt-wa-btn" class="btn btn-wa" type="button">WhatsApp</button>
+        </div>
+      </header>
+      <div id="receipt-content" class="receipt"></div>
+    </section>
+
+    <!-- Statement view -->
+    <section id="view-statement" class="view card">
+      <header class="ledger-head">
+        <a id="statement-back" class="btn ghost" href="#view-ledger">&larr; Back to ledger</a>
+        <div>
+          <h2 id="statement-title">Account Statement</h2>
+          <p id="statement-sub" class="muted"></p>
+        </div>
+        <div class="statement-header-actions" style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;">
+          <button id="print-statement-btn" class="btn" type="button">Print</button>
+          <button id="download-statement-btn" class="btn btn-primary" type="button">Download PDF</button>
+          <button id="share-statement-wa-btn" class="btn btn-wa" type="button">WhatsApp</button>
+          <button id="export-statement-csv-btn" class="btn" type="button">Export CSV</button>
+        </div>
+      </header>
+      <!-- Statement filters -->
+      <div class="statement-filters" style="margin:12px 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <label style="margin:0;font-size:0.85rem;color:var(--muted);">Period:</label>
+        <button class="btn stmt-filter active" data-filter="all" type="button">All</button>
+        <button class="btn stmt-filter" data-filter="30d" type="button">Last 30 Days</button>
+        <button class="btn stmt-filter" data-filter="3m" type="button">Last 3 Months</button>
+        <button class="btn stmt-filter" data-filter="6m" type="button">Last 6 Months</button>
+        <button class="btn stmt-filter" data-filter="custom" type="button">Custom</button>
+        <div id="custom-date-range" style="display:none;gap:6px;">
+          <label style="margin:0;font-size:0.85rem;color:var(--muted);white-space:nowrap;">From</label>
+          <input type="date" id="stmt-date-from" style="width:auto;min-width:140px;">
+          <label style="margin:0;font-size:0.85rem;color:var(--muted);white-space:nowrap;">To</label>
+          <input type="date" id="stmt-date-to" style="width:auto;min-width:140px;">
+          <button id="stmt-apply-custom" class="btn btn-primary" type="button" style="width:auto;padding:6px 12px;">Apply</button>
+        </div>
+      </div>
+      <div id="statement-summary" style="margin-bottom:12px;"></div>
+      <div id="statement-content"></div>
     </section>
   </main>
   <script src="app.js"></script>
