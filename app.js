@@ -97,6 +97,10 @@ const TRANSLATIONS = {
       shop_name_placeholder: 'e.g. Ravi General Store',
       mobile_number: 'Mobile Number',
       mobile_placeholder: 'e.g. 9876543210',
+      upi_id: 'UPI ID (for QR generation)',
+      upi_id_placeholder: 'e.g. 9876543210@upi',
+      payment_qr: 'Payment QR Code (optional)',
+      payment_qr_sub: 'Upload your UPI payment QR code image. This will be shown on invoices and statements for customers to scan and pay.',
       address: 'Shop Address',
       address_placeholder: 'e.g. 123 Main Road, Market Area',
       save_btn: 'Save Details',
@@ -292,6 +296,10 @@ const TRANSLATIONS = {
       shop_name_placeholder: 'जैसे रवि जनरल स्टोर',
       mobile_number: 'मोबाइल नंबर',
       mobile_placeholder: 'जैसे 9876543210',
+      upi_id: 'UPI ID (QR जनरेशन के लिए)',
+      upi_id_placeholder: 'जैसे 9876543210@upi',
+      payment_qr: 'भुगतान QR कोड (वैकल्पिक)',
+      payment_qr_sub: 'अपना UPI भुगतान QR कोड इमेज अपलोड करें। यह इनवॉइस और स्टेटमेंट पर दिखाया जाएगा ताकि ग्राहक स्कैन करके भुगतान कर सकें।',
       address: 'दुकान का पता',
       address_placeholder: 'जैसे 123 मुख्य रोड, मार्केट एरिया',
       save_btn: 'विवरण सहेजें',
@@ -487,6 +495,10 @@ const TRANSLATIONS = {
       shop_name_placeholder: 'مثال: رavi جنرل سٹور',
       mobile_number: 'موبائل نمبر',
       mobile_placeholder: 'مثال: 9876543210',
+      upi_id: 'UPI ID (QR کوڈ جنریشن کے لیے)',
+      upi_id_placeholder: 'مثال: 9876543210@upi',
+      payment_qr: 'ادائیگی QR کوڈ (اختیاری)',
+      payment_qr_sub: 'اپنا UPI ادائیگی QR کوڈ انڈر اپ لوڈ کریں۔ یہ انوائس اور سٹیٹمنٹ پر دکھایا جائے گا تاکہ گراہک اسکین کر کے ادائیگی کر سکیں۔',
       address: 'دکان کا پتہ',
       address_placeholder: 'مثال: 123 مرکزی سڑک، مارکیٹ علاقہ',
       save_btn: 'تفصیلات محفوظ کریں',
@@ -751,7 +763,7 @@ function nextReceiptNo() {
 
 /* ---------- Seller / Shop Details (persisted in localStorage) ---------- */
 const STORAGE_SELLER = 'hisaab_seller_details';
-let sellerDetails = { ownerName: '', shopName: '', mobile: '', address: '' };
+let sellerDetails = { ownerName: '', shopName: '', mobile: '', address: '', upiId: '', paymentQr: '' };
 
 function loadSellerDetails() {
   try {
@@ -761,9 +773,11 @@ function loadSellerDetails() {
       shopName: String(saved.shopName || '').trim(),
       mobile: String(saved.mobile || '').trim(),
       address: String(saved.address || '').trim(),
+      upiId: String(saved.upiId || '').trim(),
+      paymentQr: String(saved.paymentQr || '').trim(),
     };
   } catch (e) {
-    sellerDetails = { ownerName: '', shopName: '', mobile: '', address: '' };
+    sellerDetails = { ownerName: '', shopName: '', mobile: '', address: '', upiId: '', paymentQr: '' };
   }
 }
 function saveSellerDetails() {
@@ -1418,6 +1432,13 @@ function generateInvoice(phone) {
   `).join('');
 
   // Seller details
+  const paymentQrHtml = sellerDetails.paymentQr ? `
+    <div class="invoice-qr" style="margin-bottom:16px;">
+      <img src="${sellerDetails.paymentQr}" style="width:120px;height:120px;border:1px solid var(--border);border-radius:8px;background:#fff;" alt="Payment QR">
+      <div class="invoice-qr-text" style="font-size:12px;margin-top:6px;">Scan to Pay</div>
+    </div>
+  ` : '';
+
   const sellerHtml = hasSellerDetails() ? `
     <div class="invoice-seller">
       <div class="invoice-seller-name">${escapeHtml(sellerDetails.ownerName)}</div>
@@ -1486,6 +1507,8 @@ function generateInvoice(phone) {
       <div class="invoice-total-row"><span data-i18n="invoice.total_payments">${t('invoice.total_payments')}</span><span>${t('common.currency')} ${formatMoney2(totalPayment)}</span></div>
       <div class="invoice-total-row final"><span data-i18n="invoice.outstanding_balance">${t('invoice.outstanding_balance')}</span><span>${outstanding < 0 ? '-' : ''}${t('common.currency')} ${formatMoney2(Math.abs(outstanding))}</span></div>
     </div>
+
+    ${paymentQrHtml}
 
     ${qrHtml}
 
@@ -1716,12 +1739,21 @@ function renderStatement() {
   `;
 
   let sellerHeader = '';
+  let statementPaymentQrHtml = '';
   if (hasSellerDetails()) {
     sellerHeader = `
       <div class="statement-seller-header" style="margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--primary);">
         <div class="statement-seller-name" style="font-size:1.15rem;font-weight:800;color:var(--text);">${escapeHtml(sellerDetails.ownerName)}</div>
         ${sellerDetails.shopName ? `<div class="statement-seller-shop" style="font-size:0.95rem;color:var(--muted);margin-top:2px;">${escapeHtml(sellerDetails.shopName)}</div>` : ''}
       </div>`;
+    if (sellerDetails.paymentQr) {
+      statementPaymentQrHtml = `
+        <div class="invoice-qr" style="margin-top:20px;text-align:center;">
+          <img src="${sellerDetails.paymentQr}" style="width:120px;height:120px;border:1px solid var(--border);border-radius:8px;background:#fff;" alt="Payment QR">
+          <div class="invoice-qr-text" style="font-size:12px;margin-top:6px;">Scan to Pay</div>
+        </div>
+      `;
+    }
   } else {
     sellerHeader = `<div class="statement-seller-empty" style="margin-bottom:14px;color:var(--muted);font-size:0.9rem;">${t('seller_details.not_set')}</div>`;
   }
@@ -1758,7 +1790,7 @@ function renderStatement() {
     </table>
   `;
 
-  // Add QR code for landing page
+  // Add landing page QR code
   const qrCodeUrl = 'https://sugarresetblueprint.online/landing-page-541315';
   const qrHtml = `
     <div class="invoice-qr" style="margin-top:20px;">
@@ -1767,7 +1799,8 @@ function renderStatement() {
       <div class="invoice-qr-sub" data-i18n="invoice.scan_gift_sub">${t('invoice.scan_gift_sub')}</div>
     </div>
   `;
-  document.getElementById('statement-content').innerHTML = tableHtml + qrHtml;
+
+  document.getElementById('statement-content').innerHTML = tableHtml + statementPaymentQrHtml + qrHtml;
 
   // Generate QR code
   setTimeout(() => {
@@ -2455,6 +2488,9 @@ const sellerDetailsForm = document.getElementById('seller-details-form');
 const sellerOwnerName = document.getElementById('seller-owner-name');
 const sellerShopName = document.getElementById('seller-shop-name');
 const sellerMobile = document.getElementById('seller-mobile');
+const sellerUpiId = document.getElementById('seller-upi-id');
+const sellerPaymentQrInput = document.getElementById('seller-payment-qr-input');
+const sellerPaymentQrPreview = document.getElementById('seller-payment-qr-preview');
 const sellerAddress = document.getElementById('seller-address');
 const sellerError = document.getElementById('seller-error');
 const sellerSavedMsg = document.getElementById('seller-saved-msg');
@@ -2466,7 +2502,14 @@ function renderSellerDetailsView() {
   sellerOwnerName.value = sellerDetails.ownerName;
   sellerShopName.value = sellerDetails.shopName;
   sellerMobile.value = sellerDetails.mobile;
+  sellerUpiId.value = sellerDetails.upiId;
   sellerAddress.value = sellerDetails.address;
+  // Render payment QR preview
+  if (sellerDetails.paymentQr) {
+    sellerPaymentQrPreview.innerHTML = `<img src="${sellerDetails.paymentQr}" style="max-width:150px;border:1px solid var(--border);border-radius:8px;" alt="Payment QR">`;
+  } else {
+    sellerPaymentQrPreview.innerHTML = '';
+  }
   sellerError.textContent = '';
   sellerSavedMsg.style.display = 'none';
   if (sellerDetailsTitle) sellerDetailsTitle.textContent = t('seller_details.title');
@@ -2476,6 +2519,26 @@ function renderSellerDetailsView() {
 }
 
 if (sellerDetailsForm) {
+  // Payment QR code upload handler
+  if (sellerPaymentQrInput) {
+    sellerPaymentQrInput.addEventListener('change', function () {
+      const preview = sellerPaymentQrPreview;
+      preview.innerHTML = '';
+      const file = this.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file.');
+        this.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        preview.innerHTML = `<img src="${reader.result}" style="max-width:150px;border:1px solid var(--border);border-radius:8px;" alt="Payment QR preview">`;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
   sellerDetailsForm.addEventListener('submit', function (e) {
     e.preventDefault();
     sellerError.textContent = '';
@@ -2492,6 +2555,8 @@ if (sellerDetailsForm) {
       ownerName: name,
       shopName: sellerShopName.value.trim(),
       mobile: sellerMobile.value.trim(),
+      upiId: sellerUpiId.value.trim(),
+      paymentQr: sellerPaymentQrPreview.querySelector('img') ? sellerPaymentQrPreview.querySelector('img').src : sellerDetails.paymentQr,
       address: sellerAddress.value.trim(),
     };
     saveSellerDetails();
@@ -2510,8 +2575,11 @@ if (sellerDetailsForm) {
       sellerOwnerName.value = '';
       sellerShopName.value = '';
       sellerMobile.value = '';
+      sellerUpiId.value = '';
       sellerAddress.value = '';
-      sellerDetails = { ownerName: '', shopName: '', mobile: '', address: '' };
+      sellerPaymentQrPreview.innerHTML = '';
+      sellerPaymentQrInput.value = '';
+      sellerDetails = { ownerName: '', shopName: '', mobile: '', upiId: '', paymentQr: '', address: '' };
       saveSellerDetails();
       sellerError.textContent = '';
       sellerSavedMsg.style.display = 'none';

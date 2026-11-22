@@ -205,6 +205,11 @@
         <input type="text" id="seller-shop-name" placeholder="e.g. Ravi General Store" data-i18n-placeholder="seller_details.shop_name_placeholder" maxlength="100">
         <label data-i18n="seller_details.mobile_number">Mobile Number</label>
         <input type="tel" id="seller-mobile" placeholder="e.g. 9876543210" data-i18n-placeholder="seller_details.mobile_placeholder" inputmode="tel" maxlength="15">
+        <label data-i18n="seller_details.upi_id">UPI ID (for QR generation)</label>
+        <input type="text" id="seller-upi-id" placeholder="e.g. 9876543210@upi" data-i18n-placeholder="seller_details.upi_id_placeholder" maxlength="100">
+        <label data-i18n="seller_details.payment_qr">Payment QR Code (optional)</label>
+        <input type="file" id="seller-payment-qr-input" accept="image/*" data-i18n="seller_details.payment_qr_sub">
+        <div id="seller-payment-qr-preview" style="margin-top:8px;"></div>
         <label data-i18n="seller_details.address">Shop Address</label>
         <textarea id="seller-address" rows="3" placeholder="e.g. 123 Main Road, Market Area" data-i18n-placeholder="seller_details.address_placeholder" maxlength="200"></textarea>
         <div id="seller-error" class="error" style="margin:8px 0;"></div>
