@@ -1394,154 +1394,156 @@ function renderLedger(phone) {
 /* ---------- Invoice Generation ---------- */
 function generateInvoice(phone) {
   try {
+    console.log('generateInvoice called for:', phone);
     const c = customers.find(x => x.phone === phone);
     if (!c) { console.error('Customer not found:', phone); return; }
 
-  const txs = transactions
-    .filter(t => t.customerPhone === phone)
-    .sort((a, b) => new Date(a.date) - new Date(b.date));
+    const txs = transactions
+      .filter(t => t.customerPhone === phone)
+      .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  const credits = txs.filter(t => t.type === 'credit');
-  const payments = txs.filter(t => t.type === 'payment');
+    const credits = txs.filter(t => t.type === 'credit');
+    const payments = txs.filter(t => t.type === 'payment');
 
-  const totalCredit = credits.reduce((sum, t) => sum + t.amount, 0);
-  const totalPayment = payments.reduce((sum, t) => sum + t.amount, 0);
-  const outstanding = totalCredit - totalPayment;
+    const totalCredit = credits.reduce((sum, t) => sum + t.amount, 0);
+    const totalPayment = payments.reduce((sum, t) => sum + t.amount, 0);
+    const outstanding = totalCredit - totalPayment;
 
-  const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  const now = new Date();
-  const dateTime = now.toLocaleString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-  const invoiceNo = 'INV-' + phone.slice(-6) + '-' + Date.now().toString(36).toUpperCase();
+    const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    const now = new Date();
+    const dateTime = now.toLocaleString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    const invoiceNo = 'INV-' + phone.slice(-6) + '-' + Date.now().toString(36).toUpperCase();
 
-  // Build credit rows with qty/rate/amount
-  const creditRows = credits.map(tx => `
-    <tr>
-      <td>${escapeHtml(tx.date)}</td>
-      <td>${escapeHtml(tx.note || t('invoice.no_credit_entries'))}</td>
-      <td class="qty">1</td>
-      <td class="rate">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
-      <td class="amount">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
-    </tr>
-  `).join('');
+    // Build credit rows with qty/rate/amount
+    const creditRows = credits.map(tx => `
+      <tr>
+        <td>${escapeHtml(tx.date)}</td>
+        <td>${escapeHtml(tx.note || t('invoice.no_credit_entries'))}</td>
+        <td class="qty">1</td>
+        <td class="rate">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
+        <td class="amount">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
+      </tr>
+    `).join('');
 
-  // Build payment rows
-  const paymentRows = payments.map(tx => `
-    <tr>
-      <td>${escapeHtml(tx.date)}</td>
-      <td>${escapeHtml(tx.note || t('invoice.no_payment_entries'))}</td>
-      <td class="amount" style="color:var(--success);">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
-      <td class="amount" style="color:var(--success);">${t('payment_mode.' + (tx.paymentMode || 'cash').toLowerCase()) || tx.paymentMode || 'Cash'}</td>
-    </tr>
-  `).join('');
+    // Build payment rows
+    const paymentRows = payments.map(tx => `
+      <tr>
+        <td>${escapeHtml(tx.date)}</td>
+        <td>${escapeHtml(tx.note || t('invoice.no_payment_entries'))}</td>
+        <td class="amount" style="color:var(--success);">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
+        <td class="amount" style="color:var(--success);">${t('payment_mode.' + (tx.paymentMode || 'cash').toLowerCase()) || tx.paymentMode || 'Cash'}</td>
+      </tr>
+    `).join('');
 
-  // Seller details
-  const paymentQrHtml = sellerDetails.paymentQr ? `
-    <div class="invoice-qr" style="margin-bottom:16px;">
-      <img src="${sellerDetails.paymentQr}" style="width:120px;height:120px;border:1px solid var(--border);border-radius:8px;background:#fff;" alt="Payment QR">
-      <div class="invoice-qr-text" style="font-size:12px;margin-top:6px;">Scan to Pay</div>
-    </div>
-  ` : '';
+    // Seller details
+    const paymentQrHtml = sellerDetails.paymentQr ? `
+      <div class="invoice-qr" style="margin-bottom:16px;">
+        <img src="${sellerDetails.paymentQr}" style="width:120px;height:120px;border:1px solid var(--border);border-radius:8px;background:#fff;" alt="Payment QR">
+        <div class="invoice-qr-text" style="font-size:12px;margin-top:6px;">Scan to Pay</div>
+      </div>
+    ` : '';
 
-  const sellerHtml = hasSellerDetails() ? `
-    <div class="invoice-seller">
-      <div class="invoice-seller-name">${escapeHtml(sellerDetails.ownerName)}</div>
-      ${sellerDetails.shopName ? `<div class="invoice-seller-shop">${escapeHtml(sellerDetails.shopName)}</div>` : ''}
-      ${sellerDetails.address ? `<div class="invoice-seller-address">${escapeHtml(sellerDetails.address)}</div>` : ''}
-    </div>
-  ` : `<div class="invoice-seller-empty"><p>${t('seller_details.not_set')}</p></div>`;
+    const sellerHtml = hasSellerDetails() ? `
+      <div class="invoice-seller">
+        <div class="invoice-seller-name">${escapeHtml(sellerDetails.ownerName)}</div>
+        ${sellerDetails.shopName ? `<div class="invoice-seller-shop">${escapeHtml(sellerDetails.shopName)}</div>` : ''}
+        ${sellerDetails.address ? `<div class="invoice-seller-address">${escapeHtml(sellerDetails.address)}</div>` : ''}
+      </div>
+    ` : `<div class="invoice-seller-empty"><p>${t('seller_details.not_set')}</p></div>`;
 
-  // QR code for landing page
-  const qrCodeUrl = 'https://sugarresetblueprint.online/landing-page-541315';
-  const qrHtml = `
-    <div class="invoice-qr">
-      <div id="invoice-qr-code"></div>
-      <div class="invoice-qr-text" data-i18n="invoice.scan_gift">${t('invoice.scan_gift')}</div>
-      <div class="invoice-qr-sub" data-i18n="invoice.scan_gift_sub">${t('invoice.scan_gift_sub')}</div>
-    </div>
-  `;
+    // QR code for landing page
+    const qrCodeUrl = 'https://sugarresetblueprint.online/landing-page-541315';
+    const qrHtml = `
+      <div class="invoice-qr">
+        <div id="invoice-qr-code"></div>
+        <div class="invoice-qr-text" data-i18n="invoice.scan_gift">${t('invoice.scan_gift')}</div>
+        <div class="invoice-qr-sub" data-i18n="invoice.scan_gift_sub">${t('invoice.scan_gift_sub')}</div>
+      </div>
+    `;
 
-  const invoiceHtml = `
-    ${sellerHtml}
-    <div class="invoice-header">
-      <h1 class="brand">Hisaab</h1>
-      <p class="doc-title" data-i18n="invoice.title">${t('invoice.title')}</p>
-      <p class="doc-subtitle" data-i18n="invoice.subtitle">${t('invoice.subtitle')}</p>
-    </div>
+    const invoiceHtml = `
+      ${sellerHtml}
+      <div class="invoice-header">
+        <h1 class="brand">Hisaab</h1>
+        <p class="doc-title" data-i18n="invoice.title">${t('invoice.title')}</p>
+        <p class="doc-subtitle" data-i18n="invoice.subtitle">${t('invoice.subtitle')}</p>
+      </div>
 
-    <div class="invoice-meta">
-      <div class="row"><span class="label" data-i18n="invoice.invoice_no">${t('invoice.invoice_no')}</span><span>${invoiceNo}</span></div>
-      <div class="row"><span class="label" data-i18n="invoice.date">${t('invoice.date')}</span><span>${dateTime}</span></div>
-      <div class="row"><span class="label" data-i18n="invoice.customer">${t('invoice.customer')}</span><span>${escapeHtml(c.name)}</span></div>
-      <div class="row"><span class="label" data-i18n="invoice.mobile">${t('invoice.mobile')}</span><span>${formatPhoneDisplay(c.phone)}</span></div>
-    </div>
+      <div class="invoice-meta">
+        <div class="row"><span class="label" data-i18n="invoice.invoice_no">${t('invoice.invoice_no')}</span><span>${invoiceNo}</span></div>
+        <div class="row"><span class="label" data-i18n="invoice.date">${t('invoice.date')}</span><span>${dateTime}</span></div>
+        <div class="row"><span class="label" data-i18n="invoice.customer">${t('invoice.customer')}</span><span>${escapeHtml(c.name)}</span></div>
+        <div class="row"><span class="label" data-i18n="invoice.mobile">${t('invoice.mobile')}</span><span>${formatPhoneDisplay(c.phone)}</span></div>
+      </div>
 
-    <div class="section-title" data-i18n="invoice.items">${t('invoice.items')}</div>
-    <table class="invoice-table">
-      <thead>
-        <tr>
-          <th data-i18n="invoice.date_col">${t('invoice.date_col')}</th>
-          <th data-i18n="invoice.description_col">${t('invoice.description_col')}</th>
-          <th class="qty" data-i18n="invoice.qty_col">${t('invoice.qty_col')}</th>
-          <th class="rate" data-i18n="invoice.rate_col">${t('invoice.rate_col')}</th>
-          <th class="amount" data-i18n="invoice.amount_col">${t('invoice.amount_col')}</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${creditRows || `<tr><td colspan="5" style="text-align:center;color:var(--muted);">${t('invoice.no_credit_entries')}</td></tr>`}
-      </tbody>
-    </table>
+      <div class="section-title" data-i18n="invoice.items">${t('invoice.items')}</div>
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <th data-i18n="invoice.date_col">${t('invoice.date_col')}</th>
+            <th data-i18n="invoice.description_col">${t('invoice.description_col')}</th>
+            <th class="qty" data-i18n="invoice.qty_col">${t('invoice.qty_col')}</th>
+            <th class="rate" data-i18n="invoice.rate_col">${t('invoice.rate_col')}</th>
+            <th class="amount" data-i18n="invoice.amount_col">${t('invoice.amount_col')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${creditRows || `<tr><td colspan="5" style="text-align:center;color:var(--muted);">${t('invoice.no_credit_entries')}</td></tr>`}
+        </tbody>
+      </table>
 
-    ${payments.length > 0 ? `
-    <div class="section-title" data-i18n="invoice.payments">${t('invoice.payments')}</div>
-    <table class="invoice-table">
-      <thead>
-        <tr>
-          <th data-i18n="invoice.date_col">${t('invoice.date_col')}</th>
-          <th data-i18n="invoice.description_col">${t('invoice.description_col')}</th>
-          <th class="amount" data-i18n="invoice.amount_col">${t('invoice.amount_col')}</th>
-          <th data-i18n="invoice.payment_mode">${t('invoice.payment_mode')}</th>
-        </tr>
-      </thead>
-      <tbody>${paymentRows}</tbody>
-    </table>` : ''}
+      ${payments.length > 0 ? `
+      <div class="section-title" data-i18n="invoice.payments">${t('invoice.payments')}</div>
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <th data-i18n="invoice.date_col">${t('invoice.date_col')}</th>
+            <th data-i18n="invoice.description_col">${t('invoice.description_col')}</th>
+            <th class="amount" data-i18n="invoice.amount_col">${t('invoice.amount_col')}</th>
+            <th data-i18n="invoice.payment_mode">${t('invoice.payment_mode')}</th>
+          </tr>
+        </thead>
+        <tbody>${paymentRows}</tbody>
+      </table>` : ''}
 
-    <div class="invoice-totals">
-      <div class="invoice-total-row"><span data-i18n="invoice.total_purchases">${t('invoice.total_purchases')}</span><span>${t('common.currency')} ${formatMoney2(totalCredit)}</span></div>
-      <div class="invoice-total-row"><span data-i18n="invoice.total_payments">${t('invoice.total_payments')}</span><span>${t('common.currency')} ${formatMoney2(totalPayment)}</span></div>
-      <div class="invoice-total-row final"><span data-i18n="invoice.outstanding_balance">${t('invoice.outstanding_balance')}</span><span>${outstanding < 0 ? '-' : ''}${t('common.currency')} ${formatMoney2(Math.abs(outstanding))}</span></div>
-    </div>
+      <div class="invoice-totals">
+        <div class="invoice-total-row"><span data-i18n="invoice.total_purchases">${t('invoice.total_purchases')}</span><span>${t('common.currency')} ${formatMoney2(totalCredit)}</span></div>
+        <div class="invoice-total-row"><span data-i18n="invoice.total_payments">${t('invoice.total_payments')}</span><span>${t('common.currency')} ${formatMoney2(totalPayment)}</span></div>
+        <div class="invoice-total-row final"><span data-i18n="invoice.outstanding_balance">${t('invoice.outstanding_balance')}</span><span>${outstanding < 0 ? '-' : ''}${t('common.currency')} ${formatMoney2(Math.abs(outstanding))}</span></div>
+      </div>
 
-    ${paymentQrHtml}
+      ${paymentQrHtml}
 
-    ${qrHtml}
+      ${qrHtml}
 
-    <div class="invoice-footer">
-      <p data-i18n="invoice.thank_you">${t('invoice.thank_you')}</p>
-      <p data-i18n="invoice.generated_by">${t('invoice.generated_by')} \u2022 ${today}</p>
-    </div>
-  `;
+      <div class="invoice-footer">
+        <p data-i18n="invoice.thank_you">${t('invoice.thank_you')}</p>
+        <p data-i18n="invoice.generated_by">${t('invoice.generated_by')} \u2022 ${today}</p>
+      </div>
+    `;
 
-  document.getElementById('invoice-content').innerHTML = invoiceHtml;
-  document.getElementById('invoice-title').textContent = t('invoice.title');
-  document.getElementById('invoice-sub').textContent = `${escapeHtml(c.name)} \u2022 ${formatPhoneDisplay(c.phone)}`;
+    document.getElementById('invoice-content').innerHTML = invoiceHtml;
+    document.getElementById('invoice-title').textContent = t('invoice.title');
+    document.getElementById('invoice-sub').textContent = `${escapeHtml(c.name)} \u2022 ${formatPhoneDisplay(c.phone)}`;
 
-  // Generate QR code
-  setTimeout(() => {
-    const qrDiv = document.getElementById('invoice-qr-code');
-    if (qrDiv && window.QRCode) {
-      qrDiv.innerHTML = '';
-      new QRCode(qrDiv, {
-        text: qrCodeUrl,
-        width: 140,
-        height: 140,
-        colorDark: '#000000',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.M
-      });
-    }
-  }, 0);
+    // Generate QR code
+    setTimeout(() => {
+      const qrDiv = document.getElementById('invoice-qr-code');
+      if (qrDiv && window.QRCode) {
+        qrDiv.innerHTML = '';
+        new QRCode(qrDiv, {
+          text: qrCodeUrl,
+          width: 140,
+          height: 140,
+          colorDark: '#000000',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      }
+    }, 0);
 
-  showView('view-invoice');
+    console.log('Invoice generated, showing view');
+    showView('view-invoice');
   } catch (e) {
     console.error('generateInvoice error:', e);
     alert('Failed to generate invoice: ' + e.message);
