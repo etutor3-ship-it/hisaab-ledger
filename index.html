@@ -8,7 +8,7 @@
 </head>
 <body>
   <!-- Language selection overlay (shown on first visit) -->
-  <div id="lang-picker" class="lang-overlay">
+  <div id="lang-picker" class="lang-overlay" style="display:none;">
     <div class="lang-card">
       <div class="lang-title" data-i18n="lang.title">Choose language / भाषा चुनें / زبان منتخب کریں</div>
       <div class="lang-sub" data-i18n="lang.sub">This choice applies to the whole app and is remembered.</div>
@@ -181,6 +181,10 @@
         </select>
         <button type="submit" class="btn btn-primary" data-i18n="ledger.save_entry">Save Entry</button>
       </form>
+      <!-- Payment screenshot upload -->
+      <label style="display:block;margin-top:10px;font-weight:600;" data-i18n="ledger.payment_screenshot">Payment Screenshot (optional)</label>
+      <input type="file" id="shot-input" accept="image/*">
+      <div id="shot-preview" style="margin-top:8px;"></div>
     </section>
 
     <!-- Seller / Shop Details view -->

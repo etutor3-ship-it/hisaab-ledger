@@ -121,6 +121,7 @@ const TRANSLATIONS = {
       note_placeholder: 'Short note',
       payment_mode: 'Payment Mode',
       save_entry: 'Save Entry',
+      payment_screenshot: 'Payment Screenshot (optional)',
       balance: 'Balance:',
       no_outstanding: 'No outstanding balance — payment reminder is disabled.',
       advance_balance: 'Customer has an advance balance — payment reminder is disabled.',
@@ -287,6 +288,7 @@ const TRANSLATIONS = {
       note_placeholder: 'छोटा नोट',
       payment_mode: 'भुगतान का तरीका',
       save_entry: 'प्रविष्टि सहेजें',
+      payment_screenshot: 'भुगतान स्क्रीनशॉट (वैकल्पिक)',
       balance: 'शेष:',
       no_outstanding: 'कोई बकाया नहीं — भुगतान रिमाइंडर अक्षम है।',
       advance_balance: 'ग्राहक के पास अग्रिम शेष है — भुगतान रिमाइंडर अक्षम है।',
@@ -453,6 +455,7 @@ const TRANSLATIONS = {
       note_placeholder: 'مختصری نوٹ',
       payment_mode: 'ادائیگی کا طریقہ',
       save_entry: 'انٹری محفوظ کریں',
+      payment_screenshot: 'ادائیگی کا اسکرین شاٹ (اختیاری)',
       balance: 'بلانس:',
       no_outstanding: 'کوئی بکایا نہیں — ادائیگی کی یاد دہانی معطل ہے۔',
       advance_balance: 'گراہک کے پاس پیشگی بلانس ہے — ادائیگی کی یاد دہانی معطل ہے۔',
@@ -2313,10 +2316,20 @@ if (sellerDetailsForm) {
 }
 
 /* ---------- Boot: gate on language selection ---------- */
-const persistedLang = loadLanguage();
-if (persistedLang) {
-  setLanguage(persistedLang);
-  bootApp();
-} else {
-  document.getElementById('lang-picker').style.display = 'flex';
+try {
+  const picker = document.getElementById('lang-picker');
+  if (picker) picker.style.display = 'none';
+
+  const persistedLang = loadLanguage();
+  if (persistedLang) {
+    setLanguage(persistedLang);
+    bootApp();
+  } else {
+    if (picker) picker.style.display = 'flex';
+  }
+} catch (e) {
+  console.error('Boot failed:', e);
+  const picker = document.getElementById('lang-picker');
+  if (picker) picker.style.display = 'none';
+  try { bootApp(); } catch (e2) { console.error('App boot failed:', e2); }
 }
