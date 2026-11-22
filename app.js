@@ -1414,23 +1414,23 @@ function generateInvoice(phone) {
   const invoiceNo = 'INV-' + phone.slice(-6) + '-' + Date.now().toString(36).toUpperCase();
 
   // Build credit rows with qty/rate/amount
-  const creditRows = credits.map(t => `
+  const creditRows = credits.map(tx => `
     <tr>
-      <td>${escapeHtml(t.date)}</td>
-      <td>${escapeHtml(t.note || t('invoice.no_credit_entries'))}</td>
+      <td>${escapeHtml(tx.date)}</td>
+      <td>${escapeHtml(tx.note || t('invoice.no_credit_entries'))}</td>
       <td class="qty">1</td>
-      <td class="rate">${t('common.currency')} ${formatMoney2(t.amount)}</td>
-      <td class="amount">${t('common.currency')} ${formatMoney2(t.amount)}</td>
+      <td class="rate">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
+      <td class="amount">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
     </tr>
   `).join('');
 
   // Build payment rows
-  const paymentRows = payments.map(t => `
+  const paymentRows = payments.map(tx => `
     <tr>
-      <td>${escapeHtml(t.date)}</td>
-      <td>${escapeHtml(t.note || t('invoice.no_payment_entries'))}</td>
-      <td class="amount" style="color:var(--success);">${t('common.currency')} ${formatMoney2(t.amount)}</td>
-      <td class="amount" style="color:var(--success);">${t('payment_mode.' + (t.paymentMode || 'cash').toLowerCase()) || t.paymentMode || 'Cash'}</td>
+      <td>${escapeHtml(tx.date)}</td>
+      <td>${escapeHtml(tx.note || t('invoice.no_payment_entries'))}</td>
+      <td class="amount" style="color:var(--success);">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
+      <td class="amount" style="color:var(--success);">${t('payment_mode.' + (tx.paymentMode || 'cash').toLowerCase()) || tx.paymentMode || 'Cash'}</td>
     </tr>
   `).join('');
 
