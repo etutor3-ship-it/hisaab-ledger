@@ -733,3 +733,298 @@ code {
     color: #fff;
   }
 }
+
+/* ---------- Language picker overlay ---------- */
+.lang-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(31, 41, 55, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.lang-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+}
+.lang-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+.lang-sub {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+.lang-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+.lang-btn:hover { background: #f3f4f6; border-color: var(--primary); }
+.lang-btn:focus { outline: 2px solid var(--primary); outline-offset: 2px; }
+.lang-flag { font-size: 1.4rem; }
+.lang-name { font-size: 1.05rem; }
+
+/* ---------- RTL (Urdu) adjustments ---------- */
+[dir="rtl"], body.rtl {
+  direction: rtl;
+}
+[dir="rtl"] .app-header .header-right {
+  order: -1;
+}
+[dir="rtl"] .cust-actions,
+[dir="rtl"] .ledger-actions,
+[dir="rtl"] .statement-header-actions,
+[dir="rtl"] .receipt-header-actions {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .tx-item {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .tx-item .tx-date,
+[dir="rtl"] .tx-item .tx-note {
+  margin-left: 10px;
+}
+[dir="rtl"] .tx-item .tx-amount {
+  margin-right: 10px;
+}
+[dir="rtl"] .cust-balance {
+  margin-right: 12px;
+}
+[dir="rtl"] .statement-table th,
+[dir="rtl"] .statement-table td {
+  text-align: right;
+}
+[dir="rtl"] .statement-table .amount {
+  text-align: right;
+}
+[dir="rtl"] .receipt-meta {
+  direction: rtl;
+}
+[dir="rtl"] .lang-btn { text-align: right; direction: rtl; }
+[dir="rtl"] .lang-name { direction: rtl; }
+
+/* Ensure number formatting stays LTR even in RTL UI */
+[dir="rtl"] .amount,
+[dir="rtl"] .cust-balance,
+[dir="rtl"] .tx-amount,
+[dir="rtl"] .running-balance,
+[dir="rtl"] .sum-value,
+[dir="rtl"] .receipt-total-row span:last-child {
+  direction: ltr;
+  text-align: right !important;
+}
+
+/* ---------- Contact picker modal ---------- */
+.contact-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: none;
+}
+
+.contact-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.contact-modal-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 420px);
+  max-height: 85vh;
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border, #d1d5db);
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-modal h3 {
+  margin: 0;
+  padding: 16px 20px;
+  font-size: 1.1rem;
+  border-bottom: 1px solid var(--border, #e5e7eb);
+  font-weight: 700;
+  color: var(--text, #111827);
+}
+
+.contact-modal-name {
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  color: var(--muted, #4b5563);
+  border-bottom: 1px solid var(--border, #e5e7eb);
+  background: var(--bg-muted, #f9fafb);
+}
+
+.contact-modal-name span {
+  font-weight: 700;
+  color: var(--text, #111827);
+  word-break: break-word;
+}
+
+.contact-modal-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;
+  max-height: 40vh;
+}
+
+.contact-modal-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border, #e5e7eb);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.contact-modal-item:last-child {
+  border-bottom: none;
+}
+
+.contact-modal-item input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--primary, #2563eb);
+  flex-shrink: 0;
+}
+
+.contact-modal-item-content {
+  flex: 1;
+  margin-left: 12px;
+}
+
+.contact-modal-item-number {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text, #111827);
+  word-break: break-all;
+  line-height: 1.3;
+}
+
+.contact-modal-item-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted, #6b7280);
+  margin-top: 2px;
+}
+
+.contact-modal-item:hover {
+  background: var(--hover-bg, #f3f4f6);
+}
+
+.contact-modal-item.selected {
+  background: var(--select-bg, #dbeafe);
+  border-color: var(--primary, #2563eb);
+}
+
+.contact-modal-item.selected .contact-modal-item-number {
+  color: var(--primary, #2563eb);
+}
+
+.contact-modal-item.selected::after {
+  content: '✔';
+  margin-left: 12px;
+  font-weight: 800;
+  color: var(--primary, #2563eb);
+  font-size: 1.1rem;
+}
+
+.contact-modal-empty {
+  padding: 24px 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--error, #dc2626);
+}
+
+.contact-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border, #e5e7eb);
+  background: var(--bg-muted, #f9fafb);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.contact-modal-actions .btn {
+  padding: 8px 18px;
+  font-size: 0.9rem;
+}
+
+.contact-modal-actions .btn.ghost {
+  color: var(--muted, #4b5563);
+}
+
+.contact-modal-actions .btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* RTL adjustments */
+[dir="rtl"] .contact-modal-item-content {
+  margin-left: 0;
+  margin-right: 12px;
+}
+
+[dir="rtl"] .contact-modal-item-number {
+  text-align: right;
+}
+
+[dir="rtl"] .contact-modal-item-label {
+  text-align: right;
+}
+
+[dir="rtl"] .contact-modal-actions {
+  justify-content: flex-start;
+}
+
+/* Mobile-friendly: full width on small screens */
+@media (max-width: 480px) {
+  .contact-modal-panel {
+    width: 94vw;
+    max-height: 90vh;
+  }
+  .contact-modal-item-number {
+    font-size: 1rem;
+  }
+}

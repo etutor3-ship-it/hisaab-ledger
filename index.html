@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,57 +7,94 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Language selection overlay (shown on first visit) -->
+  <div id="lang-picker" class="lang-overlay">
+    <div class="lang-card">
+      <div class="lang-title" data-i18n="lang.title">Choose language / भाषा चुनें / زبان منتخب کریں</div>
+      <div class="lang-sub" data-i18n="lang.sub">This choice applies to the whole app and is remembered.</div>
+      <div class="lang-options">
+        <button class="lang-btn" data-lang="en" type="button">
+          <span class="lang-flag">🇬🇧</span><span class="lang-name" data-i18n="lang.english">English</span>
+        </button>
+        <button class="lang-btn" data-lang="hi" type="button">
+          <span class="lang-flag">🇮🇳</span><span class="lang-name" data-i18n="lang.hindi">हिन्दी</span>
+        </button>
+        <button class="lang-btn" data-lang="ur" type="button">
+          <span class="lang-flag">🇵🇰</span><span class="lang-name" data-i18n="lang.urdu">اردو</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <header class="app-header">
     <div class="brand">Hisaab</div>
-    <div id="total-outstanding" class="outstanding">Total Outstanding: Rs 0</div>
+    <div id="total-outstanding" class="outstanding" data-i18n="home.total_outstanding">Total Outstanding: Rs 0</div>
+    <div class="header-right">
+      <button id="lang-switcher" class="btn ghost" type="button" title="Change language" data-i18n="common.change_language" aria-label="Change language">🌐</button>
+    </div>
   </header>
 
   <nav class="app-nav">
-    <a href="#view-home" class="nav-link active">Customers</a>
-    <a href="#view-add-customer" class="nav-link">Add Customer</a>
-    <a href="#view-import" class="nav-link">Import Data</a>
-    <a href="#view-backup" class="nav-link">Backup &amp; Restore</a>
+    <a href="#view-home" class="nav-link active" data-i18n="nav.customers">Customers</a>
+    <a href="#view-add-customer" class="nav-link" data-i18n="nav.add_customer">Add Customer</a>
+    <a href="#view-import" class="nav-link" data-i18n="nav.import_data">Import Data</a>
+    <a href="#view-backup" class="nav-link" data-i18n="nav.backup_restore">Backup &amp; Restore</a>
   </nav>
 
   <main>
     <!-- Home: customer list + total outstanding -->
     <section id="view-home" class="view active">
-      <h2>All Customers</h2>
+      <h2 data-i18n="home.all_customers">All Customers</h2>
       <div id="customer-list" class="customer-list"></div>
     </section>
 
     <!-- Add customer -->
     <section id="view-add-customer" class="view card">
-      <h2>Add Customer</h2>
+      <h2 data-i18n="add_customer.heading">Add Customer</h2>
       <form id="add-customer-form" novalidate>
-        <label>Full name</label>
-        <input type="text" id="cust-name" placeholder="e.g. Ravi Kumar" required maxlength="100">
+        <label data-i18n="add_customer.full_name">Full name</label>
+        <input type="text" id="cust-name" placeholder="e.g. Ravi Kumar" data-i18n-placeholder="add_customer.name_placeholder" required maxlength="100">
         <!-- Smart customer search suggestions dropdown -->
         <div id="cust-suggestions" class="suggestions" style="display:none;"></div>
-        <label>Mobile number</label>
-        <input type="tel" id="cust-phone" placeholder="e.g. 9876543210 or +919876543210" inputmode="tel" maxlength="15" required>
-        <p class="sub" style="margin-top:4px;">Accepts 10-digit mobile, or with +91 / 91 prefix. Stored as 10-digit number.</p>
+        <label data-i18n="add_customer.mobile_number">Mobile number</label>
+        <input type="tel" id="cust-phone" placeholder="e.g. 9876543210 or +919876543210" data-i18n-placeholder="add_customer.phone_placeholder" inputmode="tel" maxlength="15" required>
+        <p class="sub" style="margin-top:4px;" data-i18n="add_customer.phone_sub">Accepts 10-digit mobile, or with +91 / 91 prefix. Stored as 10-digit number.</p>
         <!-- Import from contacts -->
         <div class="contact-import" style="margin-top:10px;">
-          <button type="button" id="import-contacts-btn" class="btn btn-wa" style="width:auto;padding:8px 14px;font-size:0.9rem;">
+          <button type="button" id="import-contacts-btn" class="btn btn-wa" style="width:auto;padding:8px 14px;font-size:0.9rem;" data-i18n="add_customer.contact_import_btn">
             <span style="margin-right:6px;">&#128102;</span>Import from Contacts
           </button>
-          <div id="contact-picker-notice" class="msg error" style="display:none;margin-top:6px;font-size:0.85rem;">
+          <div id="contact-picker-notice" class="msg error" style="display:none;margin-top:6px;font-size:0.85rem;" data-i18n="add_customer.contact_not_supported">
             Contact import is not supported in this browser. Please enter the mobile number manually.
           </div>
         </div>
-        <label>Opening Balance (Rs)</label>
-        <input type="number" id="cust-opening-balance" placeholder="0.00" min="0" step="0.01">
-        <p class="sub" style="margin-top:4px;">Positive value = customer owes this amount (auto-creates a credit entry).</p>
+        <label data-i18n="add_customer.opening_balance">Opening Balance (Rs)</label>
+        <input type="number" id="cust-opening-balance" placeholder="0.00" min="0" step="0.01" data-i18n-placeholder="add_customer.opening_placeholder">
+        <p class="sub" style="margin-top:4px;" data-i18n="add_customer.opening_sub">Positive value = customer owes this amount (auto-creates a credit entry).</p>
         <div id="cust-error" class="error"></div>
-        <button type="submit" class="btn btn-primary">Add Customer</button>
+        <button type="submit" class="btn btn-primary" data-i18n="add_customer.add_customer_btn">Add Customer</button>
       </form>
     </section>
 
+    <!-- Contact phone number selection modal -->
+    <div id="contact-picker-modal" class="contact-modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="contact-picker-modal-title">
+      <div class="contact-modal-backdrop" id="contact-picker-backdrop"></div>
+      <div class="contact-modal-panel">
+        <h3 id="contact-picker-modal-title" data-i18n="contact_picker.title">Select Phone Number</h3>
+        <div id="contact-picker-contact-name" class="contact-modal-name" data-i18n="contact_picker.contact_name">Contact: <span id="contact-picker-name-display"></span></div>
+        <div id="contact-picker-list" class="contact-modal-list"></div>
+        <p id="contact-picker-empty" class="contact-modal-empty msg error" style="display:none;" data-i18n="contact_picker.no_phones">No phone number found for this contact. Please enter manually.</p>
+        <div class="contact-modal-actions">
+        <button type="button" id="contact-picker-cancel" class="btn ghost" data-i18n="contact_picker.cancel">Cancel</button>
+        <button type="button" id="contact-picker-confirm" class="btn btn-primary" data-i18n="contact_picker.confirm" disabled>Confirm Selection</button>
+        </div>
+      </div>
+    </div>
+
     <!-- JSON import -->
     <section id="view-import" class="view card">
-      <h2>Import Data</h2>
-      <p class="sub">Paste JSON in the sample-data.json format: an array of customers, or an object with a <code>customers</code> array. Each customer needs <code>name</code>, <code>phone</code> and an optional <code>entries</code> array. Customers without entries are allowed.</p>
+      <h2 data-i18n="import.import_data">Import Data</h2>
+      <p class="sub" data-i18n="import.sub">Paste JSON in the sample-data.json format: an array of customers, or an object with a <code>customers</code> array. Each customer needs <code>name</code>, <code>phone</code> and an optional <code>entries</code> array. Customers without entries are allowed.</p>
       <textarea id="import-box" rows="10" placeholder='{
   "customers": [
     {
@@ -69,29 +106,29 @@
       ]
     }
   ]
-}'></textarea>
+}' data-i18n-placeholder="import.placeholder"></textarea>
       <div class="import-options">
-        <label><input type="radio" name="import-mode" value="replace" checked> Replace all existing data</label>
-        <label><input type="radio" name="import-mode" value="merge"> Merge (skip duplicate phone numbers)</label>
+        <label><input type="radio" name="import-mode" value="replace" checked> <span data-i18n="import.replace">Replace all existing data</span></label>
+        <label><input type="radio" name="import-mode" value="merge"> <span data-i18n="import.merge">Merge (skip duplicate phone numbers)</span></label>
       </div>
-      <button id="import-go" class="btn btn-primary">Import</button>
+      <button id="import-go" class="btn btn-primary" data-i18n="import.import_btn">Import</button>
       <div id="import-result" class="msg"></div>
     </section>
 
     <!-- Backup & Restore -->
     <section id="view-backup" class="view card">
-      <h2>Backup &amp; Restore</h2>
+      <h2 data-i18n="backup.backup_restore">Backup &amp; Restore</h2>
 
       <div class="card" style="margin-top:12px;">
-        <h3 style="margin-top:0;">Download Full Backup</h3>
-        <p class="sub">Export all customers, transactions, and payment screenshots as a JSON file. Includes backup date and app version.</p>
-        <button id="download-backup" class="btn btn-primary">Download Backup JSON</button>
+        <h3 style="margin-top:0;" data-i18n="backup.download_backup">Download Full Backup</h3>
+        <p class="sub" data-i18n="backup.backup_sub">Export all customers, transactions, and payment screenshots as a JSON file. Includes backup date and app version.</p>
+        <button id="download-backup" class="btn btn-primary" data-i18n="backup.download_backup_btn">Download Backup JSON</button>
         <div id="backup-info" class="msg ok" style="display:none;margin-top:10px;"></div>
       </div>
 
       <div class="card" style="margin-top:16px;">
-        <h3 style="margin-top:0;">Restore from Backup</h3>
-        <p class="sub">Select a backup JSON file to preview and restore. Existing data is never overwritten without your explicit confirmation.</p>
+        <h3 style="margin-top:0;" data-i18n="backup.restore_backup">Restore from Backup</h3>
+        <p class="sub" data-i18n="backup.restore_sub">Select a backup JSON file to preview and restore. Existing data is never overwritten without your explicit confirmation.</p>
         <input type="file" id="restore-file" accept=".json">
         <div id="restore-preview" style="margin-top:12px;"></div>
         <div id="restore-actions" style="margin-top:12px;display:none;gap:8px;"></div>
@@ -100,20 +137,20 @@
     </section>
 
     <!-- Individual customer ledger -->
-    <section id="view-ledger" class="view">
+    <section id="view-ledger" class="view card">
       <header class="ledger-head">
-        <a id="back-home" class="btn ghost" href="#view-home">&larr; Back to customers</a>
+        <a id="back-home" class="btn ghost" href="#view-home">&larr; <span data-i18n="common.back">Back to customers</span></a>
         <div>
-          <h2 id="ledger-title">Customer Ledger</h2>
+          <h2 id="ledger-title" data-i18n="ledger.customer_ledger">Customer Ledger</h2>
           <p id="ledger-sub" class="muted"></p>
         </div>
         <div class="ledger-actions">
-          <a id="whatsapp-btn" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp Reminder</a>
-          <button id="invoice-btn" class="btn" type="button">Generate Invoice</button>
-          <button id="statement-btn" class="btn" type="button">Statement</button>
+          <a id="whatsapp-btn" class="btn btn-wa" target="_blank" rel="noopener" data-i18n="ledger.whatsapp_reminder">WhatsApp Reminder</a>
+          <button id="invoice-btn" class="btn" type="button" data-i18n="ledger.generate_invoice">Generate Invoice</button>
+          <button id="statement-btn" class="btn" type="button" data-i18n="ledger.statement">Statement</button>
           <div id="receipt-actions" style="display:none;gap:6px;">
-            <button id="view-receipt-btn" class="btn btn-primary" type="button">View Receipt</button>
-            <button id="download-receipt-btn" class="btn" type="button">Download PDF</button>
+            <button id="view-receipt-btn" class="btn btn-primary" type="button" data-i18n="receipt.view_receipt">View Receipt</button>
+            <button id="download-receipt-btn" class="btn" type="button" data-i18n="receipt.download_receipt">Download PDF</button>
           </div>
         </div>
       </header>
@@ -121,45 +158,41 @@
       <p id="ledger-reminder-note" class="sub reminder-note"></p>
       <div id="tx-list" class="tx-list"></div>
       <form id="entry-form" class="card entry-card" novalidate>
-        <h3>Add New Entry</h3>
-        <label>Type</label>
+        <h3 data-i18n="ledger.add_new_entry">Add New Entry</h3>
+        <label data-i18n="ledger.type">Type</label>
         <select id="entry-type" required>
-          <option value="credit">Credit – goods given on credit</option>
-          <option value="payment">Payment – money received</option>
+          <option value="credit" data-i18n="ledger.credit_option">Credit – goods given on credit</option>
+          <option value="payment" data-i18n="ledger.payment_option">Payment – money received</option>
         </select>
-        <label>Amount (Rs)</label>
-        <input type="number" id="entry-amount" placeholder="0.00" min="0" step="0.01" required>
-        <label>Date</label>
+        <label data-i18n="ledger.amount">Amount (Rs)</label>
+        <input type="number" id="entry-amount" placeholder="0.00" min="0" step="0.01" required data-i18n-placeholder="ledger.amount_placeholder">
+        <label data-i18n="ledger.date">Date</label>
         <input type="date" id="entry-date" required>
-        <label>Note</label>
-        <input type="text" id="entry-note" placeholder="Short note" required>
-        <label>Payment screenshot (optional)</label>
-        <input type="file" id="shot-input" accept="image/*">
-        <div id="shot-preview" class="shot-preview"></div>
-        <!-- Payment mode (used for receipts) -->
-        <label>Payment Mode</label>
+        <label data-i18n="ledger.note">Note</label>
+        <input type="text" id="entry-note" placeholder="Short note" required data-i18n-placeholder="ledger.note_placeholder">
+        <label data-i18n="ledger.payment_mode">Payment Mode</label>
         <select id="entry-payment-mode" style="width:auto;min-width:160px;display:inline-block;">
-          <option value="Cash">Cash</option>
-          <option value="UPI">UPI</option>
-          <option value="Bank Transfer">Bank Transfer</option>
-          <option value="Other">Other</option>
+          <option value="Cash" data-i18n="payment_mode.cash">Cash</option>
+          <option value="UPI" data-i18n="payment_mode.upi">UPI</option>
+          <option value="Bank Transfer" data-i18n="payment_mode.bank">Bank Transfer</option>
+          <option value="Other" data-i18n="payment_mode.other">Other</option>
         </select>
-        <button type="submit" class="btn btn-primary">Save Entry</button>
+        <button type="submit" class="btn btn-primary" data-i18n="ledger.save_entry">Save Entry</button>
       </form>
     </section>
 
     <!-- Receipt view -->
     <section id="view-receipt" class="view card">
       <header class="ledger-head">
-        <a id="receipt-back" class="btn ghost" href="#view-ledger">&larr; Back to ledger</a>
+        <a id="receipt-back" class="btn ghost" href="#view-ledger">&larr; <span data-i18n="common.back">Back to ledger</span></a>
         <div>
-          <h2 id="receipt-title">Payment Receipt</h2>
+          <h2 id="receipt-title" data-i18n="receipt.title">Payment Receipt</h2>
           <p id="receipt-sub" class="muted"></p>
         </div>
         <div class="receipt-header-actions" style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;">
-          <button id="print-receipt-btn" class="btn" type="button">Print</button>
-          <button id="download-receipt-page-btn" class="btn btn-primary" type="button">Download PDF</button>
-          <button id="share-receipt-wa-btn" class="btn btn-wa" type="button">WhatsApp</button>
+          <button id="print-receipt-btn" class="btn" type="button" data-i18n="common.print">Print</button>
+          <button id="download-receipt-page-btn" class="btn btn-primary" type="button" data-i18n="common.download_pdf">Download PDF</button>
+          <button id="share-receipt-wa-btn" class="btn btn-wa" type="button" data-i18n="common.whatsapp">WhatsApp</button>
         </div>
       </header>
       <div id="receipt-content" class="receipt"></div>
@@ -168,32 +201,32 @@
     <!-- Statement view -->
     <section id="view-statement" class="view card">
       <header class="ledger-head">
-        <a id="statement-back" class="btn ghost" href="#view-ledger">&larr; Back to ledger</a>
+        <a id="statement-back" class="btn ghost" href="#view-ledger">&larr; <span data-i18n="common.back">Back to ledger</span></a>
         <div>
-          <h2 id="statement-title">Account Statement</h2>
+          <h2 id="statement-title" data-i18n="statement.title">Account Statement</h2>
           <p id="statement-sub" class="muted"></p>
         </div>
         <div class="statement-header-actions" style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;">
-          <button id="print-statement-btn" class="btn" type="button">Print</button>
-          <button id="download-statement-btn" class="btn btn-primary" type="button">Download PDF</button>
-          <button id="share-statement-wa-btn" class="btn btn-wa" type="button">WhatsApp</button>
-          <button id="export-statement-csv-btn" class="btn" type="button">Export CSV</button>
+          <button id="print-statement-btn" class="btn" type="button" data-i18n="common.print">Print</button>
+          <button id="download-statement-btn" class="btn btn-primary" type="button" data-i18n="common.download_pdf">Download PDF</button>
+          <button id="share-statement-wa-btn" class="btn btn-wa" type="button" data-i18n="common.whatsapp">WhatsApp</button>
+          <button id="export-statement-csv-btn" class="btn" type="button" data-i18n="statement.export_csv">Export CSV</button>
         </div>
       </header>
       <!-- Statement filters -->
       <div class="statement-filters" style="margin:12px 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-        <label style="margin:0;font-size:0.85rem;color:var(--muted);">Period:</label>
-        <button class="btn stmt-filter active" data-filter="all" type="button">All</button>
-        <button class="btn stmt-filter" data-filter="30d" type="button">Last 30 Days</button>
-        <button class="btn stmt-filter" data-filter="3m" type="button">Last 3 Months</button>
-        <button class="btn stmt-filter" data-filter="6m" type="button">Last 6 Months</button>
-        <button class="btn stmt-filter" data-filter="custom" type="button">Custom</button>
+        <label style="margin:0;font-size:0.85rem;color:var(--muted);" data-i18n="statement.period">Period:</label>
+        <button class="btn stmt-filter active" data-filter="all" type="button" data-i18n="statement.all">All</button>
+        <button class="btn stmt-filter" data-filter="30d" type="button" data-i18n="statement.last_30_days">Last 30 Days</button>
+        <button class="btn stmt-filter" data-filter="3m" type="button" data-i18n="statement.last_3_months">Last 3 Months</button>
+        <button class="btn stmt-filter" data-filter="6m" type="button" data-i18n="statement.last_6_months">Last 6 Months</button>
+        <button class="btn stmt-filter" data-filter="custom" type="button" data-i18n="statement.custom">Custom</button>
         <div id="custom-date-range" style="display:none;gap:6px;">
-          <label style="margin:0;font-size:0.85rem;color:var(--muted);white-space:nowrap;">From</label>
+          <label style="margin:0;font-size:0.85rem;color:var(--muted);white-space:nowrap;" data-i18n="statement.from">From</label>
           <input type="date" id="stmt-date-from" style="width:auto;min-width:140px;">
-          <label style="margin:0;font-size:0.85rem;color:var(--muted);white-space:nowrap;">To</label>
+          <label style="margin:0;font-size:0.85rem;color:var(--muted);white-space:nowrap;" data-i18n="statement.to">To</label>
           <input type="date" id="stmt-date-to" style="width:auto;min-width:140px;">
-          <button id="stmt-apply-custom" class="btn btn-primary" type="button" style="width:auto;padding:6px 12px;">Apply</button>
+          <button id="stmt-apply-custom" class="btn btn-primary" type="button" style="width:auto;padding:6px 12px;" data-i18n="statement.apply">Apply</button>
         </div>
       </div>
       <div id="statement-summary" style="margin-bottom:12px;"></div>
