@@ -1028,3 +1028,105 @@ code {
     font-size: 1rem;
   }
 }
+
+/* ---------- Seller / Shop Details section ---------- */
+.seller-details-section label,
+#seller-details-form label {
+  display: block;
+  font-weight: 600;
+  margin: 10px 0 4px;
+  color: var(--text);
+}
+
+.seller-details-section input,
+.seller-details-section textarea,
+#seller-details-form input,
+#seller-details-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+.seller-details-section .msg.ok,
+#seller-details-form .msg.ok {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.seller-details-section .btn.ghost,
+#seller-details-form .btn.ghost {
+  margin-left: 8px;
+}
+
+/* Receipt seller header */
+.receipt-seller {
+  text-align: center;
+  margin-bottom: 12px;
+}
+.receipt-seller-name {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+.receipt-seller-shop {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0;
+}
+.receipt-seller-empty {
+  text-align: center;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.receipt-footer-seller {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 8px 0 4px;
+}
+.receipt-footer-seller-empty {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 8px 0 4px;
+}
+
+/* Statement seller header */
+.statement-seller-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+.statement-seller-shop {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0;
+}
+.statement-seller-empty {
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* RTL adjustments for seller details */
+[dir="rtl"] .seller-details-section label,
+[dir="rtl"] #seller-details-form label {
+  text-align: right;
+}
+[dir="rtl"] .receipt-seller-name,
+[dir="rtl"] .statement-seller-name {
+  text-align: right;
+}
+[dir="rtl"] .receipt-seller-shop,
+[dir="rtl"] .statement-seller-shop {
+  text-align: right;
+}

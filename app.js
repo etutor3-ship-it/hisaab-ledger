@@ -54,6 +54,7 @@ const TRANSLATIONS = {
       import_data: 'Import Data',
       backup_restore: 'Backup & Restore',
       change_language: 'Change Language',
+      seller_details: 'Seller / Shop Details',
     },
     home: {
       all_customers: 'All Customers',
@@ -87,6 +88,21 @@ const TRANSLATIONS = {
       cancel: 'Cancel',
       select: 'Select this number',
       selected: 'Selected',
+    },
+    seller_details: {
+      title: 'Seller / Shop Details',
+      owner_name: 'Seller / Shop Owner Name',
+      owner_name_placeholder: 'e.g. Ravi Kumar',
+      shop_name: 'Shop Name',
+      shop_name_placeholder: 'e.g. Ravi General Store',
+      mobile_number: 'Mobile Number',
+      mobile_placeholder: 'e.g. 9876543210',
+      address: 'Shop Address',
+      address_placeholder: 'e.g. 123 Main Road, Market Area',
+      save_btn: 'Save Details',
+      error_name: 'Please enter the seller / shop owner name.',
+      not_set: 'Seller / Shop details not set. Please complete Seller / Shop Details in Settings.',
+      saved: 'Seller / Shop details saved successfully.',
     },
     ledger: {
       customer_ledger: 'Customer Ledger',
@@ -204,6 +220,7 @@ const TRANSLATIONS = {
       import_data: 'डेटा आयात करें',
       backup_restore: 'बैकअप और पुनर्स्थापना',
       change_language: 'भाषा बदलें',
+      seller_details: 'विक्रेता / दुकान विवरण',
     },
     home: {
       all_customers: 'सभी ग्राहक',
@@ -237,6 +254,21 @@ const TRANSLATIONS = {
       cancel: 'रद्द करें',
       select: 'इस नंबर को चुनें',
       selected: 'चुना गया',
+    },
+    seller_details: {
+      title: 'विक्रेता / दुकान विवरण',
+      owner_name: 'विक्रेता / दुकान मालिक का नाम',
+      owner_name_placeholder: 'जैसे रवि कुमार',
+      shop_name: 'दुकान का नाम',
+      shop_name_placeholder: 'जैसे रवि जनरल स्टोर',
+      mobile_number: 'मोबाइल नंबर',
+      mobile_placeholder: 'जैसे 9876543210',
+      address: 'दुकान का पता',
+      address_placeholder: 'जैसे 123 मुख्य रोड, मार्केट एरिया',
+      save_btn: 'विवरण सहेजें',
+      error_name: 'कृपया विक्रेता / दुकान मालिक का नाम दर्ज करें।',
+      not_set: 'विक्रेता / दुकान विवरण सेट नहीं है। सेटिंग्स में विक्रेता / दुकान विवरण पूरा करें।',
+      saved: 'विक्रेता / दुकान विवरण सफलतापूर्वक सहेजा गया।',
     },
     ledger: {
       customer_ledger: 'ग्राहक बहीखाता',
@@ -354,6 +386,7 @@ const TRANSLATIONS = {
       import_data: 'ڈیٹا درآمد کریں',
       backup_restore: 'بیک اپ اور بحالی',
       change_language: 'زبان بدلیں',
+      seller_details: 'فروخت کنندہ / دکان تفصیلات',
     },
     home: {
       all_customers: 'تمام گراہک',
@@ -387,6 +420,21 @@ const TRANSLATIONS = {
       cancel: 'منسوخ کریں',
       select: 'اس نمبر کو منتخب کریں',
       selected: 'منتخب شدہ',
+    },
+    seller_details: {
+      title: 'فروخت کنندہ / دکان تفصیلات',
+      owner_name: 'فروخت کنندہ / دکان کے مالک کا نام',
+      owner_name_placeholder: 'مثال: رavi کمار',
+      shop_name: 'دکان کا نام',
+      shop_name_placeholder: 'مثال: رavi جنرل سٹور',
+      mobile_number: 'موبائل نمبر',
+      mobile_placeholder: 'مثال: 9876543210',
+      address: 'دکان کا پتہ',
+      address_placeholder: 'مثال: 123 مرکزی سڑک، مارکیٹ علاقہ',
+      save_btn: 'تفصیلات محفوظ کریں',
+      error_name: 'براہ کرم فروخت کنندہ / دکان کے مالک کا نام درج کریں۔',
+      not_set: 'فروخت کنندہ / دکان تفصیلات مقرر نہیں ہیں۔ براہ کرم سیٹنگز میں فروخت کنندہ / دکان تفصیلات مکمل کریں۔',
+      saved: 'فروخت کنندہ / دکان تفصیلات کامیاب الأحيان محفوظ کر لی گئیں۔',
     },
     ledger: {
       customer_ledger: 'گراہک کھاتہ',
@@ -564,6 +612,7 @@ function loadState() {
   try { transactions = JSON.parse(localStorage.getItem(STORAGE_TRANSACTIONS) || '[]'); } catch (e) { transactions = []; }
   try { shots = JSON.parse(localStorage.getItem(STORAGE_SHOTS) || '{}'); } catch (e) { shots = {}; }
   try { receipts = JSON.parse(localStorage.getItem(STORAGE_RECEIPTS) || '[]'); } catch (e) { receipts = []; }
+  loadSellerDetails();
 }
 
 function saveState() {
@@ -611,6 +660,42 @@ function nextReceiptNo() {
   counter += 1;
   localStorage.setItem(STORAGE_RECEIPT_COUNTER, String(counter));
   return 'RCPT-' + String(counter).padStart(4, '0');
+}
+
+/* ---------- Seller / Shop Details (persisted in localStorage) ---------- */
+const STORAGE_SELLER = 'hisaab_seller_details';
+let sellerDetails = { ownerName: '', shopName: '', mobile: '', address: '' };
+
+function loadSellerDetails() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_SELLER) || '{}');
+    sellerDetails = {
+      ownerName: String(saved.ownerName || '').trim(),
+      shopName: String(saved.shopName || '').trim(),
+      mobile: String(saved.mobile || '').trim(),
+      address: String(saved.address || '').trim(),
+    };
+  } catch (e) {
+    sellerDetails = { ownerName: '', shopName: '', mobile: '', address: '' };
+  }
+}
+function saveSellerDetails() {
+  localStorage.setItem(STORAGE_SELLER, JSON.stringify(sellerDetails));
+}
+function getSellerName() {
+  return sellerDetails.ownerName;
+}
+function getSellerShopName() {
+  return sellerDetails.shopName;
+}
+function hasSellerDetails() {
+  return sellerDetails.ownerName.length > 0;
+}
+function formatSellerHeader() {
+  const lines = [];
+  if (sellerDetails.ownerName) lines.push(escapeHtml(sellerDetails.ownerName));
+  if (sellerDetails.shopName) lines.push(escapeHtml(sellerDetails.shopName));
+  return lines.length > 0 ? lines.join(' \u2022 ') : '';
 }
 
 /* Running balance up to (but not including) a given transaction id, chronological order. */
@@ -809,6 +894,7 @@ function route() {
       document.getElementById('restore-result').innerHTML = '';
       document.getElementById('restore-file').value = '';
     }
+    if (id === 'view-seller-details') renderSellerDetailsView();
   }
 }
 
@@ -1325,6 +1411,7 @@ function openViewReceipt(receiptNo) {
   const html = `
   <div class="receipt">
     <div class="receipt-header">
+      ${hasSellerDetails() ? `<div class="receipt-seller"><div class="receipt-seller-name">${escapeHtml(sellerDetails.ownerName)}</div>${sellerDetails.shopName ? `<div class="receipt-seller-shop">${escapeHtml(sellerDetails.shopName)}</div>` : ''}</div>` : `<div class="receipt-seller-empty"><p>${t('seller_details.not_set')}</p></div>`}
       <h1 class="brand">HISAAB</h1>
       <p class="doc-title">Payment Receipt</p>
     </div>
@@ -1354,6 +1441,7 @@ function openViewReceipt(receiptNo) {
     </div>
     <div class="receipt-footer">
       <p>Thank you for your payment!</p>
+      ${hasSellerDetails() ? `<p class="receipt-footer-seller">${escapeHtml(sellerDetails.ownerName)}${sellerDetails.shopName ? ' \u2022 ' + escapeHtml(sellerDetails.shopName) : ''}</p>` : `<p class="receipt-footer-seller-empty">${t('seller_details.not_set')}</p>`}
       <p>Generated by Hisaab Digital Ledger \u2022 ${new Date().toLocaleDateString('en-IN')}</p>
     </div>
   </div>
@@ -1499,7 +1587,19 @@ function renderStatement() {
     <div class="sum-box"><div class="sum-label">Closing Balance</div><div class="sum-value balance">${closingBalance < 0 ? '-' : ''}${t('common.currency')} ${formatMoney2(closingBalance)}</div></div>
   `;
 
+  let sellerHeader = '';
+  if (hasSellerDetails()) {
+    sellerHeader = `
+      <div class="statement-seller-header" style="margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--primary);">
+        <div class="statement-seller-name" style="font-size:1.15rem;font-weight:800;color:var(--text);">${escapeHtml(sellerDetails.ownerName)}</div>
+        ${sellerDetails.shopName ? `<div class="statement-seller-shop" style="font-size:0.95rem;color:var(--muted);margin-top:2px;">${escapeHtml(sellerDetails.shopName)}</div>` : ''}
+      </div>`;
+  } else {
+    sellerHeader = `<div class="statement-seller-empty" style="margin-bottom:14px;color:var(--muted);font-size:0.9rem;">${t('seller_details.not_set')}</div>`;
+  }
+
   let tableHtml = `
+    ${sellerHeader}
     <table class="statement-table">
       <thead><tr><th class="date-col">Date</th><th>Description</th><th class="amount">Credit</th><th class="amount">Payment</th><th class="amount running-balance">Balance</th></tr></thead>
       <tbody>
@@ -2033,7 +2133,7 @@ document.getElementById('share-receipt-wa-btn').addEventListener('click', functi
   if (!r) return;
   const c = customers.find(x => x.phone === r.customerPhone);
   const dateTime = new Date(r.date).toLocaleString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-  const msg = `HISAAB Payment Receipt\n\nReceipt No: ${r.receiptNo}\nDate & Time: ${dateTime}\nCustomer: ${escapeHtml(c ? c.name : r.customerName)}\nMobile: ${formatPhoneDisplay(r.customerPhone)}\nPayment Mode: ${r.paymentMode}\nAmount Received: ${t('common.currency')} ${formatMoney2(r.amount)}\nPrevious Balance: ${r.previousBalance < 0 ? '-' : ''}${t('common.currency')} ${formatMoney2(r.previousBalance)}\nRemaining Balance: ${r.remainingBalance < 0 ? '-' : ''}${t('common.currency')} ${formatMoney2(r.remainingBalance)}\n\nGenerated by Hisaab Digital Ledger`;
+  const msg = `HISAAB Payment Receipt\n\n${hasSellerDetails() ? sellerDetails.ownerName + (sellerDetails.shopName ? ' \u2022 ' + sellerDetails.shopName : '') + '\n' : ''}Receipt No: ${r.receiptNo}\nDate & Time: ${dateTime}\nCustomer: ${escapeHtml(c ? c.name : r.customerName)}\nMobile: ${formatPhoneDisplay(r.customerPhone)}\nPayment Mode: ${r.paymentMode}\nAmount Received: ${t('common.currency')} ${formatMoney2(r.amount)}\nPrevious Balance: ${r.previousBalance < 0 ? '-' : ''}${t('common.currency')} ${formatMoney2(r.previousBalance)}\nRemaining Balance: ${r.remainingBalance < 0 ? '-' : ''}${t('common.currency')} ${formatMoney2(r.remainingBalance)}\n\nGenerated by Hisaab Digital Ledger`;
   location.href = buildWhatsAppUrl(r.customerPhone, msg);
 });
 document.getElementById('receipt-back').addEventListener('click', function (e) {
@@ -2053,7 +2153,7 @@ document.getElementById('download-statement-btn').addEventListener('click', func
 document.getElementById('share-statement-wa-btn').addEventListener('click', function () {
   if (!statementPhone) return;
   const c = customers.find(x => x.phone === statementPhone);
-  const msg = `HISAAB Account Statement\n\nCustomer: ${escapeHtml(c ? c.name : '')}\nMobile: ${formatPhoneDisplay(statementPhone)}\nStatement generated: ${new Date().toLocaleString('en-IN')}\n\nGenerated by Hisaab Digital Ledger`;
+  const msg = `HISAAB Account Statement\n\n${hasSellerDetails() ? sellerDetails.ownerName + (sellerDetails.shopName ? ' \u2022 ' + sellerDetails.shopName : '') + '\n' : ''}Customer: ${escapeHtml(c ? c.name : '')}\nMobile: ${formatPhoneDisplay(statementPhone)}\nStatement generated: ${new Date().toLocaleString('en-IN')}\n\nGenerated by Hisaab Digital Ledger`;
   location.href = buildWhatsAppUrl(statementPhone, msg);
 });
 document.getElementById('export-statement-csv-btn').addEventListener('click', function () {
@@ -2140,6 +2240,76 @@ if (navChangeLang) {
     const picker = document.getElementById('lang-picker');
     if (picker) picker.style.display = 'flex';
   });
+}
+
+/* ---------- Seller / Shop Details form handler ---------- */
+const sellerDetailsForm = document.getElementById('seller-details-form');
+const sellerOwnerName = document.getElementById('seller-owner-name');
+const sellerShopName = document.getElementById('seller-shop-name');
+const sellerMobile = document.getElementById('seller-mobile');
+const sellerAddress = document.getElementById('seller-address');
+const sellerError = document.getElementById('seller-error');
+const sellerSavedMsg = document.getElementById('seller-saved-msg');
+const sellerDetailsTitle = document.getElementById('seller-details-title');
+const sellerDetailsSub = document.getElementById('seller-details-sub');
+
+function renderSellerDetailsView() {
+  if (!sellerDetailsForm) return;
+  sellerOwnerName.value = sellerDetails.ownerName;
+  sellerShopName.value = sellerDetails.shopName;
+  sellerMobile.value = sellerDetails.mobile;
+  sellerAddress.value = sellerDetails.address;
+  sellerError.textContent = '';
+  sellerSavedMsg.style.display = 'none';
+  if (sellerDetailsTitle) sellerDetailsTitle.textContent = t('seller_details.title');
+  if (sellerDetailsSub) sellerDetailsSub.textContent = hasSellerDetails()
+    ? t('seller_details.saved')
+    : t('seller_details.not_set');
+}
+
+if (sellerDetailsForm) {
+  sellerDetailsForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    sellerError.textContent = '';
+    sellerSavedMsg.style.display = 'none';
+
+    const name = sellerOwnerName.value.trim();
+    if (!name) {
+      sellerError.textContent = t('seller_details.error_name');
+      sellerOwnerName.focus();
+      return;
+    }
+
+    sellerDetails = {
+      ownerName: name,
+      shopName: sellerShopName.value.trim(),
+      mobile: sellerMobile.value.trim(),
+      address: sellerAddress.value.trim(),
+    };
+    saveSellerDetails();
+
+    sellerSavedMsg.textContent = t('seller_details.saved');
+    sellerSavedMsg.className = 'msg ok';
+    sellerSavedMsg.style.display = 'block';
+
+    // Re-render active view if it's receipt/statement to reflect new seller info
+    try { route(); } catch (e) { /* app not booted yet */ }
+  });
+
+  const sellerClearBtn = document.getElementById('seller-clear-btn');
+  if (sellerClearBtn) {
+    sellerClearBtn.addEventListener('click', function () {
+      sellerOwnerName.value = '';
+      sellerShopName.value = '';
+      sellerMobile.value = '';
+      sellerAddress.value = '';
+      sellerDetails = { ownerName: '', shopName: '', mobile: '', address: '' };
+      saveSellerDetails();
+      sellerError.textContent = '';
+      sellerSavedMsg.style.display = 'none';
+      if (sellerDetailsSub) sellerDetailsSub.textContent = t('seller_details.not_set');
+    });
+  }
 }
 
 /* ---------- Boot: gate on language selection ---------- */

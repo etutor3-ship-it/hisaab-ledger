@@ -40,6 +40,7 @@
     <a href="#view-import" class="nav-link" data-i18n="nav.import_data">Import Data</a>
     <a href="#view-backup" class="nav-link" data-i18n="nav.backup_restore">Backup &amp; Restore</a>
     <a href="#lang-picker" class="nav-link" data-i18n="nav.change_language" id="nav-change-language">Change Language</a>
+    <a href="#view-seller-details" class="nav-link" data-i18n="nav.seller_details" id="nav-seller-details">Seller / Shop Details</a>
   </nav>
 
   <main>
@@ -179,6 +180,31 @@
           <option value="Other" data-i18n="payment_mode.other">Other</option>
         </select>
         <button type="submit" class="btn btn-primary" data-i18n="ledger.save_entry">Save Entry</button>
+      </form>
+    </section>
+
+    <!-- Seller / Shop Details view -->
+    <section id="view-seller-details" class="view card">
+      <header class="ledger-head">
+        <a id="seller-back" class="btn ghost" href="#view-home">&larr; <span data-i18n="common.back">Back to customers</span></a>
+        <div>
+          <h2 id="seller-details-title" data-i18n="seller_details.title">Seller / Shop Details</h2>
+          <p id="seller-details-sub" class="muted" data-i18n="seller_details.not_set">Seller / Shop details not set. Please complete Seller / Shop Details in Settings.</p>
+        </div>
+      </header>
+      <form id="seller-details-form" novalidate class="card" style="margin-top:12px;">
+        <label data-i18n="seller_details.owner_name">Seller / Shop Owner Name</label>
+        <input type="text" id="seller-owner-name" placeholder="e.g. Ravi Kumar" data-i18n-placeholder="seller_details.owner_name_placeholder" required maxlength="100">
+        <label data-i18n="seller_details.shop_name">Shop Name</label>
+        <input type="text" id="seller-shop-name" placeholder="e.g. Ravi General Store" data-i18n-placeholder="seller_details.shop_name_placeholder" maxlength="100">
+        <label data-i18n="seller_details.mobile_number">Mobile Number</label>
+        <input type="tel" id="seller-mobile" placeholder="e.g. 9876543210" data-i18n-placeholder="seller_details.mobile_placeholder" inputmode="tel" maxlength="15">
+        <label data-i18n="seller_details.address">Shop Address</label>
+        <textarea id="seller-address" rows="3" placeholder="e.g. 123 Main Road, Market Area" data-i18n-placeholder="seller_details.address_placeholder" maxlength="200"></textarea>
+        <div id="seller-error" class="error" style="margin:8px 0;"></div>
+        <div id="seller-saved-msg" class="msg ok" style="display:none;margin:8px 0;"></div>
+        <button type="submit" class="btn btn-primary" id="seller-save-btn" data-i18n="seller_details.save_btn">Save Details</button>
+        <button type="button" class="btn ghost" id="seller-clear-btn" style="margin-left:8px;">Clear</button>
       </form>
     </section>
 
