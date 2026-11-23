@@ -1360,17 +1360,17 @@ function renderLedger(phone) {
     .filter(t => t.customerPhone === phone)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  for (const t of txs) {
-    const isPayment = t.type === 'payment';
-    const shot = shots[t.id] ? `<img src="${shots[t.id]}" data-shot class="shot-thumb" alt="payment screenshot">` : '';
+  for (const tx of txs) {
+    const isPayment = tx.type === 'payment';
+    const shot = shots[tx.id] ? `<img src="${shots[tx.id]}" data-shot class="shot-thumb" alt="payment screenshot">` : '';
 
     const el = document.createElement('div');
-    el.className = `tx-item ${t.type}`;
+    el.className = `tx-item ${tx.type}`;
     el.innerHTML = `
-      <div class="tx-date">${escapeHtml(t.date)}</div>
+      <div class="tx-date">${escapeHtml(tx.date)}</div>
       <div class="tx-type">${isPayment ? 'Payment' : 'Credit'}</div>
-      <div class="tx-amount">${isPayment ? '\u2013' : '+'}${t('common.currency')} ${formatMoney(t.amount)}</div>
-      <div class="tx-note">${escapeHtml(t.note || '')}</div>
+      <div class="tx-amount">${isPayment ? '\u2013' : '+'}${t('common.currency')} ${formatMoney(tx.amount)}</div>
+      <div class="tx-note">${escapeHtml(tx.note || '')}</div>
       ${shot}
     `;
     list.appendChild(el);
@@ -1606,33 +1606,42 @@ function openViewReceipt(receiptNo) {
   showView('view-receipt');
 }
 
-function generateReceiptFromTransaction(transactionId) {
-  const t = transactions.find(x => x.id === transactionId);
-  if (!t) { alert('Transaction not found.'); return; }
-  if (t.type !== 'payment') { alert('Receipts are only generated for payment transactions.'); return; }
-  const c = customers.find(x => x.phone === t.customerPhone);
-  if (!c) { alert('Customer not found.'); return; }
+function createReceiptFromTransaction(transactionId) {
+  const tx = transactions.find(x => x.id === transactionId);
+  if (!tx || tx.type !== 'payment') return null;
+  const c = customers.find(x => x.phone === tx.customerPhone);
+  if (!c) return null;
 
-  const previousBalance = balanceBefore(t.customerPhone, t.id);
-  const remainingBalance = balanceThrough(t.customerPhone, t.id);
+  const previousBalance = balanceBefore(tx.customerPhone, tx.id);
+  const remainingBalance = balanceThrough(tx.customerPhone, tx.id);
 
   const receipt = {
     receiptNo: nextReceiptNo(),
-    customerPhone: t.customerPhone,
+    customerPhone: tx.customerPhone,
     customerName: c.name,
-    amount: t.amount,
-    paymentMode: t.paymentMode || 'Cash',
-    note: t.note || 'Payment received',
-    date: t.date,
+    amount: tx.amount,
+    paymentMode: tx.paymentMode || 'Cash',
+    note: tx.note || 'Payment received',
+    date: tx.date,
     previousBalance,
     remainingBalance,
-    transactionId: t.id,
+    transactionId: tx.id,
     timestamp: new Date().toISOString()
   };
   receipts.push(receipt);
   saveReceipts();
   lastReceiptNo = receipt.receiptNo;
-  openViewReceipt(receipt.receiptNo);
+  return receipt;
+}
+
+function generateReceiptFromTransaction(transactionId) {
+  const tx = transactions.find(x => x.id === transactionId);
+  if (!tx) { alert('Transaction not found.'); return; }
+  if (tx.type !== 'payment') { alert('Receipts are only generated for payment transactions.'); return; }
+  const c = customers.find(x => x.phone === tx.customerPhone);
+  if (!c) { alert('Customer not found.'); return; }
+  const receipt = createReceiptFromTransaction(transactionId);
+  if (receipt) openViewReceipt(receipt.receiptNo);
 }
 
 /* ---------- Statement Module (Module 3) ---------- */
@@ -1878,17 +1887,33 @@ function handleEntrySubmit(e) {
   const preview = document.getElementById('shot-preview');
   const receiptActions = document.getElementById('receipt-actions');
 
+  const showMessage = (text, kind) => {
+    const el = document.getElementById('ledger-msg');
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'msg ' + (kind === 'error' ? 'error' : 'ok');
+    el.style.display = text ? 'block' : 'none';
+  };
+
   const finish = () => {
-    transactions.push(entry);
-    saveState();
+    try {
+      transactions.push(entry);
+      saveState();
+      /* Module 4: after saving a payment, generate a unique receipt and offer it
+         without navigating away so the seller can keep adding entries. */
+      if (type === 'payment') {
+        receiptActions.style.display = 'flex';
+        createReceiptFromTransaction(entry.id);
+      }
+      showMessage('Entry saved successfully.', 'ok');
+    } catch (err) {
+      showMessage('Save failed: ' + (err && err.message ? err.message : String(err)), 'error');
+      console.error('Entry save failed:', err);
+      return;
+    }
     renderLedger(currentPhone);
     fileInput.value = '';
     preview.innerHTML = '';
-    /* Module 4: after saving a payment, generate a unique receipt and offer it. */
-    if (type === 'payment') {
-      receiptActions.style.display = 'flex';
-      generateReceiptFromTransaction(entry.id);
-    }
   };
 
   if (file) {
