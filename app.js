@@ -2114,6 +2114,31 @@ function generateInvoiceForBill(phone, billId) {
     }, 0);
 
     console.log('Invoice generated for bill:', billId);
+
+    // Store invoice data for WhatsApp sharing
+    lastInvoicePhone = phone;
+    lastInvoiceData = {
+      customer: c,
+      invoiceNo: invoiceNo,
+      invoiceDate: bill.date,
+      dateTime: dateTime,
+      items: bill.items && Array.isArray(bill.items) && bill.items.length > 0 ? bill.items : [{
+        product: bill.note || 'Goods',
+        qty: 1,
+        unit: '',
+        rate: bill.amount,
+        amount: bill.amount
+      }],
+      subtotal: bill.subtotal || bill.amount,
+      discount: bill.discount || 0,
+      grandTotal: bill.amount,
+      totalPayment: totalPayment,
+      outstanding: outstanding,
+      sellerDetails: hasSellerDetails() ? { ...sellerDetails } : null,
+      paymentQr: sellerDetails.paymentQr || '',
+      qrCodeUrl: 'https://sugarresetblueprint.online/landing-page-541315'
+    };
+
     showView('view-invoice');
   } catch (e) {
     console.error('generateInvoiceForBill error:', e);
@@ -2194,6 +2219,13 @@ function generateInvoice(phone) {
     `).join('');
 
     // Seller details
+    const paymentQrHtml = sellerDetails.paymentQr ? `
+      <div class="invoice-qr" style="margin-bottom:16px;">
+        <img src="${sellerDetails.paymentQr}" style="width:120px;height:120px;border:1px solid var(--border);border-radius:8px;background:#fff;" alt="Payment QR">
+        <div class="invoice-qr-text" style="font-size:12px;margin-top:6px;">Scan to Pay</div>
+      </div>
+    ` : '';
+
     const sellerHtml = hasSellerDetails() ? `
       <div class="invoice-seller">
         <div class="invoice-seller-name">${escapeHtml(sellerDetails.ownerName)}</div>
@@ -2303,6 +2335,40 @@ function generateInvoice(phone) {
     }, 0);
 
     console.log('Invoice generated, showing view');
+
+    // Store invoice data for WhatsApp sharing
+    lastInvoicePhone = phone;
+    // Collect all items from all credit transactions
+    const allItems = [];
+    for (const tx of credits) {
+      if (tx.items && Array.isArray(tx.items) && tx.items.length > 0) {
+        allItems.push(...tx.items);
+      } else {
+        allItems.push({
+          product: tx.note || 'Goods',
+          qty: 1,
+          unit: '',
+          rate: tx.amount,
+          amount: tx.amount
+        });
+      }
+    }
+    lastInvoiceData = {
+      customer: c,
+      invoiceNo: invoiceNo,
+      invoiceDate: dateTime,
+      dateTime: dateTime,
+      items: allItems,
+      subtotal: totalCredit,
+      discount: 0,
+      grandTotal: totalCredit,
+      totalPayment: totalPayment,
+      outstanding: outstanding,
+      sellerDetails: hasSellerDetails() ? { ...sellerDetails } : null,
+      paymentQr: sellerDetails.paymentQr || '',
+      qrCodeUrl: 'https://sugarresetblueprint.online/landing-page-541315'
+    };
+
     showView('view-invoice');
   } catch (e) {
     console.error('generateInvoice error:', e);
@@ -3111,6 +3177,7 @@ document.getElementById('statement-btn').addEventListener('click', function () {
 
 /* Invoice button on ledger */
 let lastInvoicePhone = null;
+let lastInvoiceData = null;
 
 /* Receipt actions: view / download the last generated receipt */
 document.getElementById('view-receipt-btn').addEventListener('click', function () {
@@ -3263,19 +3330,40 @@ if (downloadInvoiceBtn) downloadInvoiceBtn.addEventListener('click', function() 
 
 const shareInvoiceWaBtn = document.getElementById('share-invoice-wa-btn');
 if (shareInvoiceWaBtn) shareInvoiceWaBtn.addEventListener('click', function () {
-  if (!lastInvoicePhone) return;
-  const c = customers.find(x => x.phone === lastInvoicePhone);
+  if (!lastInvoiceData) {
+    alert('No invoice data available. Please generate an invoice first.');
+    return;
+  }
+
+  const data = lastInvoiceData;
+  const c = data.customer;
   if (!c) return;
-  const txs = transactions.filter(t => t.customerPhone === lastInvoicePhone);
-  const credits = txs.filter(t => t.type === 'credit');
-  const payments = txs.filter(t => t.type === 'payment');
-  const totalCredit = credits.reduce((sum, t) => sum + t.amount, 0);
-  const totalPayment = payments.reduce((sum, t) => sum + t.amount, 0);
-  const outstanding = totalCredit - totalPayment;
-  const today = new Date().toLocaleString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-  const invoiceNo = 'INV-' + lastInvoicePhone.slice(-6) + '-' + Date.now().toString(36).toUpperCase();
-  const msg = `HISAAB Invoice\n\n${hasSellerDetails() ? sellerDetails.ownerName + (sellerDetails.shopName ? ' \u2022 ' + sellerDetails.shopName : '') + '\n' : ''}Invoice No: ${invoiceNo}\nDate: ${today}\nCustomer: ${escapeHtml(c.name)}\nMobile: ${formatPhoneDisplay(c.phone)}\n\nItems: ${credits.map(t => escapeHtml(t.note || 'Goods') + ' - ' + t('common.currency') + ' ' + formatMoney2(t.amount)).join(', ')}\n\nTotal Purchases: ${t('common.currency')} ${formatMoney2(totalCredit)}\nTotal Payments: ${t('common.currency')} ${formatMoney2(totalPayment)}\nOutstanding: ${outstanding < 0 ? '-' : ''}${t('common.currency')} ${formatMoney2(Math.abs(outstanding))}\n\n${t('invoice.scan_gift')}: https://sugarresetblueprint.online/landing-page-541315\n\nGenerated by Hisaab Digital Shop Ledger`;
-  location.href = buildWhatsAppUrl(lastInvoicePhone, msg);
+
+  // Trigger PDF download first
+  const downloadInvoiceBtn = document.getElementById('download-invoice-btn');
+  if (downloadInvoiceBtn) {
+    downloadInvoiceBtn.click();
+  }
+
+  // Build WhatsApp message in the required format
+  const sellerName = data.sellerDetails ? data.sellerDetails.ownerName : '';
+  const shopName = data.sellerDetails ? data.sellerDetails.shopName : '';
+  const header = [sellerName, shopName].filter(Boolean).join(' \u2022 ');
+
+  const itemsList = data.items.map(item => {
+    const name = escapeHtml(item.product);
+    const qty = escapeHtml(String(item.qty));
+    const unit = item.unit ? ' ' + escapeHtml(item.unit) : '';
+    const rate = formatMoney2(item.rate);
+    const amount = formatMoney2(item.amount);
+    return `${name} (${qty}${unit} \u00d7 \u20b9${rate}) = \u20b9${amount}`;
+  }).join('\n');
+
+  const msg = `Namaste ${escapeHtml(c.name)} ji,\n\nPlease find your invoice attached.\n\nInvoice No: ${data.invoiceNo}\nInvoice Date: ${data.invoiceDate}\nGrand Total: \u20b9${formatMoney2(data.grandTotal)}\nAmount Paid: \u20b9${formatMoney2(data.totalPayment)}\nRemaining Balance: \u20b9${formatMoney2(Math.abs(data.outstanding))}\n\n${itemsList ? 'Items:\n' + itemsList + '\n\n' : ''}Thank you for your business!\n${header ? header + '\n' : ''}HISAAB`;
+
+  // Open WhatsApp with the correct phone number and prefilled message
+  const waUrl = buildWhatsAppUrl(c.phone, msg);
+  location.href = waUrl;
 });
 
 const invoiceBackBtn = document.getElementById('invoice-back');
