@@ -47,6 +47,7 @@ const TRANSLATIONS = {
       download_pdf: 'Download PDF',
       whatsapp: 'WhatsApp',
       currency: 'Rs',
+      sno: 'S.No.',
     },
     nav: {
       customers: 'Customers',
@@ -203,6 +204,36 @@ const TRANSLATIONS = {
       no_credit_entries: 'No credit entries',
       no_payment_entries: 'No payment entries',
     },
+    billing: {
+      heading: 'Create Bill',
+      add_item: '+ Add Item',
+      product_name: 'Product Name',
+      product_placeholder: 'e.g. Rice, Sugar, Oil',
+      quantity: 'Qty',
+      quantity_placeholder: '1',
+      unit: 'Unit',
+      unit_placeholder: 'pcs/kg/ltr',
+      rate: 'Rate (₹)',
+      rate_placeholder: '0.00',
+      amount: 'Amount (₹)',
+      remove: 'Remove',
+      subtotal: 'Subtotal:',
+      discount: 'Discount (₹)',
+      discount_placeholder: '0.00',
+      grand_total: 'Grand Total:',
+      amount_paid: 'Amount Paid (₹)',
+      amount_paid_placeholder: '0.00',
+      remaining: 'Remaining:',
+      save_bill: 'Save Bill',
+      bill_note: 'Bill Note (optional)',
+      bill_note_placeholder: 'e.g. Invoice #123, GST details',
+      no_items: 'No items added yet.',
+      enter_valid_qty: 'Enter a valid quantity.',
+      enter_valid_rate: 'Enter a valid rate.',
+      at_least_one_item: 'Add at least one item to the bill.',
+      bill_saved: 'Bill saved successfully.',
+      bill_failed: 'Failed to save bill:',
+    },
     backup: {
       backup_restore: 'Backup & Restore',
       download_backup: 'Download Full Backup',
@@ -246,6 +277,7 @@ const TRANSLATIONS = {
       download_pdf: 'पीडीएफ डाउनलोड करें',
       whatsapp: 'व्हाट्सएप',
       currency: 'रु',
+      sno: 'क्र.सं.',
     },
     nav: {
       customers: 'ग्राहक',
@@ -402,6 +434,36 @@ const TRANSLATIONS = {
       no_credit_entries: 'कोई क्रेडिट प्रविष्टि नहीं',
       no_payment_entries: 'कोई भुगतान प्रविष्टि नहीं',
     },
+    billing: {
+      heading: 'बिल बनाएं',
+      add_item: '+ आइटम जोड़ें',
+      product_name: 'उत्पाद का नाम',
+      product_placeholder: 'उदा. चावल, चीनी, तेल',
+      quantity: 'मात्रा',
+      quantity_placeholder: '1',
+      unit: 'इकाई',
+      unit_placeholder: 'पीस/किग्रा/लीटर',
+      rate: 'दर (₹)',
+      rate_placeholder: '0.00',
+      amount: 'राशि (₹)',
+      remove: 'हटाएं',
+      subtotal: 'उपयोग:',
+      discount: 'छूट (₹)',
+      discount_placeholder: '0.00',
+      grand_total: 'कुल योग:',
+      amount_paid: 'भुगतान राशि (₹)',
+      amount_paid_placeholder: '0.00',
+      remaining: 'शेष:',
+      save_bill: 'बिल सेव करें',
+      bill_note: 'बिल नोट (वैकल्पिक)',
+      bill_note_placeholder: 'उदा. इनवॉइस #123, GST विवरण',
+      no_items: 'अभी तक कोई आइटम नहीं जोड़ा गया।',
+      enter_valid_qty: 'मान्य मात्रा दर्ज करें।',
+      enter_valid_rate: 'मान्य दर दर्ज करें।',
+      at_least_one_item: 'बिल में कम से कम एक आइटम जोड़ें।',
+      bill_saved: 'बिल सफलतापूर्वक सेव हो गया।',
+      bill_failed: 'बिल सेव करने में विफल:',
+    },
     backup: {
       backup_restore: 'बैकअप और पुनर्स्थापना',
       download_backup: 'पूर्ण बैकअप डाउनलोड करें',
@@ -445,6 +507,7 @@ const TRANSLATIONS = {
       download_pdf: 'پی ڈی ایف ڈاؤن لوڈ کریں',
       whatsapp: 'وٹس ایپ',
       currency: 'Rs',
+      sno: 'کم نمبر',
     },
     nav: {
       customers: 'گراہک',
@@ -600,6 +663,36 @@ const TRANSLATIONS = {
       generated_by: 'Hisaab ڈجیٹل دکان لیجر کی طرف سے جاری',
       no_credit_entries: 'کوئی کریڈٹ انٹری نہیں',
       no_payment_entries: 'کوئی ادائیگی انٹری نہیں',
+    },
+    billing: {
+      heading: 'بل بنائیں',
+      add_item: '+ آئٹم شامل کریں',
+      product_name: 'پروڈکٹ کا نام',
+      product_placeholder: 'مثال: چاول، چینی، تیل',
+      quantity: 'مقدار',
+      quantity_placeholder: '1',
+      unit: 'اکائی',
+      unit_placeholder: 'پیس/کلو/لیٹر',
+      rate: 'نرخ (₹)',
+      rate_placeholder: '0.00',
+      amount: 'رقم (₹)',
+      remove: 'حذف کریں',
+      subtotal: 'کلیہ:',
+      discount: 'رعایت (₹)',
+      discount_placeholder: '0.00',
+      grand_total: 'مجموعی کل:',
+      amount_paid: 'ادائیگی رقم (₹)',
+      amount_paid_placeholder: '0.00',
+      remaining: 'بقایا:',
+      save_bill: 'بل محفوظ کریں',
+      bill_note: 'بل نوٹ (اختیاری)',
+      bill_note_placeholder: 'مثال: انوائس #123، GST تفصیلات',
+      no_items: 'ابھی تک کوئی آئٹم شامل نہیں ہوا۔',
+      enter_valid_qty: 'درست مقدار درج کریں۔',
+      enter_valid_rate: 'درست نرخ درج کریں۔',
+      at_least_one_item: 'بل میں کم از کم ایک آئٹم شامل کریں۔',
+      bill_saved: 'بل کامیابی سے محفوظ ہو گیا۔',
+      bill_failed: 'بل محفوظ کرنے میں ناکام:',
     },
     backup: {
       backup_restore: 'بیک اپ اور بحالی',
@@ -776,6 +869,7 @@ function loadSellerDetails() {
       upiId: String(saved.upiId || '').trim(),
       paymentQr: String(saved.paymentQr || '').trim(),
     };
+    sellerPaymentQrCache = sellerDetails.paymentQr;
   } catch (e) {
     sellerDetails = { ownerName: '', shopName: '', mobile: '', address: '', upiId: '', paymentQr: '' };
   }
@@ -791,6 +885,34 @@ function getSellerShopName() {
 }
 function hasSellerDetails() {
   return sellerDetails.ownerName.length > 0;
+}
+
+let sellerPaymentQrCache = '';
+function getPaymentQr() {
+  if (sellerPaymentQrCache) return sellerPaymentQrCache;
+  try { sellerPaymentQrCache = String(localStorage.getItem('hisaab_seller_payment_qr') || sellerDetails.paymentQr || '').trim(); } catch(e){ sellerPaymentQrCache=''; }
+  return sellerPaymentQrCache;
+}
+function getSellerPaymentQrDataUrl() { return getPaymentQr(); }
+async function savePaymentQr(dataUrl) {
+  sellerPaymentQrCache = String(dataUrl || '').trim();
+  try { localStorage.setItem('hisaab_seller_payment_qr', sellerPaymentQrCache); } catch(e){}
+  sellerDetails.paymentQr = sellerPaymentQrCache;
+}
+async function removePaymentQr() {
+  sellerPaymentQrCache = '';
+  try { localStorage.removeItem('hisaab_seller_payment_qr'); } catch(e){}
+  sellerDetails.paymentQr = '';
+}
+function generateMarketingQrDataUrl() {
+  return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+}
+function renderQrBlock() {
+  const qr = getPaymentQr();
+  if (!qr) {
+    return '<div class="qr-block"><div class="qr-notice">Seller payment QR not configured</div><img src="'+generateMarketingQrDataUrl()+'" alt="marketing"/><div class="qr-label">SCAN &amp; GET GIFT</div></div>';
+  }
+  return '<div class="qr-block"><img src="'+qr+'" alt="payment"/><div class="qr-label">SCAN &amp; PAY</div><img src="'+generateMarketingQrDataUrl()+'" alt="marketing"/><div class="qr-label">SCAN &amp; GET GIFT</div></div>';
 }
 function formatSellerHeader() {
   const lines = [];
@@ -960,6 +1082,15 @@ function balanceFor(phone) {
     total += t.type === 'credit' ? t.amount : -t.amount;
   }
   return total;
+}
+
+function computeLedgerSummary(phone) {
+  let totalCredit = 0, totalPayment = 0;
+  for (const t of transactions) {
+    if (t.customerPhone !== phone) continue;
+    if (t.type === 'credit') totalCredit += t.amount; else totalPayment += t.amount;
+  }
+  return { totalCredit, totalPayment, outstanding: totalCredit - totalPayment };
 }
 
 function totalOutstanding() {
@@ -1180,7 +1311,7 @@ function showContactModal(name, phones) {
   let added = 0;
 
   for (const p of phones) {
-    const raw = p && p.value ? String(p.value).trim() : '';
+    const raw = (typeof p === 'string') ? String(p).trim() : (p && p.value ? String(p.value).trim() : '');
     if (!raw) continue;
     const normalized = normalizePhone(raw);
     if (!/^\d{10}$/.test(normalized)) continue;
@@ -1279,11 +1410,11 @@ importContactsBtn.addEventListener('click', async function () {
       return;
     }
     const contact = contacts[0];
-    const name = contact.name && contact.name.displayName ? contact.name.displayName : (contact.name && contact.name.firstName ? contact.name.firstName : '');
-    const phones = Array.isArray(contact.phones) ? contact.phones : [];
+    const name = Array.isArray(contact.name) ? (contact.name[0] || '') : (contact.name && contact.name.displayName ? contact.name.displayName : (contact.name && contact.name.firstName ? contact.name.firstName : (typeof contact.name === 'string' ? contact.name : '')));
+    const phones = Array.isArray(contact.tel) ? contact.tel : (Array.isArray(contact.phones) ? contact.phones : []);
 
     const validPhones = phones
-      .map(p => p && p.value ? p.value : null)
+      .map(p => (typeof p === 'string' ? p : (p && p.value ? p.value : null)))
       .filter(Boolean)
       .map(p => ({ raw: p, normalized: normalizePhone(p) }))
       .filter(p => /^\d{10}$/.test(p.normalized));
@@ -1310,6 +1441,381 @@ importContactsBtn.addEventListener('click', async function () {
     contactNotice.style.display = 'block';
   }
 });
+
+/* ---------- Billing Table Functions ---------- */
+let billRowCounter = 0;
+
+function initBillingTable() {
+  const tbody = document.getElementById('bill-tbody');
+  const emptyMsg = document.getElementById('bill-empty');
+  const addBtn = document.getElementById('add-item-btn');
+  const form = document.getElementById('bill-form');
+  const discountInput = document.getElementById('bill-discount');
+  const amountPaidInput = document.getElementById('bill-amount-paid');
+  const dateInput = document.getElementById('bill-date');
+
+  // Guard: elements may not exist in tests or old views
+  if (!tbody || !emptyMsg || !addBtn || !form || !discountInput || !amountPaidInput || !dateInput) return;
+
+  // Reset
+  tbody.innerHTML = '';
+  billRowCounter = 0;
+  emptyMsg.style.display = 'block';
+
+  // Set default date
+  dateInput.value = DEFAULT_DATE;
+
+  // Add first row
+  addBillRow();
+
+  // Event listeners
+  addBtn.onclick = () => addBillRow();
+  discountInput.oninput = updateBillTotals;
+  amountPaidInput.oninput = updateBillTotals;
+
+  // Form submit
+  form.onsubmit = handleBillSubmit;
+}
+
+function addBillRow() {
+  const tbody = document.getElementById('bill-tbody');
+  const emptyMsg = document.getElementById('bill-empty');
+  if (!tbody || !emptyMsg) return;
+  billRowCounter++;
+
+  const row = document.createElement('tr');
+  row.dataset.rowId = billRowCounter;
+
+  // S.No.
+  const snoCell = document.createElement('td');
+  snoCell.className = 'bill-sno';
+  snoCell.textContent = billRowCounter;
+  row.appendChild(snoCell);
+
+  // Product Name
+  const productCell = document.createElement('td');
+  const productInput = document.createElement('input');
+  productInput.type = 'text';
+  productInput.className = 'bill-input bill-product';
+  productInput.placeholder = t('billing.product_placeholder');
+  productInput.required = true;
+  productInput.setAttribute('data-i18n-placeholder', 'billing.product_placeholder');
+  productCell.appendChild(productInput);
+  row.appendChild(productCell);
+
+  // Quantity
+  const qtyCell = document.createElement('td');
+  const qtyInput = document.createElement('input');
+  qtyInput.type = 'number';
+  qtyInput.className = 'bill-input bill-qty';
+  qtyInput.min = '1';
+  qtyInput.step = '0.01';
+  qtyInput.value = '1';
+  qtyInput.placeholder = t('billing.quantity_placeholder');
+  qtyInput.required = true;
+  qtyInput.setAttribute('data-i18n-placeholder', 'billing.quantity_placeholder');
+  qtyInput.oninput = () => { updateRowAmount(row); updateBillTotals(); };
+  qtyCell.appendChild(qtyInput);
+  row.appendChild(qtyCell);
+
+  // Unit
+  const unitCell = document.createElement('td');
+  const unitInput = document.createElement('input');
+  unitInput.type = 'text';
+  unitInput.className = 'bill-input bill-unit';
+  unitInput.placeholder = t('billing.unit_placeholder');
+  unitInput.setAttribute('data-i18n-placeholder', 'billing.unit_placeholder');
+  unitCell.appendChild(unitInput);
+  row.appendChild(unitCell);
+
+  // Rate
+  const rateCell = document.createElement('td');
+  const rateInput = document.createElement('input');
+  rateInput.type = 'number';
+  rateInput.className = 'bill-input bill-rate';
+  rateInput.min = '0';
+  rateInput.step = '0.01';
+  rateInput.placeholder = t('billing.rate_placeholder');
+  rateInput.required = true;
+  rateInput.setAttribute('data-i18n-placeholder', 'billing.rate_placeholder');
+  rateInput.oninput = () => { updateRowAmount(row); updateBillTotals(); };
+  rateCell.appendChild(rateInput);
+  row.appendChild(rateCell);
+
+  // Amount (read-only)
+  const amountCell = document.createElement('td');
+  const amountSpan = document.createElement('span');
+  amountSpan.className = 'bill-amount';
+  amountSpan.textContent = '₹ 0.00';
+  amountCell.appendChild(amountSpan);
+  row.appendChild(amountCell);
+
+  // Remove button
+  const removeCell = document.createElement('td');
+  const removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'btn btn-ghost btn-sm bill-remove';
+  removeBtn.textContent = t('billing.remove');
+  removeBtn.setAttribute('data-i18n', 'billing.remove');
+  removeBtn.onclick = () => removeBillRow(row);
+  removeCell.appendChild(removeBtn);
+  row.appendChild(removeCell);
+
+  tbody.appendChild(row);
+  emptyMsg.style.display = 'none';
+
+  // Focus product name in new row
+  setTimeout(() => productInput.focus(), 0);
+
+  // Keyboard navigation: Enter in last field adds new row
+  rateInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addBillRow();
+    }
+  });
+
+  updateRowAmount(row);
+  updateBillTotals();
+}
+
+function removeBillRow(row) {
+  const tbody = document.getElementById('bill-tbody');
+  const emptyMsg = document.getElementById('bill-empty');
+  if (!tbody || !emptyMsg) return;
+  row.remove();
+  // Renumber rows
+  const rows = tbody.querySelectorAll('tr');
+  rows.forEach((r, i) => {
+    r.dataset.rowId = i + 1;
+    r.querySelector('.bill-sno').textContent = i + 1;
+  });
+  billRowCounter = rows.length;
+  if (billRowCounter === 0) {
+    emptyMsg.style.display = 'block';
+  }
+  updateBillTotals();
+}
+
+function updateRowAmount(row) {
+  const qtyEl = row.querySelector('.bill-qty');
+  const rateEl = row.querySelector('.bill-rate');
+  const amountEl = row.querySelector('.bill-amount');
+  if (!qtyEl || !rateEl || !amountEl) return;
+  const qty = parseFloat(qtyEl.value) || 0;
+  const rate = parseFloat(rateEl.value) || 0;
+  const amount = qty * rate;
+  amountEl.textContent = formatMoney2(amount);
+}
+
+function updateBillTotals() {
+  const tbody = document.getElementById('bill-tbody');
+  if (!tbody) return;
+  const rows = tbody.querySelectorAll('tr');
+  let subtotal = 0;
+  rows.forEach(row => {
+    const qty = parseFloat(row.querySelector('.bill-qty').value) || 0;
+    const rate = parseFloat(row.querySelector('.bill-rate').value) || 0;
+    subtotal += qty * rate;
+  });
+
+  const discount = parseFloat(document.getElementById('bill-discount').value) || 0;
+  const grandTotal = Math.max(0, subtotal - discount);
+  const amountPaid = parseFloat(document.getElementById('bill-amount-paid').value) || 0;
+  const remaining = Math.max(0, grandTotal - amountPaid);
+
+  document.getElementById('bill-subtotal').textContent = '₹ ' + formatMoney2(subtotal);
+  document.getElementById('bill-grand-total').textContent = '₹ ' + formatMoney2(grandTotal);
+  document.getElementById('bill-remaining').textContent = '₹ ' + formatMoney2(remaining);
+}
+
+function getBillItems() {
+  const tbody = document.getElementById('bill-tbody');
+  if (!tbody) return [];
+  const rows = tbody.querySelectorAll('tr');
+  const items = [];
+  rows.forEach(row => {
+    const product = row.querySelector('.bill-product').value.trim();
+    const qty = parseFloat(row.querySelector('.bill-qty').value) || 0;
+    const unit = row.querySelector('.bill-unit').value.trim();
+    const rate = parseFloat(row.querySelector('.bill-rate').value) || 0;
+    const amount = qty * rate;
+    if (product && qty > 0 && rate >= 0) {
+      items.push({ product, qty, unit, rate, amount });
+    }
+  });
+  return items;
+}
+
+function validateBillForm() {
+  const items = getBillItems();
+  if (items.length === 0) {
+    alert(t('billing.at_least_one_item'));
+    return false;
+  }
+  for (const item of items) {
+    if (!item.product) {
+      alert(t('billing.enter_valid_qty'));
+      return false;
+    }
+    if (item.qty <= 0) {
+      alert(t('billing.enter_valid_qty'));
+      return false;
+    }
+    if (item.rate < 0) {
+      alert(t('billing.enter_valid_rate'));
+      return false;
+    }
+  }
+  return true;
+}
+
+function handleBillSubmit(e) {
+  e.preventDefault();
+  if (!currentPhone) return;
+
+  if (!validateBillForm()) return;
+
+  const items = getBillItems();
+  const subtotal = items.reduce((sum, item) => sum + item.amount, 0);
+  const discount = parseFloat(document.getElementById('bill-discount').value) || 0;
+  const grandTotal = Math.max(0, subtotal - discount);
+  const amountPaid = parseFloat(document.getElementById('bill-amount-paid').value) || 0;
+  const date = document.getElementById('bill-date').value || DEFAULT_DATE;
+  const note = document.getElementById('bill-note').value.trim();
+
+  // Create credit entry with items
+  const creditEntry = {
+    id: uid(),
+    customerPhone: currentPhone,
+    type: 'credit',
+    amount: grandTotal,
+    date,
+    note: note || 'Bill',
+    items: items,
+    discount: discount,
+    subtotal: subtotal
+  };
+
+  // If amount paid > 0, also create a payment entry
+  const paymentEntry = amountPaid > 0 ? {
+    id: uid(),
+    customerPhone: currentPhone,
+    type: 'payment',
+    amount: amountPaid,
+    date,
+    note: note || 'Payment against bill',
+    paymentMode: 'Cash'
+  } : null;
+
+  const showMessage = (text, kind) => {
+    const el = document.getElementById('ledger-msg');
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'msg ' + (kind === 'error' ? 'error' : 'ok');
+    el.style.display = text ? 'block' : 'none';
+  };
+
+  try {
+    transactions.push(creditEntry);
+    if (paymentEntry) transactions.push(paymentEntry);
+    saveState();
+    showMessage(t('billing.bill_saved'), 'ok');
+    // Reset bill form
+    initBillingTable();
+    // Reset payment form too
+    initPaymentForm();
+  } catch (err) {
+    showMessage(t('billing.bill_failed') + ' ' + (err && err.message ? err.message : String(err)), 'error');
+    console.error('Bill save failed:', err);
+    return;
+  }
+  renderLedger(currentPhone);
+}
+
+function initPaymentForm() {
+  const form = document.getElementById('payment-form');
+  form.reset();
+  document.getElementById('payment-date').value = DEFAULT_DATE;
+  form.onsubmit = handlePaymentSubmit;
+}
+
+function handlePaymentSubmit(e) {
+  e.preventDefault();
+  if (!currentPhone) return;
+
+  const amount = parseFloat(document.getElementById('payment-amount').value);
+  const date = document.getElementById('payment-date').value || DEFAULT_DATE;
+  const note = document.getElementById('payment-note').value.trim();
+  const paymentMode = document.getElementById('payment-mode').value;
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    alert('Enter a valid amount greater than 0.');
+    return;
+  }
+  if (!date) {
+    alert('Select a date.');
+    return;
+  }
+  if (!note) {
+    alert('Enter a note.');
+    return;
+  }
+
+  const entry = {
+    id: uid(),
+    customerPhone: currentPhone,
+    type: 'payment',
+    amount,
+    date,
+    note,
+    paymentMode
+  };
+
+  const fileInput = document.getElementById('shot-input');
+  const file = fileInput.files[0];
+  const preview = document.getElementById('shot-preview');
+  const receiptActions = document.getElementById('receipt-actions');
+
+  const showMessage = (text, kind) => {
+    const el = document.getElementById('ledger-msg');
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'msg ' + (kind === 'error' ? 'error' : 'ok');
+    el.style.display = text ? 'block' : 'none';
+  };
+
+  const finish = () => {
+    try {
+      transactions.push(entry);
+      saveState();
+      if (entry.type === 'payment') {
+        receiptActions.style.display = 'flex';
+        createReceiptFromTransaction(entry.id);
+      }
+      showMessage('Entry saved successfully.', 'ok');
+    } catch (err) {
+      showMessage('Save failed: ' + (err && err.message ? err.message : String(err)), 'error');
+      console.error('Entry save failed:', err);
+      return;
+    }
+    renderLedger(currentPhone);
+    fileInput.value = '';
+    preview.innerHTML = '';
+  };
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      shots[entry.id] = reader.result;
+      finish();
+    };
+    reader.onerror = () => alert('Could not read the image.');
+    reader.readAsDataURL(file);
+  } else {
+    finish();
+  }
+}
 
 /* ---------- Individual ledger ---------- */
 function renderLedger(phone) {
@@ -1376,12 +1882,11 @@ function renderLedger(phone) {
     list.appendChild(el);
   }
 
-  /* Entry form defaults. */
-  const form = document.getElementById('entry-form');
-  form.reset();
-  document.getElementById('entry-date').value = DEFAULT_DATE;
-  document.getElementById('shot-preview').innerHTML = '';
-  form.onsubmit = handleEntrySubmit;
+  /* Initialize billing table for credit entries */
+  initBillingTable();
+
+  /* Initialize payment form for payment entries */
+  initPaymentForm();
 
   /* Wire invoice button */
   const invoiceBtn = document.getElementById('invoice-btn');
@@ -1414,16 +1919,44 @@ function generateInvoice(phone) {
     const dateTime = now.toLocaleString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
     const invoiceNo = 'INV-' + phone.slice(-6) + '-' + Date.now().toString(36).toUpperCase();
 
-    // Build credit rows with qty/rate/amount
-    const creditRows = credits.map(tx => `
-      <tr>
-        <td>${escapeHtml(tx.date)}</td>
-        <td>${escapeHtml(tx.note || t('invoice.no_credit_entries'))}</td>
-        <td class="qty">1</td>
-        <td class="rate">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
-        <td class="amount">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
-      </tr>
-    `).join('');
+    // Build credit rows with qty/rate/amount - support multi-item bills
+    let creditRows = '';
+    for (const tx of credits) {
+      if (tx.items && Array.isArray(tx.items) && tx.items.length > 0) {
+        // Multi-item bill: show each item as a separate row
+        for (const item of tx.items) {
+          creditRows += `
+            <tr>
+              <td>${escapeHtml(tx.date)}</td>
+              <td>${escapeHtml(item.product)}</td>
+              <td class="qty">${escapeHtml(String(item.qty))}${item.unit ? ' ' + escapeHtml(item.unit) : ''}</td>
+              <td class="rate">${t('common.currency')} ${formatMoney2(item.rate)}</td>
+              <td class="amount">${t('common.currency')} ${formatMoney2(item.amount)}</td>
+            </tr>
+          `;
+        }
+        // Show discount row if applicable
+        if (tx.discount > 0) {
+          creditRows += `
+            <tr style="background:var(--muted);">
+              <td colspan="4" style="text-align:right;"><strong>${escapeHtml(tx.note || 'Bill')} - Discount</strong></td>
+              <td class="amount" style="color:var(--destructive);"><strong>-${t('common.currency')} ${formatMoney2(tx.discount)}</strong></td>
+            </tr>
+          `;
+        }
+      } else {
+        // Legacy single-item entry
+        creditRows += `
+          <tr>
+            <td>${escapeHtml(tx.date)}</td>
+            <td>${escapeHtml(tx.note || t('invoice.no_credit_entries'))}</td>
+            <td class="qty">1</td>
+            <td class="rate">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
+            <td class="amount">${t('common.currency')} ${formatMoney2(tx.amount)}</td>
+          </tr>
+        `;
+      }
+    }
 
     // Build payment rows
     const paymentRows = payments.map(tx => `

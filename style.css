@@ -1268,3 +1268,193 @@ code {
 [dir="rtl"] .statement-seller-shop {
   text-align: right;
 }
+
+/* ===================================================================
+   BILLING TABLE STYLES (Multi-item POS)
+   =================================================================== */
+.bill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.bill-header h3 {
+  margin: 0;
+}
+.bill-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 12px;
+}
+.bill-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.bill-table th,
+.bill-table td {
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: middle;
+}
+.bill-table th {
+  background: var(--muted);
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+.bill-table tbody tr:last-child td {
+  border-bottom: 2px solid var(--border);
+}
+.bill-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--background);
+  color: var(--text);
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+.bill-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+.bill-product { min-width: 180px; }
+.bill-qty { width: 70px; }
+.bill-unit { width: 90px; }
+.bill-rate { width: 90px; }
+.bill-amount {
+  font-weight: 600;
+  color: var(--primary);
+  white-space: nowrap;
+}
+.bill-sno {
+  text-align: center;
+  color: var(--muted);
+  font-weight: 500;
+}
+.bill-remove {
+  padding: 4px 8px;
+  font-size: 0.75rem;
+}
+.bill-empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 20px;
+  font-style: italic;
+}
+
+/* Bill Totals */
+.bill-totals {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.bill-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 0.95rem;
+}
+.bill-total-row label {
+  margin: 0;
+  font-weight: 500;
+}
+.bill-total-row input {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--background);
+  color: var(--text);
+}
+.bill-total-row.grand {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 8px -12px;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.bill-total-row.grand label,
+.bill-total-row.grand span {
+  font-weight: 700;
+}
+.bill-total-row.remaining {
+  color: var(--destructive);
+  font-weight: 600;
+}
+.bill-total-row.remaining span {
+  color: var(--destructive);
+  font-weight: 700;
+}
+
+/* Bill Actions */
+.bill-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.bill-actions label {
+  margin: 0;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.bill-actions input[type="date"] {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--background);
+  color: var(--text);
+}
+
+/* Payment Form */
+#payment-form {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+  margin-top: 16px;
+}
+#payment-form h3 {
+  margin-top: 0;
+}
+
+/* Mobile responsive for billing table */
+@media (max-width: 640px) {
+  .bill-table th,
+  .bill-table td {
+    padding: 6px 4px;
+    font-size: 0.8rem;
+  }
+  .bill-input {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
+  .bill-product { min-width: 120px; }
+  .bill-qty { width: 60px; }
+  .bill-unit { width: 70px; }
+  .bill-rate { width: 70px; }
+  .bill-header h3 { font-size: 1.1rem; }
+  .bill-remove { padding: 4px 6px; font-size: 0.7rem; }
+  .bill-totals { padding: 10px; }
+  .bill-total-row { font-size: 0.9rem; }
+  .bill-total-row.grand { font-size: 1rem; padding: 10px; }
+}
+
+/* Invoice table adjustments for multi-item */
+.invoice-table td.qty,
+.invoice-table th.qty {
+  text-align: center;
+  white-space: nowrap;
+}
+.invoice-table td.rate,
+.invoice-table th.rate,
+.invoice-table td.amount,
+.invoice-table th.amount {
+  text-align: right;
+  white-space: nowrap;
+}

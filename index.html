@@ -162,30 +162,87 @@
       <p id="ledger-reminder-note" class="sub reminder-note"></p>
       <div id="ledger-msg" class="msg" style="margin:8px 0;display:none;"></div>
       <div id="tx-list" class="tx-list"></div>
-      <form id="entry-form" class="card entry-card" novalidate>
-        <h3 data-i18n="ledger.add_new_entry">Add New Entry</h3>
-        <label data-i18n="ledger.type">Type</label>
-        <select id="entry-type" required>
-          <option value="credit" data-i18n="ledger.credit_option">Credit – goods given on credit</option>
-          <option value="payment" data-i18n="ledger.payment_option">Payment – money received</option>
-        </select>
-        <label data-i18n="ledger.amount">Amount (Rs)</label>
-        <input type="number" id="entry-amount" placeholder="0.00" min="0" step="0.01" required data-i18n-placeholder="ledger.amount_placeholder">
+
+      <!-- Billing Table (Multi-item Credit Entry) -->
+      <form id="bill-form" class="card entry-card" novalidate>
+        <div class="bill-header">
+          <h3 data-i18n="billing.heading">Create Bill</h3>
+          <button type="button" id="add-item-btn" class="btn btn-secondary" data-i18n="billing.add_item">+ Add Item</button>
+        </div>
+        <div class="bill-table-wrapper">
+          <table id="bill-table" class="bill-table">
+            <thead>
+              <tr>
+                <th style="width:50px;" data-i18n="common.sno">S.No.</th>
+                <th data-i18n="billing.product_name">Product Name</th>
+                <th style="width:80px;" data-i18n="billing.quantity">Qty</th>
+                <th style="width:100px;" data-i18n="billing.unit">Unit</th>
+                <th style="width:100px;" data-i18n="billing.rate">Rate (₹)</th>
+                <th style="width:110px;" data-i18n="billing.amount">Amount (₹)</th>
+                <th style="width:60px;" data-i18n="billing.remove"></th>
+              </tr>
+            </thead>
+            <tbody id="bill-tbody">
+              <!-- Rows added dynamically -->
+            </tbody>
+          </table>
+        </div>
+        <p id="bill-empty" class="bill-empty" data-i18n="billing.no_items" style="display:none;">No items added yet.</p>
+
+        <div class="bill-totals">
+          <div class="bill-total-row">
+            <label data-i18n="billing.subtotal">Subtotal:</label>
+            <span id="bill-subtotal">₹ 0.00</span>
+          </div>
+          <div class="bill-total-row">
+            <label data-i18n="billing.discount">Discount (₹):</label>
+            <input type="number" id="bill-discount" min="0" step="0.01" value="0" placeholder="0.00" data-i18n-placeholder="billing.discount_placeholder" style="width:100px;">
+          </div>
+          <div class="bill-total-row grand">
+            <label data-i18n="billing.grand_total">Grand Total:</label>
+            <span id="bill-grand-total">₹ 0.00</span>
+          </div>
+          <div class="bill-total-row">
+            <label data-i18n="billing.amount_paid">Amount Paid (₹):</label>
+            <input type="number" id="bill-amount-paid" min="0" step="0.01" value="0" placeholder="0.00" data-i18n-placeholder="billing.amount_paid_placeholder" style="width:100px;">
+          </div>
+          <div class="bill-total-row remaining">
+            <label data-i18n="billing.remaining">Remaining:</label>
+            <span id="bill-remaining">₹ 0.00</span>
+          </div>
+        </div>
+
+        <label data-i18n="billing.bill_note">Bill Note (optional)</label>
+        <input type="text" id="bill-note" placeholder="" data-i18n-placeholder="billing.bill_note_placeholder" maxlength="200">
+
+        <div class="bill-actions">
+          <label data-i18n="ledger.date">Date</label>
+          <input type="date" id="bill-date" required>
+          <button type="submit" class="btn btn-primary" data-i18n="billing.save_bill">Save Bill</button>
+        </div>
+      </form>
+
+      <!-- Payment Entry Form (for payments received) -->
+      <form id="payment-form" class="card entry-card" novalidate style="margin-top:12px;">
+        <h3 data-i18n="ledger.add_new_entry">Record Payment Received</h3>
+        <label data-i18n="ledger.amount">Amount (₹)</label>
+        <input type="number" id="payment-amount" placeholder="0.00" min="0" step="0.01" required data-i18n-placeholder="ledger.amount_placeholder">
         <label data-i18n="ledger.date">Date</label>
-        <input type="date" id="entry-date" required>
+        <input type="date" id="payment-date" required>
         <label data-i18n="ledger.note">Note</label>
-        <input type="text" id="entry-note" placeholder="Short note" required data-i18n-placeholder="ledger.note_placeholder">
+        <input type="text" id="payment-note" placeholder="Short note" required data-i18n-placeholder="ledger.note_placeholder">
         <label data-i18n="ledger.payment_mode">Payment Mode</label>
-        <select id="entry-payment-mode" style="width:auto;min-width:160px;display:inline-block;">
+        <select id="payment-mode" style="width:auto;min-width:160px;display:inline-block;">
           <option value="Cash" data-i18n="payment_mode.cash">Cash</option>
           <option value="UPI" data-i18n="payment_mode.upi">UPI</option>
           <option value="Bank Transfer" data-i18n="payment_mode.bank">Bank Transfer</option>
           <option value="Other" data-i18n="payment_mode.other">Other</option>
         </select>
-        <button type="submit" class="btn btn-primary" data-i18n="ledger.save_entry">Save Entry</button>
+        <button type="submit" class="btn btn-primary" data-i18n="ledger.save_entry">Save Payment</button>
       </form>
+
       <!-- Payment screenshot upload -->
-      <label style="display:block;margin-top:10px;font-weight:600;" data-i18n="ledger.payment_screenshot">Payment Screenshot (optional)</label>
+      <label id="shot-label" style="display:block;margin-top:10px;font-weight:600;" data-i18n="ledger.payment_screenshot">Payment Screenshot (optional)</label>
       <input type="file" id="shot-input" accept="image/*">
       <div id="shot-preview" style="margin-top:8px;"></div>
     </section>
