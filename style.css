@@ -1711,6 +1711,123 @@ code {
 }
 
 /* ===================================================================
+   INVOICE QR CODES - HORIZONTAL LAYOUT
+   =================================================================== */
+.invoice-qr-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.invoice-qr-col {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.invoice-qr-empty {
+  visibility: hidden;
+}
+.invoice-qr-img,
+.invoice-qr-img-placeholder {
+  width: 120px;
+  height: 120px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+.invoice-qr-img-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.invoice-qr-text {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+}
+.invoice-qr-sub {
+  font-size: 10px;
+  color: var(--muted);
+  text-align: center;
+  max-width: 140px;
+}
+
+/* Print styles for QR row */
+@media print {
+  .invoice-qr-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #ddd;
+    page-break-inside: avoid;
+  }
+  .invoice-qr-col {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .invoice-qr-empty {
+    visibility: hidden;
+  }
+  .invoice-qr-img {
+    width: 110px;
+    height: 110px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+  }
+  .invoice-qr-img-placeholder {
+    width: 110px;
+    height: 110px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+  }
+  .invoice-qr-text {
+    font-size: 9pt;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+  }
+  .invoice-qr-sub {
+    font-size: 8pt;
+    color: #666;
+    text-align: center;
+    max-width: 140px;
+  }
+}
+
+/* Mobile responsive for QR row */
+@media (max-width: 480px) {
+  .invoice-qr-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .invoice-qr-col {
+    width: 100%;
+    min-width: auto;
+  }
+  .invoice-qr-empty {
+    display: none;
+  }
+}
+
+/* ===================================================================
    STATEMENT PRINT STYLES
    =================================================================== */
 @media print {
