@@ -1471,6 +1471,11 @@ code {
 }
 
 @media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
   /* Hide everything except the invoice container */
   body * {
     visibility: hidden;
@@ -1484,6 +1489,13 @@ code {
     width: 100%;
     margin: 0;
     padding: 0;
+    display: block !important;
+  }
+  
+  /* Explicitly hide ALL other views - they take up space even with visibility:hidden */
+  .view:not(#view-invoice) {
+    display: none !important;
+    visibility: hidden !important;
   }
   
   /* Hide non-print elements within invoice view */
@@ -1516,9 +1528,9 @@ code {
   /* Seller header - compact */
   .invoice-seller {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     border-bottom: 2px solid #333;
-    padding-bottom: 8px;
+    padding-bottom: 6px;
   }
   .invoice-seller-name {
     font-size: 14pt;
@@ -1540,12 +1552,12 @@ code {
   /* Invoice header */
   .invoice-header {
     text-align: center;
-    margin: 10px 0 14px;
+    margin: 8px 0 10px;
   }
   .invoice-header .brand {
     font-size: 14pt;
     font-weight: 800;
-    margin: 0 0 6px;
+    margin: 0 0 4px;
     color: #000;
   }
   .doc-title {
@@ -1562,13 +1574,13 @@ code {
   
   /* Invoice meta */
   .invoice-meta {
-    margin: 10px 0;
+    margin: 8px 0;
     font-size: 9pt;
   }
   .invoice-meta .row {
     display: flex;
     justify-content: space-between;
-    padding: 3px 0;
+    padding: 2px 0;
     border-bottom: 1px solid #eee;
   }
   .invoice-meta .label {
@@ -1584,13 +1596,13 @@ code {
   .invoice-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 10px 0;
+    margin: 8px 0;
     font-size: 9pt;
   }
   .invoice-table th,
   .invoice-table td {
     border: 1px solid #ddd;
-    padding: 5px 4px;
+    padding: 4px 3px;
     text-align: left;
   }
   .invoice-table th {
@@ -1627,15 +1639,15 @@ code {
   
   /* Invoice totals */
   .invoice-totals {
-    margin-top: 10px;
+    margin-top: 8px;
     text-align: right;
     font-size: 9pt;
   }
   .invoice-total-row {
     display: flex;
     justify-content: flex-end;
-    gap: 16px;
-    padding: 4px 0;
+    gap: 12px;
+    padding: 3px 0;
   }
   .invoice-total-row .label {
     font-weight: 600;
@@ -1643,8 +1655,8 @@ code {
   }
   .invoice-total-row.final {
     border-top: 2px solid #333;
-    padding-top: 8px;
-    margin-top: 6px;
+    padding-top: 6px;
+    margin-top: 4px;
     font-size: 10pt;
     font-weight: 800;
   }
@@ -1660,91 +1672,91 @@ code {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    gap: 20px;
-    margin-top: 14px;
-    padding-top: 10px;
+    gap: 16px;
+    margin-top: 10px;
+    padding-top: 8px;
     border-top: 1px solid #ddd;
     page-break-inside: avoid;
   }
   .invoice-qr-col {
     flex: 1;
-    min-width: 160px;
-    max-width: 180px;
+    min-width: 140px;
+    max-width: 160px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
   }
   .invoice-qr-empty {
     visibility: hidden;
   }
   .invoice-qr-img,
   .invoice-qr-img-placeholder {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    background: #fff.
+    background: #fff;
   }
   .invoice-qr-text {
     font-size: 8pt;
     font-weight: 700;
     color: #333;
-    text-align: center.
+    text-align: center;
   }
   .invoice-qr-sub {
     font-size: 7pt;
     color: #666;
-    text-align: center.
-    max-width: 120px.
+    text-align: center;
+    max-width: 120px;
   }
   
   /* Footer - natural flow, no fixed positioning */
   .invoice-footer {
-    margin-top: 14px;
+    margin-top: 10px;
     text-align: center;
-    font-size: 8pt.
-    color: #666.
-    border-top: 1px solid #ddd.
-    padding-top: 8px.
+    font-size: 8pt;
+    color: #666;
+    border-top: 1px solid #ddd;
+    padding-top: 6px;
   }
   .invoice-footer p {
-    margin: 2px 0.
+    margin: 2px 0;
   }
   
   /* Page break controls - smart pagination */
   .invoice-table {
-    page-break-inside: auto.
+    page-break-inside: auto;
   }
   .invoice-table thead {
-    display: table-header-group.
+    display: table-header-group;
   }
   .invoice-table tbody {
-    display: table-row-group.
+    display: table-row-group;
   }
   .invoice-table tr {
-    page-break-inside: avoid.
-    page-break-after: auto.
+    page-break-inside: avoid;
+    page-break-after: auto;
   }
   .invoice-totals,
   .invoice-qr-row,
   .invoice-footer {
-    page-break-inside: avoid.
+    page-break-inside: avoid;
   }
   
   /* Ensure QR images don't split across pages */
   .invoice-qr-img,
   .invoice-qr-img-placeholder {
-    page-break-inside: avoid.
+    page-break-inside: avoid;
   }
   
   /* Prevent unnecessary blank pages */
   html, body {
-    height: auto.
-    overflow: visible.
+    height: auto;
+    overflow: visible;
   }
   #view-invoice {
-    overflow: visible.
+    overflow: visible;
   }
 }/* ===================================================================
    INVOICE QR CODES - HORIZONTAL LAYOUT
@@ -1797,58 +1809,7 @@ code {
   max-width: 140px;
 }
 
-/* Print styles for QR row */
-@media print {
-  .invoice-qr-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    gap: 32px;
-    margin-top: 24px;
-    padding-top: 16px;
-    border-top: 1px solid #ddd;
-    page-break-inside: avoid;
-  }
-  .invoice-qr-col {
-    flex: 1;
-    min-width: 200px;
-    max-width: 220px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-  .invoice-qr-empty {
-    visibility: hidden;
-  }
-  .invoice-qr-img {
-    width: 110px;
-    height: 110px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background: #fff;
-  }
-  .invoice-qr-img-placeholder {
-    width: 110px;
-    height: 110px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background: #fff;
-  }
-  .invoice-qr-text {
-    font-size: 9pt;
-    font-weight: 700;
-    color: #333;
-    text-align: center;
-  }
-  .invoice-qr-sub {
-    font-size: 8pt;
-    color: #666;
-    text-align: center;
-    max-width: 140px;
-  }
-}
+
 
 /* Mobile responsive for QR row */
 @media (max-width: 480px) {
