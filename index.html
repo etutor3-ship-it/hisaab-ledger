@@ -36,11 +36,20 @@
     </div>
   </header>
 
-  <nav class="app-nav">
+<nav class="app-nav">
     <a href="#view-home" class="nav-link active" data-i18n="nav.customers">Customers</a>
     <a href="#view-add-customer" class="nav-link" data-i18n="nav.add_customer">Add Customer</a>
+    <a href="#view-stock-dashboard" class="nav-link" data-i18n="nav.stock_dashboard">Stock Dashboard</a>
+    <a href="#view-products" class="nav-link" data-i18n="nav.products">Products</a>
+    <a href="#view-add-product" class="nav-link" data-i18n="nav.add_product">Add Product</a>
+    <a href="#view-purchase" class="nav-link" data-i18n="nav.purchase">Purchase Stock</a>
+    <a href="#view-suppliers" class="nav-link" data-i18n="nav.suppliers">Suppliers</a>
+    <a href="#view-stock-adjustment" class="nav-link" data-i18n="nav.stock_adjustment">Stock Adjustment</a>
+    <a href="#view-stock-movement" class="nav-link" data-i18n="nav.stock_movement">Stock Movement</a>
+    <a href="#view-low-stock" class="nav-link" data-i18n="nav.low_stock">Low Stock Alerts</a>
+    <a href="#view-stock-reports" class="nav-link" data-i18n="nav.stock_reports">Stock Reports</a>
     <a href="#view-import" class="nav-link" data-i18n="nav.import_data">Import Data</a>
-    <a href="#view-backup" class="nav-link" data-i18n="nav.backup_restore">Backup &amp; Restore</a>
+    <a href="#view-backup" class="nav-link" data-i18n="nav.backup_restore">Backup & Restore</a>
     <a href="#lang-picker" class="nav-link" data-i18n="nav.change_language" id="nav-change-language">Change Language</a>
     <a href="#view-seller-details" class="nav-link" data-i18n="nav.seller_details" id="nav-seller-details">Seller / Shop Details</a>
   </nav>
@@ -275,6 +284,479 @@
         <button type="submit" class="btn btn-primary" id="seller-save-btn" data-i18n="seller_details.save_btn">Save Details</button>
         <button type="button" class="btn ghost" id="seller-clear-btn" style="margin-left:8px;">Clear</button>
       </form>
+    </section>
+
+    <!-- Stock Dashboard -->
+    <section id="view-stock-dashboard" class="view card">
+      <header class="ledger-head">
+        <a id="stock-dashboard-back" class="btn ghost" href="#view-home">&larr; <span data-i18n="common.back">Back to customers</span></a>
+        <div>
+          <h2 data-i18n="stock.dashboard_title">Stock Dashboard</h2>
+          <p class="muted" data-i18n="stock.dashboard_sub">Overview of inventory status</p>
+        </div>
+      </header>
+      <div class="dashboard-grid" id="stock-dashboard-grid"></div>
+    </section>
+
+    <!-- Products List -->
+    <section id="view-products" class="view card">
+      <header class="ledger-head">
+        <a id="products-back" class="btn ghost" href="#view-home">&larr; <span data-i18n="common.back">Back to customers</span></a>
+        <div>
+          <h2 data-i18n="products.title">Products</h2>
+          <p class="muted" data-i18n="products.sub">Manage product catalog</p>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button id="add-product-from-list-btn" class="btn btn-primary" type="button" data-i18n="products.add_product">Add Product</button>
+        </div>
+      </header>
+      <div class="search-box" style="margin-bottom:12px;">
+        <input type="search" id="product-search" placeholder="Search by name, SKU, barcode..." data-i18n-placeholder="products.search_placeholder" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:1rem;">
+      </div>
+      <div class="filter-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;">
+        <select id="product-category-filter" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;background:#fff;">
+          <option value="" data-i18n="products.all_categories">All Categories</option>
+          <option value="grocery" data-i18n="products.category.grocery">Grocery</option>
+          <option value="medical" data-i18n="products.category.medical">Medical</option>
+          <option value="general" data-i18n="products.category.general">General Store</option>
+        </select>
+        <select id="product-status-filter" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;background:#fff;">
+          <option value="" data-i18n="products.all_status">All Status</option>
+          <option value="active" data-i18n="products.status.active">Active</option>
+          <option value="inactive" data-i18n="products.status.inactive">Inactive</option>
+        </select>
+      </div>
+      <div id="products-list" class="products-list"></div>
+      <div id="products-empty" class="hint" style="display:none;text-align:center;padding:24px;" data-i18n="products.no_products">No products yet. Add your first product.</div>
+    </section>
+
+    <!-- Add / Edit Product -->
+    <section id="view-add-product" class="view card">
+      <header class="ledger-head">
+        <a id="add-product-back" class="btn ghost" href="#view-products">&larr; <span data-i18n="common.back">Back to products</span></a>
+        <div>
+          <h2 id="add-product-title" data-i18n="products.add_product">Add Product</h2>
+          <p id="add-product-sub" class="muted" data-i18n="products.add_sub">Enter product details</p>
+        </div>
+      </header>
+      <form id="add-product-form" novalidate>
+        <div id="product-form-error" class="error" style="margin-bottom:12px;"></div>
+        
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label data-i18n="products.product_name">Product Name <span class="required">*</span></label>
+            <input type="text" id="product-name" placeholder="e.g. Basmati Rice" required maxlength="100">
+          </div>
+          <div>
+            <label data-i18n="products.sku">SKU <span class="required">*</span></label>
+            <input type="text" id="product-sku" placeholder="e.g. RIC-BAS-001" required maxlength="50">
+          </div>
+        </div>
+        
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label data-i18n="products.barcode">Barcode</label>
+            <input type="text" id="product-barcode" placeholder="Scan or enter barcode" maxlength="50">
+          </div>
+          <div>
+            <label data-i18n="products.category">Category <span class="required">*</span></label>
+            <select id="product-category" required>
+              <option value="" disabled selected data-i18n="products.select_category">Select Category</option>
+              <option value="grocery" data-i18n="products.category.grocery">Grocery</option>
+              <option value="medical" data-i18n="products.category.medical">Medical</option>
+              <option value="general" data-i18n="products.category.general">General Store</option>
+              <option value="other" data-i18n="products.category.other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label data-i18n="products.brand">Brand</label>
+            <input type="text" id="product-brand" placeholder="e.g. India Gate" maxlength="50">
+          </div>
+          <div>
+            <label data-i18n="products.unit">Unit <span class="required">*</span></label>
+            <select id="product-unit" required>
+              <option value="" disabled selected data-i18n="products.select_unit">Select Unit</option>
+              <option value="piece" data-i18n="products.unit.piece">Piece</option>
+              <option value="kg" data-i18n="products.unit.kg">Kg</option>
+              <option value="gram" data-i18n="products.unit.gram">Gram</option>
+              <option value="litre" data-i18n="products.unit.litre">Litre</option>
+              <option value="ml" data-i18n="products.unit.ml">ML</option>
+              <option value="packet" data-i18n="products.unit.packet">Packet</option>
+              <option value="strip" data-i18n="products.unit.strip">Strip</option>
+              <option value="box" data-i18n="products.unit.box">Box</option>
+              <option value="bottle" data-i18n="products.unit.bottle">Bottle</option>
+              <option value="dozen" data-i18n="products.unit.dozen">Dozen</option>
+              <option value="custom" data-i18n="products.unit.custom">Custom</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="custom-unit-field" style="display:none;">
+          <label data-i18n="products.custom_unit">Custom Unit Name <span class="required">*</span></label>
+          <input type="text" id="product-custom-unit" placeholder="e.g. Sachet" maxlength="20">
+        </div>
+
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label data-i18n="products.purchase_price">Purchase Price (₹) <span class="required">*</span></label>
+            <input type="number" id="product-purchase-price" min="0" step="0.01" placeholder="0.00" required>
+          </div>
+          <div>
+            <label data-i18n="products.selling_price">Selling Price (₹) <span class="required">*</span></label>
+            <input type="number" id="product-selling-price" min="0" step="0.01" placeholder="0.00" required>
+          </div>
+        </div>
+
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label data-i18n="products.current_stock">Current Stock <span class="required">*</span></label>
+            <input type="number" id="product-current-stock" min="0" step="0.01" placeholder="0" required value="0">
+          </div>
+          <div>
+            <label data-i18n="products.min_stock_alert">Min Stock Alert</label>
+            <input type="number" id="product-min-stock" min="0" step="0.01" placeholder="0" value="0">
+          </div>
+        </div>
+
+        <div id="medical-fields" style="display:none;border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:12px;background:#fafafa;">
+          <h4 style="margin:0 0 8px;" data-i18n="products.medical_details">Medical Product Details</h4>
+          <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div>
+              <label data-i18n="products.batch_number">Batch Number <span class="required">*</span></label>
+              <input type="text" id="product-batch" placeholder="e.g. BTH-2024-001" maxlength="50">
+            </div>
+            <div>
+              <label data-i18n="products.expiry_date">Expiry Date <span class="required">*</span></label>
+              <input type="date" id="product-expiry" required>
+            </div>
+          </div>
+          <div>
+            <label data-i18n="products.manufacturer">Manufacturer</label>
+            <input type="text" id="product-manufacturer" placeholder="e.g. Cipla Ltd" maxlength="100">
+          </div>
+        </div>
+
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label data-i18n="products.supplier">Supplier</label>
+            <select id="product-supplier">
+              <option value="" data-i18n="products.select_supplier">Select Supplier (optional)</option>
+            </select>
+          </div>
+          <div>
+            <label data-i18n="products.status">Status</label>
+            <select id="product-status">
+              <option value="active" data-i18n="products.status.active">Active</option>
+              <option value="inactive" data-i18n="products.status.inactive">Inactive</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label data-i18n="products.notes">Notes</label>
+          <textarea id="product-notes" rows="2" placeholder="Additional notes..." maxlength="500"></textarea>
+        </div>
+
+        <div id="product-saved-msg" class="msg ok" style="display:none;margin:12px 0;"></div>
+        <button type="submit" class="btn btn-primary" data-i18n="products.save_btn">Save Product</button>
+        <button type="button" class="btn ghost" id="product-cancel-btn" style="margin-left:8px;" data-i18n="common.cancel">Cancel</button>
+      </form>
+    </section>
+
+    <!-- Purchase Stock -->
+    <section id="view-purchase" class="view card">
+      <header class="ledger-head">
+        <a id="purchase-back" class="btn ghost" href="#view-home">&larr; <span data-i18n="common.back">Back to customers</span></a>
+        <div>
+          <h2 data-i18n="purchase.title">Purchase Stock</h2>
+          <p class="muted" data-i18n="purchase.sub">Record stock purchases from suppliers</p>
+        </div>
+      </header>
+      <form id="purchase-form" novalidate>
+        <div id="purchase-form-error" class="error" style="margin-bottom:12px;"></div>
+        
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label data-i18n="purchase.supplier">Supplier <span class="required">*</span></label>
+            <select id="purchase-supplier" required>
+              <option value="" disabled selected data-i18n="purchase.select_supplier">Select Supplier</option>
+            </select>
+          </div>
+          <div>
+            <label data-i18n="purchase.invoice_no">Invoice Number</label>
+            <input type="text" id="purchase-invoice" placeholder="e.g. INV-2024-001" maxlength="50">
+          </div>
+        </div>
+
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label data-i18n="purchase.date">Purchase Date <span class="required">*</span></label>
+            <input type="date" id="purchase-date" required>
+          </div>
+          <div>
+            <label data-i18n="purchase.payment_mode">Payment Mode</label>
+            <select id="purchase-payment-mode">
+              <option value="Cash" data-i18n="payment_mode.cash">Cash</option>
+              <option value="UPI" data-i18n="payment_mode.upi">UPI</option>
+              <option value="Bank Transfer" data-i18n="payment_mode.bank">Bank Transfer</option>
+              <option value="Credit" data-i18n="purchase.payment_credit">Credit</option>
+              <option value="Other" data-i18n="payment_mode.other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin:12px 0;">
+          <label data-i18n="purchase.items">Purchase Items</label>
+          <div class="bill-table-wrapper">
+            <table id="purchase-table" class="bill-table">
+              <thead>
+                <tr>
+                  <th style="width:40px;" data-i18n="common.sno">S.No.</th>
+                  <th data-i18n="purchase.product">Product</th>
+                  <th style="width:100px;" data-i18n="purchase.batch">Batch No.</th>
+                  <th style="width:100px;" data-i18n="purchase.expiry">Expiry Date</th>
+                  <th style="width:80px;" data-i18n="billing.quantity">Qty</th>
+                  <th style="width:100px;" data-i18n="purchase.purchase_rate">Rate (₹)</th>
+                  <th style="width:100px;" data-i18n="billing.discount">Discount (₹)</th>
+                  <th style="width:110px;" data-i18n="billing.amount">Amount (₹)</th>
+                  <th style="width:50px;"></th>
+                </tr>
+              </thead>
+              <tbody id="purchase-tbody"></tbody>
+            </table>
+          </div>
+          <p id="purchase-empty" class="bill-empty" data-i18n="purchase.no_items" style="display:none;">No items added yet.</p>
+          <button type="button" id="add-purchase-item-btn" class="btn btn-secondary" data-i18n="billing.add_item" style="margin-top:8px;">+ Add Item</button>
+        </div>
+
+        <div class="bill-totals">
+          <div class="bill-total-row">
+            <label data-i18n="billing.subtotal">Subtotal:</label>
+            <span id="purchase-subtotal">₹ 0.00</span>
+          </div>
+          <div class="bill-total-row">
+            <label data-i18n="billing.discount">Total Discount (₹):</label>
+            <input type="number" id="purchase-discount" min="0" step="0.01" value="0" placeholder="0.00" style="width:100px;">
+          </div>
+          <div class="bill-total-row grand">
+            <label data-i18n="billing.grand_total">Grand Total:</label>
+            <span id="purchase-grand-total">₹ 0.00</span>
+          </div>
+        </div>
+
+        <label data-i18n="purchase.notes">Notes</label>
+        <textarea id="purchase-notes" rows="2" placeholder="Additional notes..." maxlength="500"></textarea>
+
+        <div id="purchase-saved-msg" class="msg ok" style="display:none;margin:12px 0;"></div>
+        <button type="submit" class="btn btn-primary" data-i18n="purchase.save_btn">Save Purchase</button>
+        <button type="button" class="btn ghost" id="purchase-cancel-btn" style="margin-left:8px;" data-i18n="common.cancel">Cancel</button>
+      </form>
+    </section>
+
+    <!-- Suppliers -->
+    <section id="view-suppliers" class="view card">
+      <header class="ledger-head">
+        <a id="suppliers-back" class="btn ghost" href="#view-home">&larr; <span data-i18n="common.back">Back to customers</span></a>
+        <div>
+          <h2 data-i18n="suppliers.title">Suppliers</h2>
+          <p class="muted" data-i18n="suppliers.sub">Manage supplier directory</p>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button id="add-supplier-btn" class="btn btn-primary" type="button" data-i18n="suppliers.add_supplier">Add Supplier</button>
+        </div>
+      </header>
+      <div class="search-box" style="margin-bottom:12px;">
+        <input type="search" id="supplier-search" placeholder="Search suppliers..." data-i18n-placeholder="suppliers.search_placeholder" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:1rem;">
+      </div>
+      <div id="suppliers-list" class="suppliers-list"></div>
+      <div id="suppliers-empty" class="hint" style="display:none;text-align:center;padding:24px;" data-i18n="suppliers.no_suppliers">No suppliers yet. Add your first supplier.</div>
+    </section>
+
+    <!-- Add / Edit Supplier -->
+    <section id="view-add-supplier" class="view card">
+      <header class="ledger-head">
+        <a id="add-supplier-back" class="btn ghost" href="#view-suppliers">&larr; <span data-i18n="common.back">Back to suppliers</span></a>
+        <div>
+          <h2 id="add-supplier-title" data-i18n="suppliers.add_supplier">Add Supplier</h2>
+          <p id="add-supplier-sub" class="muted" data-i18n="suppliers.add_sub">Enter supplier details</p>
+        </div>
+      </header>
+      <form id="add-supplier-form" novalidate>
+        <div id="supplier-form-error" class="error" style="margin-bottom:12px;"></div>
+        
+        <label data-i18n="suppliers.name">Supplier Name <span class="required">*</span></label>
+        <input type="text" id="supplier-name" placeholder="e.g. ABC Distributors" required maxlength="100">
+        
+        <label data-i18n="suppliers.mobile">Mobile Number</label>
+        <input type="tel" id="supplier-mobile" placeholder="e.g. 9876543210" inputmode="tel" maxlength="15">
+        
+        <label data-i18n="suppliers.address">Address</label>
+        <textarea id="supplier-address" rows="3" placeholder="e.g. 123 Market Road, City" maxlength="200"></textarea>
+        
+        <label data-i18n="suppliers.gstin">GSTIN (optional)</label>
+        <input type="text" id="supplier-gstin" placeholder="e.g. 27AAAAA0000A1Z5" maxlength="15">
+        
+        <label data-i18n="suppliers.notes">Notes</label>
+        <textarea id="supplier-notes" rows="2" placeholder="Additional notes..." maxlength="500"></textarea>
+
+        <div id="supplier-saved-msg" class="msg ok" style="display:none;margin:12px 0;"></div>
+        <button type="submit" class="btn btn-primary" data-i18n="suppliers.save_btn">Save Supplier</button>
+        <button type="button" class="btn ghost" id="supplier-cancel-btn" style="margin-left:8px;" data-i18n="common.cancel">Cancel</button>
+      </form>
+    </section>
+
+    <!-- Stock Adjustment -->
+    <section id="view-stock-adjustment" class="view card">
+      <header class="ledger-head">
+        <a id="stock-adjustment-back" class="btn ghost" href="#view-home">&larr; <span data-i18n="common.back">Back to customers</span></a>
+        <div>
+          <h2 data-i18n="stock_adjustment.title">Stock Adjustment</h2>
+          <p class="muted" data-i18n="stock_adjustment.sub">Authorized stock corrections</p>
+        </div>
+      </header>
+      <form id="stock-adjustment-form" novalidate>
+        <div id="stock-adjustment-error" class="error" style="margin-bottom:12px;"></div>
+        
+        <label data-i18n="stock_adjustment.product">Product <span class="required">*</span></label>
+        <select id="adjustment-product" required>
+          <option value="" disabled selected data-i18n="stock_adjustment.select_product">Select Product</option>
+        </select>
+        
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label data-i18n="stock_adjustment.type">Adjustment Type <span class="required">*</span></label>
+            <select id="adjustment-type" required>
+              <option value="" disabled selected data-i18n="stock_adjustment.select_type">Select Type</option>
+              <option value="increase" data-i18n="stock_adjustment.increase">Increase Stock</option>
+              <option value="decrease" data-i18n="stock_adjustment.decrease">Decrease Stock</option>
+            </select>
+          </div>
+          <div>
+            <label data-i18n="stock_adjustment.quantity">Quantity <span class="required">*</span></label>
+            <input type="number" id="adjustment-qty" min="0.01" step="0.01" placeholder="0" required>
+          </div>
+        </div>
+
+        <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div id="adjustment-batch-field" style="display:none;">
+            <label data-i18n="stock_adjustment.batch">Batch Number</label>
+            <select id="adjustment-batch">
+              <option value="" data-i18n="stock_adjustment.all_batches">All Batches</option>
+            </select>
+          </div>
+          <div>
+            <label data-i18n="stock_adjustment.reason">Reason <span class="required">*</span></label>
+            <select id="adjustment-reason" required>
+              <option value="" disabled selected data-i18n="stock_adjustment.select_reason">Select Reason</option>
+              <option value="damage" data-i18n="stock_adjustment.damage">Damage/Loss</option>
+              <option value="expiry" data-i18n="stock_adjustment.expiry">Expiry</option>
+              <option value="correction" data-i18n="stock_adjustment.correction">Stock Count Correction</option>
+              <option value="return" data-i18n="stock_adjustment.return">Supplier Return</option>
+              <option value="other" data-i18n="stock_adjustment.other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <label data-i18n="stock_adjustment.notes">Notes <span class="required">*</span></label>
+        <textarea id="adjustment-notes" rows="3" placeholder="Explain the reason for adjustment..." maxlength="500" required></textarea>
+
+        <div id="adjustment-saved-msg" class="msg ok" style="display:none;margin:12px 0;"></div>
+        <button type="submit" class="btn btn-primary" data-i18n="stock_adjustment.save_btn">Save Adjustment</button>
+        <button type="button" class="btn ghost" id="adjustment-cancel-btn" style="margin-left:8px;" data-i18n="common.cancel">Cancel</button>
+      </form>
+    </section>
+
+    <!-- Stock Movement History -->
+    <section id="view-stock-movement" class="view card">
+      <header class="ledger-head">
+        <a id="stock-movement-back" class="btn ghost" href="#view-home">&larr; <span data-i18n="common.back">Back to customers</span></a>
+        <div>
+          <h2 data-i18n="stock_movement.title">Stock Movement History</h2>
+          <p class="muted" data-i18n="stock_movement.sub">Complete audit trail of stock changes</p>
+        </div>
+      </header>
+      <div class="filter-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;">
+        <select id="movement-product-filter" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;background:#fff;">
+          <option value="" data-i18n="stock_movement.all_products">All Products</option>
+        </select>
+        <select id="movement-type-filter" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;background:#fff;">
+          <option value="" data-i18n="stock_movement.all_types">All Types</option>
+          <option value="purchase" data-i18n="stock_movement.purchase">Purchase</option>
+          <option value="sale" data-i18n="stock_movement.sale">Sale</option>
+          <option value="adjustment_increase" data-i18n="stock_movement.adjustment_increase">Adjustment (+)</option>
+          <option value="adjustment_decrease" data-i18n="stock_movement.adjustment_decrease">Adjustment (-)</option>
+          <option value="return" data-i18n="stock_movement.return">Return</option>
+          <option value="opening" data-i18n="stock_movement.opening">Opening Stock</option>
+        </select>
+      </div>
+      <div class="date-filter-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;">
+        <label style="font-size:0.85rem;color:var(--muted);" data-i18n="stock_movement.from">From</label>
+        <input type="date" id="movement-date-from" style="width:auto;min-width:140px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;">
+        <label style="font-size:0.85rem;color:var(--muted);" data-i18n="stock_movement.to">To</label>
+        <input type="date" id="movement-date-to" style="width:auto;min-width:140px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;">
+        <button id="movement-filter-apply" class="btn btn-primary" type="button" data-i18n="statement.apply">Apply</button>
+        <button id="movement-export-csv" class="btn" type="button" data-i18n="statement.export_csv">Export CSV</button>
+      </div>
+      <div id="stock-movement-list"></div>
+      <div id="stock-movement-empty" class="hint" style="display:none;text-align:center;padding:24px;" data-i18n="stock_movement.no_movements">No stock movements recorded.</div>
+    </section>
+
+    <!-- Low Stock Alerts -->
+    <section id="view-low-stock" class="view card">
+      <header class="ledger-head">
+        <a id="low-stock-back" class="btn ghost" href="#view-home">&larr; <span data-i18n="common.back">Back to customers</span></a>
+        <div>
+          <h2 data-i18n="low_stock.title">Low Stock Alerts</h2>
+          <p class="muted" data-i18n="low_stock.sub">Products below minimum stock level</p>
+        </div>
+      </header>
+      <div class="filter-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;">
+        <select id="low-stock-filter" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;background:#fff;">
+          <option value="all" data-i18n="low_stock.all">Low Stock & Out of Stock</option>
+          <option value="low" data-i18n="low_stock.low_only">Low Stock Only</option>
+          <option value="out" data-i18n="low_stock.out_only">Out of Stock Only</option>
+        </select>
+      </div>
+      <div id="low-stock-list"></div>
+      <div id="low-stock-empty" class="hint" style="display:none;text-align:center;padding:24px;" data-i18n="low_stock.no_alerts">No low stock alerts. All products are well stocked.</div>
+    </section>
+
+    <!-- Stock Reports -->
+    <section id="view-stock-reports" class="view card">
+      <header class="ledger-head">
+        <a id="stock-reports-back" class="btn ghost" href="#view-home">&larr; <span data-i18n="common.back">Back to customers</span></a>
+        <div>
+          <h2 data-i18n="stock_reports.title">Stock Reports</h2>
+          <p class="muted" data-i18n="stock_reports.sub">Generate inventory reports</p>
+        </div>
+      </header>
+      <div class="filter-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;">
+        <label style="font-size:0.85rem;color:var(--muted);" data-i18n="stock_reports.report_type">Report:</label>
+        <select id="report-type" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;background:#fff;">
+          <option value="stock_valuation" data-i18n="stock_reports.valuation_report">Stock Valuation Report</option>
+          <option value="stock_movement" data-i18n="stock_reports.movement_report">Stock Movement Report</option>
+          <option value="purchase_summary" data-i18n="stock_reports.purchase_report">Purchase Report</option>
+          <option value="expiry_report" data-i18n="stock_reports.expiry_report">Expiry Report</option>
+          <option value="low_stock_report" data-i18n="stock_reports.low_stock_report">Low Stock Report</option>
+        </select>
+      </div>
+      <div class="filter-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;">
+        <select id="report-product-filter" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;background:#fff;">
+          <option value="" data-i18n="stock.all_products">All Products</option>
+        </select>
+      </div>
+      <div class="date-filter-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;">
+        <label style="font-size:0.85rem;color:var(--muted);" data-i18n="stock_movement.from">From</label>
+        <input type="date" id="report-date-from" style="width:auto;min-width:140px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;">
+        <label style="font-size:0.85rem;color:var(--muted);" data-i18n="stock_movement.to">To</label>
+        <input type="date" id="report-date-to" style="width:auto;min-width:140px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;">
+        <button id="generate-report-btn" class="btn btn-primary" type="button" data-i18n="stock_reports.generate">Generate</button>
+        <button id="report-export-csv" class="btn" type="button" data-i18n="statement.export_csv">Export CSV</button>
+      </div>
+      <div id="report-result"></div>
     </section>
 
     <!-- Receipt view -->

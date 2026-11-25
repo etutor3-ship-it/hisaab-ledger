@@ -13,6 +13,16 @@ const STORAGE_CUSTOMERS = 'hisaab_customers';
 const STORAGE_TRANSACTIONS = 'hisaab_transactions';
 const STORAGE_SHOTS = 'hisaab_shots';
 const STORAGE_LANG = 'hisaab_lang';
+const STORAGE_RECEIPTS = 'hisaab_receipts';
+const STORAGE_RECEIPT_COUNTER = 'hisaab_receipt_counter';
+const STORAGE_SELLER = 'hisaab_seller_details';
+
+// Inventory storage keys
+const STORAGE_PRODUCTS = 'hisaab_products';
+const STORAGE_BATCHES = 'hisaab_batches';
+const STORAGE_PURCHASES = 'hisaab_purchases';
+const STORAGE_STOCK_MOVEMENTS = 'hisaab_stock_movements';
+const STORAGE_SUPPLIERS = 'hisaab_suppliers';
 
 /* ---------- Supported languages ---------- */
 const SUPPORTED_LANGS = ['en', 'hi', 'ur'];
@@ -56,6 +66,15 @@ const TRANSLATIONS = {
       backup_restore: 'Backup & Restore',
       change_language: 'Change Language',
       seller_details: 'Seller / Shop Details',
+      stock_dashboard: 'Stock Dashboard',
+      products: 'Products',
+      add_product: 'Add Product',
+      purchase: 'Purchase Stock',
+      suppliers: 'Suppliers',
+      stock_adjustment: 'Stock Adjustment',
+      stock_movement: 'Stock Movement',
+      low_stock: 'Low Stock Alerts',
+      stock_reports: 'Stock Reports',
     },
     home: {
       all_customers: 'All Customers',
@@ -241,6 +260,187 @@ const TRANSLATIONS = {
       bill_saved: 'Bill saved successfully.',
       bill_failed: 'Failed to save bill:',
     },
+    stock: {
+      dashboard_title: 'Stock Dashboard',
+      dashboard_sub: 'Overview of inventory status',
+      total_products: 'Total Active Products',
+      total_stock_units: 'Total Stock Units',
+      total_purchase_value: 'Total Purchase Value',
+      low_stock_count: 'Low Stock Products',
+      out_of_stock_count: 'Out of Stock Products',
+      expiring_count: 'Expiring Products (30 days)',
+      recent_purchases: 'Recent Purchases',
+      recent_sales: 'Recent Sales',
+      recent_adjustments: 'Recent Adjustments',
+      no_recent_purchases: 'No recent purchases',
+      no_recent_sales: 'No recent sales',
+      no_recent_adjustments: 'No recent adjustments',
+      type_purchase: 'Purchase',
+      type_sale: 'Sale',
+      type_adj_inc: 'Adjustment (+)',
+      type_adj_dec: 'Adjustment (-)',
+      type_return: 'Return',
+      type_opening: 'Opening Stock',
+      report_valuation: 'Stock Valuation Report',
+      purchase_value: 'Purchase Value',
+      sell_value: 'Sell Value',
+      total: 'Total',
+      total_purchases: 'Total Purchases',
+      all_products: 'All Products',
+    },
+    products: {
+      title: 'Products',
+      sub: 'Manage product catalog',
+      add_product: 'Add Product',
+      add_sub: 'Enter product details',
+      search_placeholder: 'Search by name, SKU, barcode...',
+      all_categories: 'All Categories',
+      all_status: 'All Status',
+      category: {
+        grocery: 'Grocery',
+        medical: 'Medical',
+        general: 'General Store',
+        other: 'Other',
+      },
+      status: {
+        active: 'Active',
+        inactive: 'Inactive',
+      },
+      select_category: 'Select Category',
+      select_unit: 'Select Unit',
+      unit: {
+        piece: 'Piece',
+        kg: 'Kg',
+        gram: 'Gram',
+        litre: 'Litre',
+        ml: 'ML',
+        packet: 'Packet',
+        strip: 'Strip',
+        box: 'Box',
+        bottle: 'Bottle',
+        dozen: 'Dozen',
+        custom: 'Custom',
+      },
+      custom_unit: 'Custom Unit Name',
+      product_name: 'Product Name',
+      sku: 'SKU',
+      barcode: 'Barcode',
+      category: 'Category',
+      brand: 'Brand',
+      unit: 'Unit',
+      purchase_price: 'Purchase Price (₹)',
+      selling_price: 'Selling Price (₹)',
+      current_stock: 'Current Stock',
+      min_stock_alert: 'Min Stock Alert',
+      medical_details: 'Medical Product Details',
+      batch_number: 'Batch Number',
+      expiry_date: 'Expiry Date',
+      manufacturer: 'Manufacturer',
+      supplier: 'Supplier',
+      select_supplier: 'Select Supplier (optional)',
+      status: 'Status',
+      notes: 'Notes',
+      save_btn: 'Save Product',
+      edit_product: 'Edit Product',
+      edit_sub: 'Modify product details',
+      no_products: 'No products yet. Add your first product.',
+    },
+    purchase: {
+      title: 'Purchase Stock',
+      sub: 'Record stock purchases from suppliers',
+      supplier: 'Supplier',
+      select_supplier: 'Select Supplier',
+      invoice_no: 'Invoice Number',
+      date: 'Purchase Date',
+      payment_mode: 'Payment Mode',
+      payment_credit: 'Credit',
+      items: 'Purchase Items',
+      product: 'Product',
+      batch: 'Batch No.',
+      expiry: 'Expiry Date',
+      purchase_rate: 'Rate (₹)',
+      no_items: 'No items added yet.',
+      add_item: '+ Add Item',
+      subtotal: 'Subtotal:',
+      discount: 'Discount (₹)',
+      grand_total: 'Grand Total:',
+      notes: 'Notes',
+      save_btn: 'Save Purchase',
+    },
+    suppliers: {
+      title: 'Suppliers',
+      sub: 'Manage supplier directory',
+      add_supplier: 'Add Supplier',
+      add_sub: 'Enter supplier details',
+      search_placeholder: 'Search suppliers...',
+      name: 'Supplier Name',
+      mobile: 'Mobile Number',
+      address: 'Address',
+      gstin: 'GSTIN (optional)',
+      notes: 'Notes',
+      save_btn: 'Save Supplier',
+      no_suppliers: 'No suppliers yet. Add your first supplier.',
+    },
+    stock_adjustment: {
+      title: 'Stock Adjustment',
+      sub: 'Authorized stock corrections',
+      product: 'Product',
+      select_product: 'Select Product',
+      type: 'Adjustment Type',
+      select_type: 'Select Type',
+      increase: 'Increase Stock',
+      decrease: 'Decrease Stock',
+      quantity: 'Quantity',
+      batch: 'Batch Number',
+      all_batches: 'All Batches',
+      reason: 'Reason',
+      select_reason: 'Select Reason',
+      damage: 'Damage/Loss',
+      expiry: 'Expiry',
+      correction: 'Stock Count Correction',
+      return: 'Supplier Return',
+      other: 'Other',
+      notes: 'Notes',
+      save_btn: 'Save Adjustment',
+    },
+    stock_movement: {
+      title: 'Stock Movement History',
+      sub: 'Complete audit trail of stock changes',
+      all_products: 'All Products',
+      all_types: 'All Types',
+      purchase: 'Purchase',
+      sale: 'Sale',
+      adjustment_increase: 'Adjustment (+)',
+      adjustment_decrease: 'Adjustment (-)',
+      return: 'Return',
+      opening: 'Opening Stock',
+      from: 'From',
+      to: 'To',
+      apply: 'Apply',
+      no_movements: 'No stock movements recorded.',
+    },
+    low_stock: {
+      title: 'Low Stock Alerts',
+      sub: 'Products below minimum stock level',
+      no_alerts: 'No low stock alerts. All products are well stocked.',
+      all: 'Low Stock & Out of Stock',
+      low_only: 'Low Stock Only',
+      out_only: 'Out of Stock Only',
+    },
+    stock_reports: {
+      title: 'Stock Reports',
+      sub: 'Generate inventory reports',
+      report_type: 'Report:',
+      current_stock: 'Current Stock Report',
+      product_wise: 'Product-wise Stock',
+      purchase_report: 'Purchase Report',
+      sales_report: 'Sales Report',
+      low_stock_report: 'Low Stock Report',
+      expiry_report: 'Expiry Report',
+      movement_report: 'Stock Movement Report',
+      valuation_report: 'Stock Valuation Report',
+      generate: 'Generate',
+    },
     backup: {
       backup_restore: 'Backup & Restore',
       download_backup: 'Download Full Backup',
@@ -293,6 +493,15 @@ const TRANSLATIONS = {
       backup_restore: 'बैकअप और पुनर्स्थापना',
       change_language: 'भाषा बदलें',
       seller_details: 'विक्रेता / दुकान विवरण',
+      stock_dashboard: 'स्टॉक डैशबोर्ड',
+      products: 'उत्पाद',
+      add_product: 'उत्पाद जोड़ें',
+      purchase: 'स्टॉक खरीद',
+      suppliers: 'आपूर्तिकर्ता',
+      stock_adjustment: 'स्टॉक समायोजन',
+      stock_movement: 'स्टॉक मूवमेंट',
+      low_stock: 'कम स्टॉक अलर्ट',
+      stock_reports: 'स्टॉक रिपोर्ट',
     },
     home: {
       all_customers: 'सभी ग्राहक',
@@ -452,7 +661,7 @@ const TRANSLATIONS = {
       amount_paid: 'भुगतान राशि:',
       remaining: 'शेष:',
     },
-    billing: {
+billing: {
       heading: 'बिल बनाएं',
       add_item: '+ आइटम जोड़ें',
       product_name: 'उत्पाद का नाम',
@@ -481,6 +690,187 @@ const TRANSLATIONS = {
       at_least_one_item: 'बिल में कम से कम एक आइटम जोड़ें।',
       bill_saved: 'बिल सफलतापूर्वक सेव हो गया।',
       bill_failed: 'बिल सेव करने में विफल:',
+    },
+    stock: {
+      dashboard_title: 'स्टॉक डैशबोर्ड',
+      dashboard_sub: 'इन्वेंट्री स्थिति का अवलोकन',
+      total_products: 'कुल सक्रिय उत्पाद',
+      total_stock_units: 'कुल स्टॉक इकाइयाँ',
+      total_purchase_value: 'कुल खरीद मूल्य',
+      low_stock_count: 'कम स्टॉक वाले उत्पाद',
+      out_of_stock_count: 'स्टॉक से बाहर उत्पाद',
+      expiring_count: 'समाप्त होने वाले उत्पाद (30 दिन)',
+      recent_purchases: 'हाल की खरीदारी',
+      recent_sales: 'हाल की बिक्री',
+      recent_adjustments: 'हाल के समायोजन',
+      no_recent_purchases: 'कोई हाल की खरीदारी नहीं',
+      no_recent_sales: 'कोई हाल की बिक्री नहीं',
+      no_recent_adjustments: 'कोई हाल का समायोजन नहीं',
+      type_purchase: 'खरीद',
+      type_sale: 'बिक्री',
+      type_adj_inc: 'समायोजन (+)',
+      type_adj_dec: 'समायोजन (-)',
+      type_return: 'वापसी',
+      type_opening: 'प्रारंभिक स्टॉक',
+      report_valuation: 'स्टॉक मूल्यांकन रिपोर्ट',
+      purchase_value: 'खरीद मूल्य',
+      sell_value: 'बिक्री मूल्य',
+      total: 'कुल',
+      total_purchases: 'कुल खरीद',
+      all_products: 'सभी उत्पाद',
+    },
+    products: {
+      title: 'उत्पाद',
+      sub: 'उत्पाद सूची प्रबंधित करें',
+      add_product: 'उत्पाद जोड़ें',
+      add_sub: 'उत्पाद विवरण दर्ज करें',
+      search_placeholder: 'नाम, SKU, बारकोड से खोजें...',
+      all_categories: 'सभी श्रेणियाँ',
+      all_status: 'सभी स्थिति',
+      category: {
+        grocery: 'किराना',
+        medical: 'चिकित्सा',
+        general: 'जनरल स्टोर',
+        other: 'अन्य',
+      },
+      status: {
+        active: 'सक्रिय',
+        inactive: 'निष्क्रिय',
+      },
+      select_category: 'श्रेणी चुनें',
+      select_unit: 'इकाई चुनें',
+      unit: {
+        piece: 'पीस',
+        kg: 'किग्रा',
+        gram: 'ग्राम',
+        litre: 'लीटर',
+        ml: 'मिली',
+        packet: 'पैकेट',
+        strip: 'स्ट्रिप',
+        box: 'बॉक्स',
+        bottle: 'बोतल',
+        dozen: 'दर्जन',
+        custom: 'कस्टम',
+      },
+      custom_unit: 'कस्टम इकाई नाम',
+      product_name: 'उत्पाद नाम',
+      sku: 'SKU',
+      barcode: 'बारकोड',
+      category: 'श्रेणी',
+      brand: 'ब्रांड',
+      unit: 'इकाई',
+      purchase_price: 'खरीद मूल्य (₹)',
+      selling_price: 'बिक्री मूल्य (₹)',
+      current_stock: 'वर्तमान स्टॉक',
+      min_stock_alert: 'न्यूनतम स्टॉक अलर्ट',
+      medical_details: 'चिकित्सा उत्पाद विवरण',
+      batch_number: 'बैच नंबर',
+      expiry_date: 'समाप्ति तिथि',
+      manufacturer: 'निर्माता',
+      supplier: 'आपूर्तिकर्ता',
+      select_supplier: 'आपूर्तिकर्ता चुनें (वैकल्पिक)',
+      status: 'स्थिति',
+      notes: 'नोट्स',
+      save_btn: 'उत्पाद सेव करें',
+      edit_product: 'उत्पाद संपादित करें',
+      edit_sub: 'उत्पाद विवरण संशोधित करें',
+      no_products: 'अभी तक कोई उत्पाद नहीं। पहला उत्पाद जोड़ें।',
+    },
+    purchase: {
+      title: 'स्टॉक खरीद',
+      sub: 'आपूर्तिकर्ताओं से स्टॉक खरीद रिकॉर्ड करें',
+      supplier: 'आपूर्तिकर्ता',
+      select_supplier: 'आपूर्तिकर्ता चुनें',
+      invoice_no: 'इनवॉइस नंबर',
+      date: 'खरीद तिथि',
+      payment_mode: 'भुगतान मोड',
+      payment_credit: 'उधार',
+      items: 'खरीद आइटम',
+      product: 'उत्पाद',
+      batch: 'बैच नं.',
+      expiry: 'समाप्ति तिथि',
+      purchase_rate: 'दर (₹)',
+      no_items: 'अभी तक कोई आइटम नहीं जोड़ा गया।',
+      add_item: '+ आइटम जोड़ें',
+      subtotal: 'उपयोग:',
+      discount: 'छूट (₹)',
+      grand_total: 'कुल योग:',
+      notes: 'नोट्स',
+      save_btn: 'खरीद सेव करें',
+    },
+    suppliers: {
+      title: 'आपूर्तिकर्ता',
+      sub: 'आपूर्तिकर्ता निर्देशिका प्रबंधित करें',
+      add_supplier: 'आपूर्तिकर्ता जोड़ें',
+      add_sub: 'आपूर्तिकर्ता विवरण दर्ज करें',
+      search_placeholder: 'आपूर्तिकर्ता खोजें...',
+      name: 'आपूर्तिकर्ता नाम',
+      mobile: 'मोबाइल नंबर',
+      address: 'पता',
+      gstin: 'GSTIN (वैकल्पिक)',
+      notes: 'नोट्स',
+      save_btn: 'आपूर्तिकर्ता सेव करें',
+      no_suppliers: 'अभी तक कोई आपूर्तिकर्ता नहीं। पहला आपूर्तिकर्ता जोड़ें।',
+    },
+    stock_adjustment: {
+      title: 'स्टॉक समायोजन',
+      sub: 'अधिकृत स्टॉक सुधार',
+      product: 'उत्पाद',
+      select_product: 'उत्पाद चुनें',
+      type: 'समायोजन प्रकार',
+      select_type: 'प्रकार चुनें',
+      increase: 'स्टॉक बढ़ाएं',
+      decrease: 'स्टॉक घटाएं',
+      quantity: 'मात्रा',
+      batch: 'बैच नंबर',
+      all_batches: 'सभी बैच',
+      reason: 'कारण',
+      select_reason: 'कारण चुनें',
+      damage: 'क्षति/नुकसान',
+      expiry: 'समाप्ति',
+      correction: 'स्टॉक गिनती सुधार',
+      return: 'आपूर्तिकर्ता वापसी',
+      other: 'अन्य',
+      notes: 'नोट्स',
+      save_btn: 'समायोजन सेव करें',
+    },
+    stock_movement: {
+      title: 'स्टॉक मूवमेंट इतिहास',
+      sub: 'स्टॉक परिवर्तनों का पूर्ण ऑडिट ट्रेल',
+      all_products: 'सभी उत्पाद',
+      all_types: 'सभी प्रकार',
+      purchase: 'खरीद',
+      sale: 'बिक्री',
+      adjustment_increase: 'समायोजन (+)',
+      adjustment_decrease: 'समायोजन (-)',
+      return: 'वापसी',
+      opening: 'प्रारंभिक स्टॉक',
+      from: 'से',
+      to: 'तक',
+      apply: 'लागू करें',
+      no_movements: 'कोई स्टॉक मूवमेंट रिकॉर्ड नहीं।',
+    },
+    low_stock: {
+      title: 'कम स्टॉक अलर्ट',
+      sub: 'न्यूनतम स्टॉक स्तर से नीचे के उत्पाद',
+      no_alerts: 'कोई कम स्टॉक अलर्ट नहीं। सभी उत्पाद अच्छी तरह से स्टॉक हैं।',
+      all: 'कम स्टॉक और आउट ऑफ स्टॉक',
+      low_only: 'केवल कम स्टॉक',
+      out_only: 'केवल आउट ऑफ स्टॉक',
+    },
+    stock_reports: {
+      title: 'स्टॉक रिपोर्ट',
+      sub: 'इन्वेंट्री रिपोर्ट जनरेट करें',
+      report_type: 'रिपोर्ट:',
+      current_stock: 'वर्तमान स्टॉक रिपोर्ट',
+      product_wise: 'उत्पाद-वार स्टॉक',
+      purchase_report: 'खरीद रिपोर्ट',
+      sales_report: 'बिक्री रिपोर्ट',
+      low_stock_report: 'कम स्टॉक रिपोर्ट',
+      expiry_report: 'समाप्ति रिपोर्ट',
+      movement_report: 'स्टॉक मूवमेंट रिपोर्ट',
+      valuation_report: 'स्टॉक मूल्यांकन रिपोर्ट',
+      generate: 'जनरेट',
     },
     backup: {
       backup_restore: 'बैकअप और पुनर्स्थापना',
@@ -527,13 +917,22 @@ const TRANSLATIONS = {
       currency: 'Rs',
       sno: 'کم نمبر',
     },
-    nav: {
+nav: {
       customers: 'گراہک',
-      add_customer: 'نया گراہک شامل کریں',
+      add_customer: 'نئے گراہک شامل کریں',
       import_data: 'ڈیٹا درآمد کریں',
       backup_restore: 'بیک اپ اور بحالی',
       change_language: 'زبان بدلیں',
       seller_details: 'فروخت کنندہ / دکان تفصیلات',
+      stock_dashboard: 'اسٹاک ڈیش بورڈ',
+      products: 'مصنوعات',
+      add_product: 'مصنوعات شامل کریں',
+      purchase: 'اسٹاک خریدیں',
+      suppliers: 'سپلائرز',
+      stock_adjustment: 'اسٹاک ایڈجسٹمنٹ',
+      stock_movement: 'اسٹاک موومینٹ',
+      low_stock: 'کم اسٹاک الرٹ',
+      stock_reports: 'اسٹاک رپورٹ',
     },
     home: {
       all_customers: 'تمام گراہک',
@@ -723,6 +1122,187 @@ const TRANSLATIONS = {
       bill_saved: 'بل کامیابی سے محفوظ ہو گیا۔',
       bill_failed: 'بل محفوظ کرنے میں ناکام:',
     },
+    stock: {
+      dashboard_title: 'اسٹاک ڈیش بورڈ',
+      dashboard_sub: 'انوینٹری کی حالت کا جائزہ',
+      total_products: 'کل فعال مصنوعات',
+      total_stock_units: 'کل اسٹاک یونٹس',
+      total_purchase_value: 'کل خرید قیمت',
+      low_stock_count: 'کم اسٹاک والی مصنوعات',
+      out_of_stock_count: 'اسٹاک سے باہر مصنوعات',
+      expiring_count: 'منقضی ہونے والی مصنوعات (30 دن)',
+      recent_purchases: 'حالیہ خریداریاں',
+      recent_sales: 'حالیہ فروخت',
+      recent_adjustments: 'حالیہ ترمیمیں',
+      no_recent_purchases: 'کوئی حالیہ خریداری نہیں',
+      no_recent_sales: 'کوئی حالیہ فروخت نہیں',
+      no_recent_adjustments: 'کوئی حالیہ ترمیم نہیں',
+      type_purchase: 'خریداری',
+      type_sale: 'فروخت',
+      type_adj_inc: 'ترمیم (+)',
+      type_adj_dec: 'ترمیم (-)',
+      type_return: 'واپسی',
+      type_opening: 'ابتدائی اسٹاک',
+      report_valuation: 'اسٹاک کی قیمت لگانے کی رپورٹ',
+      purchase_value: 'خریداری کی قیمت',
+      sell_value: 'فروخت کی قیمت',
+      total: 'کل',
+      total_purchases: 'کل خریداریاں',
+      all_products: 'تمام مصنوعات',
+    },
+    products: {
+      title: 'مصنوعات',
+      sub: 'پروڈکٹ کی کیٹلاگ کا انتظام کریں',
+      add_product: 'مصنوعات شامل کریں',
+      add_sub: 'مصنوعات کی تفصیلات درج کریں',
+      search_placeholder: 'نام، SKU، بارکوڈ سے تلاش کریں...',
+      all_categories: 'تمام اقسام',
+      all_status: 'تمام حالتیں',
+      category: {
+        grocery: 'کریانہ',
+        medical: 'طبی',
+        general: 'جنرل اسٹور',
+        other: 'دیگر',
+      },
+      status: {
+        active: 'فعال',
+        inactive: 'غیر فعال',
+      },
+      select_category: 'اقسام منتخب کریں',
+      select_unit: 'اکائی منتخب کریں',
+      unit: {
+        piece: 'پیس',
+        kg: 'کلو',
+        gram: 'گرام',
+        litre: 'لیٹر',
+        ml: 'ملی',
+        packet: 'پیکٹ',
+        strip: 'سٹرپ',
+        box: 'ڈبہ',
+        bottle: 'بوتل',
+        dozen: 'درجن',
+        custom: 'کسٹم',
+      },
+      custom_unit: 'کسٹم یونٹ کا نام',
+      product_name: 'پروڈکٹ کا نام',
+      sku: 'SKU',
+      barcode: 'بارکوڈ',
+      category: 'اقسام',
+      brand: 'برینڈ',
+      unit: 'اکائی',
+      purchase_price: 'خرید کی قیمت (₹)',
+      selling_price: 'فروخت کی قیمت (₹)',
+      current_stock: 'موجودہ اسٹاک',
+      min_stock_alert: 'کم از کم اسٹاک انتباہ',
+      medical_details: 'طبی مصنوعات کی تفصیلات',
+      batch_number: 'بیچ نمبر',
+      expiry_date: 'منقضی ہونے کی تاریخ',
+      manufacturer: 'مصنوعات ساز',
+      supplier: 'فراہم کرنے والا',
+      select_supplier: 'فراہم کرنے والا منتخب کریں (اختیاری)',
+      status: 'حالت',
+      notes: 'نوٹس',
+      save_btn: 'مصنوعات محفوظ کریں',
+      edit_product: 'مصنوعات میں ترمیم کریں',
+      edit_sub: 'مصنوعات کی تفصیلات میں ترمیم کریں',
+      no_products: 'کوئی مصنوعات نہیں۔ پہلی مصنوعات شامل کریں۔',
+    },
+    purchase: {
+      title: 'اسٹاک خرید',
+      sub: 'فراہم کنندگان سے اسٹاک خرید ریکارڈ کریں',
+      supplier: 'فراہم کرنے والا',
+      select_supplier: 'فراہم کرنے والا منتخب کریں',
+      invoice_no: 'انوائس نمبر',
+      date: 'خرید کی تاریخ',
+      payment_mode: 'ادائیگی کا طریقہ',
+      payment_credit: 'ادھار',
+      items: 'خرید کے آئٹمز',
+      product: 'مصنوعات',
+      batch: 'بیچ نمبر',
+      expiry: 'منقضی ہونے کی تاریخ',
+      purchase_rate: 'خرید کی نرخ (₹)',
+      no_items: 'کوئی آئٹم شامل نہیں کیا گیا۔',
+      add_item: '+ آئٹم شامل کریں',
+      subtotal: 'کلیہ:',
+      discount: 'رعایت (₹)',
+      grand_total: 'مجموعی کل:',
+      notes: 'نوٹس',
+      save_btn: 'خرید محفوظ کریں',
+    },
+    suppliers: {
+      title: 'فراہم کنندگان',
+      sub: 'فراہم کنندگان کی ڈائریکٹری کا انتظام کریں',
+      add_supplier: 'فراہم کرنے والا شامل کریں',
+      add_sub: 'فراہم کرنے والے کی تفصیلات درج کریں',
+      search_placeholder: 'فراہم کنندگان تلاش کریں...',
+      name: 'فراہم کرنے والے کا نام',
+      mobile: 'موبائل نمبر',
+      address: 'پتہ',
+      gstin: 'GSTIN (اختیاری)',
+      notes: 'نوٹس',
+      save_btn: 'فراہم کرنے والا محفوظ کریں',
+      no_suppliers: 'کوئی فراہم کرنے والا نہیں۔ پہلا فراہم کرنے والا شامل کریں۔',
+    },
+    stock_adjustment: {
+      title: 'اسٹاک ترمیم',
+      sub: 'مجاز اسٹاک کی ترمیم',
+      product: 'مصنوعات',
+      select_product: 'مصنوعات منتخب کریں',
+      type: 'ترمیم کی قسم',
+      select_type: 'قسم منتخب کریں',
+      increase: 'اسٹاک بڑھائیں',
+      decrease: 'اسٹاک گھٹائیں',
+      quantity: 'مقدار',
+      batch: 'بیچ نمبر',
+      all_batches: 'تمام بیچ',
+      reason: 'وجہ',
+      select_reason: 'وجہ منتخب کریں',
+      damage: 'نقصان/نقص',
+      expiry: 'منقضی',
+      correction: 'اسٹاک گنتی کی ترمیم',
+      return: 'فراہم کرنے والے کی واپسی',
+      other: 'دیگر',
+      notes: 'نوٹس',
+      save_btn: 'ترمیم محفوظ کریں',
+    },
+    stock_movement: {
+      title: 'اسٹاک موومینٹ تاریخ',
+      sub: 'اسٹاک تبدیلیوں کا مکمل آڈٹ ٹریل',
+      all_products: 'تمام مصنوعات',
+      all_types: 'تمام اقسام',
+      purchase: 'خرید',
+      sale: 'فروخت',
+      adjustment_increase: 'ترمیم (+)',
+      adjustment_decrease: 'ترمیم (-)',
+      return: 'واپسی',
+      opening: 'ابتدائی اسٹاک',
+      from: 'سے',
+      to: 'تک',
+      apply: 'لاگو کریں',
+      no_movements: 'کوئی اسٹاک موومینٹ ریکارڈ نہیں۔',
+    },
+    low_stock: {
+      title: 'کم اسٹاک انتباہ',
+      sub: 'کم از کم اسٹاک سطح سے نیچے کے مصنوعات',
+      no_alerts: 'کوئی کم اسٹاک انتباہ نہیں۔ تمام مصنوعات اچھی طرح سے اسٹاک ہیں۔',
+      all: 'کم اسٹاک اور آؤٹ آف اسٹاک',
+      low_only: 'صرف کم اسٹاک',
+      out_only: 'صرف آؤٹ آف اسٹاک',
+    },
+    stock_reports: {
+      title: 'اسٹاک رپورٹ',
+      sub: 'انوینٹری رپورٹ جنریٹ کریں',
+      report_type: 'رپورٹ:',
+      current_stock: 'موجودہ اسٹاک رپورٹ',
+      product_wise: 'پروڈکٹ وار اسٹاک',
+      purchase_report: 'خرید رپورٹ',
+      sales_report: 'فروخت رپورٹ',
+      low_stock_report: 'کم اسٹاک رپورٹ',
+      expiry_report: 'منقضی رپورٹ',
+      movement_report: 'اسٹاک موومینٹ رپورٹ',
+      valuation_report: 'اسٹاک_VALUATION رپورٹ',
+      generate: 'تیار کریں',
+    },
     backup: {
       backup_restore: 'بیک اپ اور بحالی',
       download_backup: 'مکمل بیک اپ ڈاؤن لوڈ کریں',
@@ -828,11 +1408,22 @@ let transactions = [];// { id, customerPhone, type, amount, date, note }
 let shots = {};       // entryId -> data URL (payment screenshot)
 let currentPhone = null; // phone of the ledger currently being viewed
 
+// Inventory state
+let products = [];        // { id, name, sku, barcode, category, brand, purchasePrice, sellingPrice, currentStock, unit, minStockAlert, batchNumber, expiryDate, manufacturer, supplierId, status, notes, createdAt, updatedAt }
+let batches = [];         // { id, productId, batchNumber, expiryDate, quantity, purchasePrice, purchaseId, createdAt }
+let purchases = [];       // { id, supplierId, invoiceNo, date, items[], discount, grandTotal, paymentMode, notes, createdAt }
+let stockMovements = [];  // { id, productId, batchId, type, quantity, referenceId, referenceType, date, notes, createdAt }
+let suppliers = [];       // { id, name, mobile, address, gstin, notes, createdAt }
+
 function loadState() {
   try { customers = JSON.parse(localStorage.getItem(STORAGE_CUSTOMERS) || '[]'); } catch (e) { customers = []; }
   try { transactions = JSON.parse(localStorage.getItem(STORAGE_TRANSACTIONS) || '[]'); } catch (e) { transactions = []; }
   try { shots = JSON.parse(localStorage.getItem(STORAGE_SHOTS) || '{}'); } catch (e) { shots = {}; }
   try { receipts = JSON.parse(localStorage.getItem(STORAGE_RECEIPTS) || '[]'); } catch (e) { receipts = []; }
+  
+  // Load inventory data with migration
+  loadInventoryData();
+  
   loadSellerDetails();
 }
 
@@ -841,6 +1432,9 @@ function saveState() {
   localStorage.setItem(STORAGE_TRANSACTIONS, JSON.stringify(transactions));
   localStorage.setItem(STORAGE_SHOTS, JSON.stringify(shots));
   localStorage.setItem(STORAGE_RECEIPTS, JSON.stringify(receipts));
+  
+  // Save inventory data
+  saveInventoryData();
 }
 
 function uid() {
@@ -865,8 +1459,6 @@ function formatMoney2(n) {
 }
 
 /* ---------- Receipts (sequential, stored in localStorage) ---------- */
-const STORAGE_RECEIPTS = 'hisaab_receipts';
-const STORAGE_RECEIPT_COUNTER = 'hisaab_receipt_counter';
 let receipts = []; // { receiptNo, customerPhone, customerName, amount, paymentMode, note, date, previousBalance, remainingBalance, transactionId, timestamp }
 
 function loadReceipts() {
@@ -884,7 +1476,6 @@ function nextReceiptNo() {
 }
 
 /* ---------- Seller / Shop Details (persisted in localStorage) ---------- */
-const STORAGE_SELLER = 'hisaab_seller_details';
 let sellerDetails = { ownerName: '', shopName: '', mobile: '', address: '', upiId: '', paymentQr: '' };
 
 function loadSellerDetails() {
@@ -914,6 +1505,135 @@ function getSellerShopName() {
 }
 function hasSellerDetails() {
   return sellerDetails.ownerName.length > 0;
+}
+
+/* ---------- Inventory Data Migration & Persistence ---------- */
+const INVENTORY_DATA_VERSION = 1;
+
+function loadInventoryData() {
+  try {
+    products = JSON.parse(localStorage.getItem(STORAGE_PRODUCTS) || '[]');
+  } catch (e) { products = []; }
+  
+  try {
+    batches = JSON.parse(localStorage.getItem(STORAGE_BATCHES) || '[]');
+  } catch (e) { batches = []; }
+  
+  try {
+    purchases = JSON.parse(localStorage.getItem(STORAGE_PURCHASES) || '[]');
+  } catch (e) { purchases = []; }
+  
+  try {
+    stockMovements = JSON.parse(localStorage.getItem(STORAGE_STOCK_MOVEMENTS) || '[]');
+  } catch (e) { stockMovements = []; }
+  
+  try {
+    suppliers = JSON.parse(localStorage.getItem(STORAGE_SUPPLIERS) || '[]');
+  } catch (e) { suppliers = []; }
+  
+  // Migration for older data (if any)
+  migrateInventoryData();
+}
+
+function saveInventoryData() {
+  localStorage.setItem(STORAGE_PRODUCTS, JSON.stringify(products));
+  localStorage.setItem(STORAGE_BATCHES, JSON.stringify(batches));
+  localStorage.setItem(STORAGE_PURCHASES, JSON.stringify(purchases));
+  localStorage.setItem(STORAGE_STOCK_MOVEMENTS, JSON.stringify(stockMovements));
+  localStorage.setItem(STORAGE_SUPPLIERS, JSON.stringify(suppliers));
+}
+
+function migrateInventoryData() {
+  // Version 1: Initial schema - no migration needed for fresh installs
+  // This function will handle future schema changes
+  const version = parseInt(localStorage.getItem('hisaab_inventory_version') || '0', 10);
+  if (version < INVENTORY_DATA_VERSION) {
+    // Future migrations would go here
+    localStorage.setItem('hisaab_inventory_version', String(INVENTORY_DATA_VERSION));
+  }
+}
+
+/* Create a stock movement record */
+function createStockMovement(productId, type, quantity, referenceId, referenceType, notes, batchId = null) {
+  const movement = {
+    id: uid(),
+    productId,
+    batchId,
+    type, // 'purchase', 'sale', 'adjustment_increase', 'adjustment_decrease', 'return', 'opening'
+    quantity: Number(quantity),
+    referenceId,
+    referenceType,
+    notes: notes || '',
+    date: new Date().toISOString().slice(0, 10),
+    createdAt: new Date().toISOString(),
+  };
+  stockMovements.push(movement);
+  return movement;
+}
+
+/* Update product stock - source of truth is stock movements */
+function recalculateProductStock(productId) {
+  const movements = stockMovements.filter(m => m.productId === productId);
+  let total = 0;
+  for (const m of movements) {
+    if (['purchase', 'adjustment_increase', 'return', 'opening'].includes(m.type)) {
+      total += m.quantity;
+    } else if (['sale', 'adjustment_decrease'].includes(m.type)) {
+      total -= m.quantity;
+    }
+  }
+  return Math.max(0, total);
+}
+
+/* Recalculate all product stocks from movements */
+function recalculateAllStocks() {
+  for (const p of products) {
+    p.currentStock = recalculateProductStock(p.id);
+  }
+}
+
+/* Get product by ID */
+function getProductById(id) {
+  return products.find(p => p.id === id);
+}
+
+/* Get product by barcode */
+function getProductByBarcode(barcode) {
+  if (!barcode) return null;
+  return products.find(p => p.barcode === barcode && p.status === 'active');
+}
+
+/* Get product by SKU */
+function getProductBySku(sku) {
+  if (!sku) return null;
+  return products.find(p => p.sku === sku && p.status === 'active');
+}
+
+/* Get supplier by ID */
+function getSupplierById(id) {
+  return suppliers.find(s => s.id === id);
+}
+
+/* Get active products for billing search */
+function getActiveProducts() {
+  return products.filter(p => p.status === 'active');
+}
+
+/* Get low stock products */
+function getLowStockProducts() {
+  return products.filter(p => p.status === 'active' && p.currentStock <= p.minStockAlert && p.minStockAlert > 0);
+}
+
+/* Get out of stock products */
+function getOutOfStockProducts() {
+  return products.filter(p => p.status === 'active' && p.currentStock <= 0);
+}
+
+/* Get expiring products (within days) */
+function getExpiringProducts(days = 30) {
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() + days);
+  return batches.filter(b => b.quantity > 0 && b.expiryDate && new Date(b.expiryDate) <= cutoff);
 }
 
 let sellerPaymentQrCache = '';
@@ -1156,6 +1876,18 @@ function route() {
       document.getElementById('restore-file').value = '';
     }
     if (id === 'view-seller-details') renderSellerDetailsView();
+    
+    // Inventory views
+    if (id === 'view-stock-dashboard') renderStockDashboard();
+    if (id === 'view-products') renderProductsList();
+    if (id === 'view-add-product') renderAddProductView();
+    if (id === 'view-purchase') renderPurchaseView();
+    if (id === 'view-suppliers') renderSuppliersList();
+    if (id === 'view-add-supplier') renderAddSupplierView();
+    if (id === 'view-stock-adjustment') renderStockAdjustmentView();
+    if (id === 'view-stock-movement') renderStockMovementView();
+    if (id === 'view-low-stock') renderLowStockView();
+    if (id === 'view-stock-reports') renderStockReportsView();
   }
 }
 
@@ -2936,7 +3668,12 @@ function createBackup() {
     data: {
       customers: JSON.parse(JSON.stringify(customers)),
       transactions: JSON.parse(JSON.stringify(transactions)),
-      shots: JSON.parse(JSON.stringify(shots))
+      shots: JSON.parse(JSON.stringify(shots)),
+      products: JSON.parse(JSON.stringify(products)),
+      batches: JSON.parse(JSON.stringify(batches)),
+      purchases: JSON.parse(JSON.stringify(purchases)),
+      stockMovements: JSON.parse(JSON.stringify(stockMovements)),
+      suppliers: JSON.parse(JSON.stringify(suppliers))
     }
   };
 }
@@ -2954,7 +3691,7 @@ function downloadBackup() {
   URL.revokeObjectURL(url);
 
   const info = document.getElementById('backup-info');
-  info.textContent = `Backup downloaded: ${backup.data.customers.length} customer(s), ${backup.data.transactions.length} transaction(s), ${Object.keys(backup.data.shots).length} screenshot(s).`;
+  info.textContent = `Backup downloaded: ${backup.data.customers.length} customer(s), ${backup.data.transactions.length} transaction(s), ${Object.keys(backup.data.shots).length} screenshot(s), ${backup.data.products.length} product(s), ${backup.data.purchases.length} purchase(s), ${backup.data.suppliers.length} supplier(s).`;
   info.className = 'msg ok';
   info.style.display = 'block';
 }
@@ -2979,7 +3716,7 @@ function validateBackup(parsed) {
     return { valid: false, errors, data: null };
   }
 
-  const { customers: bCustomers, transactions: bTransactions, shots: bShots } = parsed.data;
+  const { customers: bCustomers, transactions: bTransactions, shots: bShots, products: bProducts, batches: bBatches, purchases: bPurchases, stockMovements: bStockMovements, suppliers: bSuppliers } = parsed.data;
 
   if (!Array.isArray(bCustomers)) {
     errors.push('"customers" must be an array.');
@@ -3027,6 +3764,23 @@ function validateBackup(parsed) {
     errors.push('"shots" must be an object.');
   }
 
+  // Inventory validation (optional - not required for backward compatibility)
+  if (bProducts !== undefined && !Array.isArray(bProducts)) {
+    errors.push('"products" must be an array.');
+  }
+  if (bBatches !== undefined && !Array.isArray(bBatches)) {
+    errors.push('"batches" must be an array.');
+  }
+  if (bPurchases !== undefined && !Array.isArray(bPurchases)) {
+    errors.push('"purchases" must be an array.');
+  }
+  if (bStockMovements !== undefined && !Array.isArray(bStockMovements)) {
+    errors.push('"stockMovements" must be an array.');
+  }
+  if (bSuppliers !== undefined && !Array.isArray(bSuppliers)) {
+    errors.push('"suppliers" must be an array.');
+  }
+
   return {
     valid: errors.length === 0 || errors.every(e => e.startsWith('Warning:')),
     errors,
@@ -3048,11 +3802,22 @@ function showRestorePreview(parsed) {
     return null;
   }
 
-  const { customers: bCustomers, transactions: bTransactions, shots: bShots } = validation.data;
+  const { customers: bCustomers, transactions: bTransactions, shots: bShots, products: bProducts, batches: bBatches, purchases: bPurchases, stockMovements: bStockMovements, suppliers: bSuppliers } = validation.data;
 
   const existingCustomerPhones = new Set(customers.map(c => c.phone));
   const newCustomers = bCustomers.filter(c => !existingCustomerPhones.has(c.phone));
   const duplicateCustomers = bCustomers.filter(c => existingCustomerPhones.has(c.phone));
+
+  // Inventory counts for preview
+  const bProductsCount = bProducts ? bProducts.length : 0;
+  const bPurchasesCount = bPurchases ? bPurchases.length : 0;
+  const bSuppliersCount = bSuppliers ? bSuppliers.length : 0;
+  const bStockMovementsCount = bStockMovements ? bStockMovements.length : 0;
+
+  const existingProductsCount = products.length;
+  const existingPurchasesCount = purchases.length;
+  const existingSuppliersCount = suppliers.length;
+  const existingStockMovementsCount = stockMovements.length;
 
   const warningHtml = validation.errors.filter(e => e.startsWith('Warning:')).length > 0
     ? `<div class="msg error" style="margin-bottom:10px;">${validation.errors.filter(e => e.startsWith('Warning:')).join('<br>')}</div>`
@@ -3065,10 +3830,18 @@ function showRestorePreview(parsed) {
       <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Customers in backup</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${bCustomers.length}</strong></td></tr>
       <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Transactions in backup</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${bTransactions.length}</strong></td></tr>
       <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Screenshots in backup</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${bShots ? Object.keys(bShots).length : 0}</strong></td></tr>
+      <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Products in backup</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${bProductsCount}</strong></td></tr>
+      <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Purchases in backup</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${bPurchasesCount}</strong></td></tr>
+      <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Suppliers in backup</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${bSuppliersCount}</strong></td></tr>
+      <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Stock movements in backup</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${bStockMovementsCount}</strong></td></tr>
       <tr><td style="border-bottom:1px solid var(--border);padding:6px;">New customers (will be added)</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${newCustomers.length}</strong></td></tr>
       <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Duplicate customers (skipped on merge)</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${duplicateCustomers.length}</strong></td></tr>
       <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Existing customers in app</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${customers.length}</strong></td></tr>
       <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Existing transactions in app</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${transactions.length}</strong></td></tr>
+      <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Existing products in app</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${existingProductsCount}</strong></td></tr>
+      <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Existing purchases in app</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${existingPurchasesCount}</strong></td></tr>
+      <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Existing suppliers in app</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${existingSuppliersCount}</strong></td></tr>
+      <tr><td style="border-bottom:1px solid var(--border);padding:6px;">Existing stock movements in app</td><td style="border-bottom:1px solid var(--border);padding:6px;"><strong>${existingStockMovementsCount}</strong></td></tr>
     </table>
   `;
 
@@ -3079,12 +3852,12 @@ function showRestorePreview(parsed) {
   actions.style.display = 'flex';
 
   document.getElementById('restore-merge').addEventListener('click', function () {
-    if (!confirm(`Merge ${newCustomers.length} new customer(s) and ${bTransactions.length} transaction(s)? Duplicate phone numbers will be skipped. Existing data will be preserved.`)) return;
+    if (!confirm(`Merge ${newCustomers.length} new customer(s), ${bTransactions.length} transaction(s), ${bProductsCount} product(s), ${bPurchasesCount} purchase(s), ${bSuppliersCount} supplier(s)? Duplicate phone numbers will be skipped. Existing data will be preserved.`)) return;
     performRestore(validation.data, 'merge');
   });
 
   document.getElementById('restore-replace').addEventListener('click', function () {
-    if (!confirm(`WARNING: This will REPLACE all existing customers, transactions, and screenshots. This cannot be undone. Are you sure?`)) return;
+    if (!confirm(`WARNING: This will REPLACE all existing customers, transactions, screenshots, products, purchases, suppliers, and stock movements. This cannot be undone. Are you sure?`)) return;
     if (!confirm('Final confirmation: replace all existing data with this backup?')) return;
     performRestore(validation.data, 'replace');
   });
@@ -3097,6 +3870,11 @@ function performRestore(backupData, mode) {
     customers = backupData.customers.map(c => ({ ...c }));
     transactions = backupData.transactions.map(t => ({ ...t }));
     shots = backupData.shots ? { ...backupData.shots } : {};
+    products = backupData.products ? backupData.products.map(p => ({ ...p })) : [];
+    batches = backupData.batches ? backupData.batches.map(b => ({ ...b })) : [];
+    purchases = backupData.purchases ? backupData.purchases.map(p => ({ ...p })) : [];
+    stockMovements = backupData.stockMovements ? backupData.stockMovements.map(m => ({ ...m })) : [];
+    suppliers = backupData.suppliers ? backupData.suppliers.map(s => ({ ...s })) : [];
   } else {
     /* merge */
     const existingPhones = new Set(customers.map(c => c.phone));
@@ -3112,6 +3890,22 @@ function performRestore(backupData, mode) {
     if (backupData.shots) {
       Object.assign(shots, backupData.shots);
     }
+    // Merge inventory data (append only, no deduplication by ID to avoid conflicts)
+    if (backupData.products) {
+      products.push(...backupData.products.map(p => ({ ...p })));
+    }
+    if (backupData.batches) {
+      batches.push(...backupData.batches.map(b => ({ ...b })));
+    }
+    if (backupData.purchases) {
+      purchases.push(...backupData.purchases.map(p => ({ ...p })));
+    }
+    if (backupData.stockMovements) {
+      stockMovements.push(...backupData.stockMovements.map(m => ({ ...m })));
+    }
+    if (backupData.suppliers) {
+      suppliers.push(...backupData.suppliers.map(s => ({ ...s })));
+    }
   }
 
   saveState();
@@ -3119,7 +3913,7 @@ function performRestore(backupData, mode) {
   showView('view-home');
 
   const result = document.getElementById('restore-result');
-  result.textContent = `Restore complete (${mode}): ${customers.length} customer(s), ${transactions.length} transaction(s), ${Object.keys(shots).length} screenshot(s).`;
+  result.textContent = `Restore complete (${mode}): ${customers.length} customer(s), ${transactions.length} transaction(s), ${Object.keys(shots).length} screenshot(s), ${products.length} product(s), ${purchases.length} purchase(s), ${suppliers.length} supplier(s), ${stockMovements.length} stock movement(s).`;
   result.className = 'msg ok';
 
   document.getElementById('restore-file').value = '';
@@ -3461,7 +4255,1749 @@ function renderSellerDetailsView() {
     : t('seller_details.not_set');
 }
 
-if (sellerDetailsForm) {
+/* ---------- Inventory Render Functions ---------- */
+
+/* Stock Dashboard */
+function renderStockDashboard() {
+  const grid = document.getElementById('stock-dashboard-grid');
+  if (!grid) return;
+  
+  const totalProducts = products.filter(p => p.status === 'active').length;
+  const totalStockUnits = products.filter(p => p.status === 'active').reduce((sum, p) => sum + (p.currentStock || 0), 0);
+  const totalPurchaseValue = products.filter(p => p.status === 'active').reduce((sum, p) => sum + (p.currentStock || 0) * (p.purchasePrice || 0), 0);
+  const lowStockProducts = getLowStockProducts().length;
+  const outOfStockProducts = getOutOfStockProducts().length;
+  const expiringProducts = getExpiringProducts(30).length;
+  
+  // Recent purchases (last 5)
+  const recentPurchases = [...purchases].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+  // Recent sales (last 5 credit transactions with items)
+  const recentSales = transactions
+    .filter(t => t.type === 'credit' && t.items && t.items.length > 0)
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 5);
+  // Recent adjustments (last 5)
+  const recentAdjustments = [...stockMovements]
+    .filter(m => ['adjustment_increase', 'adjustment_decrease'].includes(m.type))
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 5);
+  
+  grid.innerHTML = `
+    <div class="dashboard-card">
+      <div class="dashboard-label">${t('stock.total_products')}</div>
+      <div class="dashboard-value">${totalProducts}</div>
+    </div>
+    <div class="dashboard-card">
+      <div class="dashboard-label">${t('stock.total_stock_units')}</div>
+      <div class="dashboard-value">${formatMoney(totalStockUnits)}</div>
+    </div>
+    <div class="dashboard-card">
+      <div class="dashboard-label">${t('stock.total_purchase_value')}</div>
+      <div class="dashboard-value">${t('common.currency')} ${formatMoney2(totalPurchaseValue)}</div>
+    </div>
+    <div class="dashboard-card warning">
+      <div class="dashboard-label">${t('stock.low_stock_count')}</div>
+      <div class="dashboard-value">${lowStockProducts}</div>
+    </div>
+    <div class="dashboard-card danger">
+      <div class="dashboard-label">${t('stock.out_of_stock_count')}</div>
+      <div class="dashboard-value">${outOfStockProducts}</div>
+    </div>
+    <div class="dashboard-card warning">
+      <div class="dashboard-label">${t('stock.expiring_count')}</div>
+      <div class="dashboard-value">${expiringProducts}</div>
+    </div>
+    
+    <div class="dashboard-section">
+      <h4>${t('stock.recent_purchases')}</h4>
+      <div class="recent-list">
+        ${recentPurchases.length === 0 
+          ? `<p class="hint">${t('stock.no_recent_purchases')}</p>`
+          : recentPurchases.map(p => {
+              const supplier = getSupplierById(p.supplierId);
+              return `<div class="recent-item">
+                <span>${escapeHtml(p.invoiceNo || 'N/A')} - ${escapeHtml(supplier ? supplier.name : 'Unknown Supplier')}</span>
+                <span>${t('common.currency')} ${formatMoney2(p.grandTotal)}</span>
+              </div>`;
+            }).join('')
+        }
+      </div>
+    </div>
+    
+    <div class="dashboard-section">
+      <h4>${t('stock.recent_sales')}</h4>
+      <div class="recent-list">
+        ${recentSales.length === 0
+          ? `<p class="hint">${t('stock.no_recent_sales')}</p>`
+          : recentSales.map(t => {
+              const customer = customers.find(c => c.phone === t.customerPhone);
+              return `<div class="recent-item">
+                <span>${escapeHtml(t.invoiceNo || 'N/A')} - ${escapeHtml(customer ? customer.name : 'Unknown')}</span>
+                <span>${t('common.currency')} ${formatMoney2(t.amount)}</span>
+              </div>`;
+            }).join('')
+        }
+      </div>
+    </div>
+    
+    <div class="dashboard-section">
+      <h4>${t('stock.recent_adjustments')}</h4>
+      <div class="recent-list">
+        ${recentAdjustments.length === 0
+          ? `<p class="hint">${t('stock.no_recent_adjustments')}</p>`
+          : recentAdjustments.map(m => {
+              const product = getProductById(m.productId);
+              return `<div class="recent-item">
+                <span>${escapeHtml(product ? product.name : 'Unknown Product')} (${m.type === 'adjustment_increase' ? '+' : '-'}${formatMoney(m.quantity)})</span>
+                <span>${escapeHtml(m.notes || '')}</span>
+              </div>`;
+            }).join('')
+        }
+      </div>
+    </div>
+  `;
+}
+
+/* Products List */
+function renderProductsList() {
+  const list = document.getElementById('products-list');
+  const empty = document.getElementById('products-empty');
+  const searchInput = document.getElementById('product-search');
+  const categoryFilter = document.getElementById('product-category-filter');
+  const statusFilter = document.getElementById('product-status-filter');
+  
+  if (!list) return;
+  
+  const render = () => {
+    const search = (searchInput?.value || '').toLowerCase().trim();
+    const category = categoryFilter?.value || '';
+    const status = statusFilter?.value || '';
+    
+    let filtered = products;
+    
+    if (search) {
+      filtered = filtered.filter(p => 
+        p.name.toLowerCase().includes(search) ||
+        p.sku.toLowerCase().includes(search) ||
+        (p.barcode || '').toLowerCase().includes(search)
+      );
+    }
+    if (category) {
+      filtered = filtered.filter(p => p.category === category);
+    }
+    if (status) {
+      filtered = filtered.filter(p => p.status === status);
+    }
+    
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
+    
+    if (filtered.length === 0) {
+      list.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    
+    empty.style.display = 'none';
+    list.innerHTML = filtered.map(p => {
+      const supplier = p.supplierId ? getSupplierById(p.supplierId) : null;
+      const isLowStock = p.currentStock <= p.minStockAlert && p.minStockAlert > 0;
+      const isOutOfStock = p.currentStock <= 0;
+      const stockClass = isOutOfStock ? 'out-of-stock' : (isLowStock ? 'low-stock' : '');
+      
+      return `
+        <div class="product-card ${stockClass}" data-product-id="${p.id}">
+          <div class="product-header">
+            <div class="product-name">${escapeHtml(p.name)}</div>
+            <div class="product-sku">${escapeHtml(p.sku)}</div>
+          </div>
+          <div class="product-details">
+            <span class="product-category">${t('products.category.' + p.category) || p.category}</span>
+            <span class="product-unit">${t('products.unit.' + p.unit) || p.unit}</span>
+            <span class="product-status ${p.status}">${t('products.status.' + p.status)}</span>
+          </div>
+          <div class="product-prices">
+            <span>Purchase: ${t('common.currency')} ${formatMoney2(p.purchasePrice)}</span>
+            <span>Sell: ${t('common.currency')} ${formatMoney2(p.sellingPrice)}</span>
+          </div>
+          <div class="product-stock ${stockClass}">
+            <span>Stock: ${formatMoney(p.currentStock)} ${t('products.unit.' + p.unit) || p.unit}</span>
+            ${isLowStock ? `<span class="stock-alert">${t('products.low_stock_alert')}</span>` : ''}
+            ${isOutOfStock ? `<span class="stock-alert danger">${t('products.out_of_stock')}</span>` : ''}
+          </div>
+          <div class="product-actions">
+            <button class="btn btn-sm edit-product" data-id="${p.id}" data-i18n="common.edit">Edit</button>
+            <button class="btn btn-sm btn-danger delete-product" data-id="${p.id}" data-i18n="common.delete">Delete</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+    
+    // Wire up edit/delete buttons
+    list.querySelectorAll('.edit-product').forEach(btn => {
+      btn.onclick = (e) => {
+        const id = e.currentTarget.dataset.id;
+        editProduct(id);
+      };
+    });
+    list.querySelectorAll('.delete-product').forEach(btn => {
+      btn.onclick = (e) => {
+        const id = e.currentTarget.dataset.id;
+        deleteProduct(id);
+      };
+    });
+  };
+  
+  // Initial render
+  render();
+  
+  // Event listeners
+  if (searchInput) {
+    searchInput.oninput = render;
+  }
+  if (categoryFilter) {
+    categoryFilter.onchange = render;
+  }
+  if (statusFilter) {
+    statusFilter.onchange = render;
+  }
+  
+  // Add product button
+  const addBtn = document.getElementById('add-product-from-list-btn');
+  if (addBtn) {
+    addBtn.onclick = () => {
+      // Reset form for new product
+      document.getElementById('add-product-form').reset();
+      document.getElementById('add-product-title').textContent = t('products.add_product');
+      document.getElementById('add-product-sub').textContent = t('products.add_sub');
+      document.getElementById('add-product-form').dataset.editId = '';
+      showView('view-add-product');
+    };
+  }
+}
+
+/* Add/Edit Product View */
+function renderAddProductView() {
+  const form = document.getElementById('add-product-form');
+  const title = document.getElementById('add-product-title');
+  const sub = document.getElementById('add-product-sub');
+  const categorySelect = document.getElementById('product-category');
+  const unitSelect = document.getElementById('product-unit');
+  const customUnitField = document.getElementById('custom-unit-field');
+  const medicalFields = document.getElementById('medical-fields');
+  const supplierSelect = document.getElementById('product-supplier');
+  const cancelBtn = document.getElementById('product-cancel-btn');
+  const savedMsg = document.getElementById('product-saved-msg');
+const errorEl = document.getElementById('product-form-error');
+   
+  if (!form) return;
+
+  // Handle edit mode - populate form with existing product data
+  if (form.dataset.editId) {
+    const product = getProductById(form.dataset.editId);
+    if (product) {
+      document.getElementById('product-name').value = product.name;
+      document.getElementById('product-sku').value = product.sku;
+      document.getElementById('product-barcode').value = product.barcode || '';
+      document.getElementById('product-category').value = product.category;
+      document.getElementById('product-brand').value = product.brand || '';
+      document.getElementById('product-unit').value = product.unit;
+      document.getElementById('product-purchase-price').value = product.purchasePrice;
+      document.getElementById('product-selling-price').value = product.sellingPrice;
+      document.getElementById('product-current-stock').value = product.currentStock;
+      document.getElementById('product-min-stock').value = product.minStockAlert;
+      document.getElementById('product-supplier').value = product.supplierId || '';
+      document.getElementById('product-status').value = product.status;
+      document.getElementById('product-notes').value = product.notes || '';
+      
+      // Handle medical fields
+      if (product.category === 'medical') {
+        medicalFields.style.display = 'block';
+        document.getElementById('product-batch').required = true;
+        document.getElementById('product-expiry').required = true;
+        document.getElementById('product-batch').value = product.batchNumber || '';
+        document.getElementById('product-expiry').value = product.expiryDate || '';
+        document.getElementById('product-manufacturer').value = product.manufacturer || '';
+      } else {
+        medicalFields.style.display = 'none';
+        document.getElementById('product-batch').required = false;
+        document.getElementById('product-expiry').required = false;
+      }
+      
+      // Handle custom unit
+      const standardUnits = ['pcs', 'kg', 'g', 'ltr', 'ml', 'mtr', 'cm', 'box', 'strip', 'bottle', 'pack', 'dozen'];
+      if (!standardUnits.includes(product.unit)) {
+        unitSelect.value = 'custom';
+        customUnitField.style.display = 'block';
+        document.getElementById('product-custom-unit').required = true;
+        document.getElementById('product-custom-unit').value = product.unit;
+      }
+      
+      // Update title
+      title.textContent = t('products.edit_product') || 'Edit Product';
+      sub.textContent = t('products.edit_sub') || 'Modify product details';
+    }
+  }
+  
+  // Populate supplier dropdown
+  if (supplierSelect) {
+    supplierSelect.innerHTML = `<option value="" data-i18n="products.select_supplier">${t('products.select_supplier')}</option>` +
+      suppliers.filter(s => s.status !== 'inactive').map(s => 
+        `<option value="${s.id}">${escapeHtml(s.name)}</option>`
+      ).join('');
+  }
+  
+  // Handle category change - show medical fields for medical products
+  if (categorySelect) {
+    categorySelect.onchange = () => {
+      if (categorySelect.value === 'medical') {
+        medicalFields.style.display = 'block';
+        // Make batch and expiry required
+        document.getElementById('product-batch').required = true;
+        document.getElementById('product-expiry').required = true;
+      } else {
+        medicalFields.style.display = 'none';
+        document.getElementById('product-batch').required = false;
+        document.getElementById('product-expiry').required = false;
+      }
+    };
+  }
+  
+  // Handle unit change - show custom unit field
+  if (unitSelect) {
+    unitSelect.onchange = () => {
+      if (unitSelect.value === 'custom') {
+        customUnitField.style.display = 'block';
+        document.getElementById('product-custom-unit').required = true;
+      } else {
+        customUnitField.style.display = 'none';
+        document.getElementById('product-custom-unit').required = false;
+      }
+    };
+  }
+  
+  // Cancel button
+  if (cancelBtn) {
+    cancelBtn.onclick = () => {
+      form.reset();
+      customUnitField.style.display = 'none';
+      medicalFields.style.display = 'none';
+      form.dataset.editId = '';
+      title.textContent = t('products.add_product');
+      sub.textContent = t('products.add_sub');
+      errorEl.textContent = '';
+      savedMsg.style.display = 'none';
+      showView('view-products');
+    };
+  }
+  
+  // Form submit
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    errorEl.textContent = '';
+    savedMsg.style.display = 'none';
+    
+    const name = document.getElementById('product-name').value.trim();
+    const sku = document.getElementById('product-sku').value.trim().toUpperCase();
+    const barcode = document.getElementById('product-barcode').value.trim();
+    const category = document.getElementById('product-category').value;
+    const brand = document.getElementById('product-brand').value.trim();
+    const unit = document.getElementById('product-unit').value;
+    const customUnit = document.getElementById('product-custom-unit').value.trim();
+    const purchasePrice = parseFloat(document.getElementById('product-purchase-price').value);
+    const sellingPrice = parseFloat(document.getElementById('product-selling-price').value);
+    const currentStock = parseFloat(document.getElementById('product-current-stock').value) || 0;
+    const minStock = parseFloat(document.getElementById('product-min-stock').value) || 0;
+    const batchNumber = document.getElementById('product-batch').value.trim();
+    const expiryDate = document.getElementById('product-expiry').value;
+    const manufacturer = document.getElementById('product-manufacturer').value.trim();
+    const supplierId = document.getElementById('product-supplier').value || null;
+    const status = document.getElementById('product-status').value;
+    const notes = document.getElementById('product-notes').value.trim();
+    
+    // Validation
+    if (!name) { errorEl.textContent = t('products.error_name') || 'Enter product name'; return; }
+    if (!sku) { errorEl.textContent = t('products.error_sku') || 'Enter SKU'; return; }
+    if (!category) { errorEl.textContent = t('products.error_category') || 'Select category'; return; }
+    if (!unit) { errorEl.textContent = t('products.error_unit') || 'Select unit'; return; }
+    if (unit === 'custom' && !customUnit) { errorEl.textContent = t('products.error_custom_unit') || 'Enter custom unit name'; return; }
+    if (isNaN(purchasePrice) || purchasePrice < 0) { errorEl.textContent = t('products.error_purchase_price') || 'Enter valid purchase price'; return; }
+    if (isNaN(sellingPrice) || sellingPrice < 0) { errorEl.textContent = t('products.error_selling_price') || 'Enter valid selling price'; return; }
+    
+    // Medical product validation
+    if (category === 'medical') {
+      if (!batchNumber) { errorEl.textContent = t('products.error_batch') || 'Batch number required for medical products'; return; }
+      if (!expiryDate) { errorEl.textContent = t('products.error_expiry') || 'Expiry date required for medical products'; return; }
+    }
+    
+    // Check for duplicate SKU
+    const existingSku = products.find(p => p.sku === sku && p.id !== form.dataset.editId);
+    if (existingSku) { errorEl.textContent = t('products.error_duplicate_sku') || 'SKU already exists'; return; }
+    
+    // Check for duplicate barcode
+    if (barcode) {
+      const existingBarcode = products.find(p => p.barcode === barcode && p.id !== form.dataset.editId);
+      if (existingBarcode) { errorEl.textContent = t('products.error_duplicate_barcode') || 'Barcode already exists'; return; }
+    }
+    
+    const finalUnit = unit === 'custom' ? customUnit : unit;
+    const now = new Date().toISOString();
+    
+    if (form.dataset.editId) {
+      // Edit existing product
+      const idx = products.findIndex(p => p.id === form.dataset.editId);
+      if (idx !== -1) {
+        const oldProduct = products[idx];
+        
+        products[idx] = {
+          ...oldProduct,
+          name,
+          sku,
+          barcode,
+          category,
+          brand,
+          unit: finalUnit,
+          purchasePrice,
+          sellingPrice,
+          currentStock,
+          minStockAlert: minStock,
+          batchNumber: category === 'medical' ? batchNumber : '',
+          expiryDate: category === 'medical' ? expiryDate : '',
+          manufacturer: category === 'medical' ? manufacturer : '',
+          supplierId,
+          status,
+          notes,
+          updatedAt: now,
+        };
+        
+        // If stock changed, create opening adjustment movement
+        if (oldProduct.currentStock !== currentStock) {
+          const diff = currentStock - oldProduct.currentStock;
+          if (diff !== 0) {
+            createStockMovement(
+              oldProduct.id,
+              diff > 0 ? 'adjustment_increase' : 'adjustment_decrease',
+              Math.abs(diff),
+              oldProduct.id,
+              'product_edit',
+              `Stock adjusted from ${oldProduct.currentStock} to ${currentStock} during product edit`
+            );
+          }
+        }
+        
+        saveState();
+        savedMsg.textContent = t('products.updated') || 'Product updated successfully';
+      }
+    } else {
+      // Create new product
+      const product = {
+        id: uid(),
+        name,
+        sku,
+        barcode,
+        category,
+        brand,
+        unit: finalUnit,
+        purchasePrice,
+        sellingPrice,
+        currentStock,
+        minStockAlert: minStock,
+        batchNumber: category === 'medical' ? batchNumber : '',
+        expiryDate: category === 'medical' ? expiryDate : '',
+        manufacturer: category === 'medical' ? manufacturer : '',
+        supplierId,
+        status,
+        notes,
+        createdAt: now,
+        updatedAt: now,
+      };
+      
+      products.push(product);
+      
+      // Create opening stock movement if initial stock > 0
+      if (currentStock > 0) {
+        createStockMovement(
+          product.id,
+          'opening',
+          currentStock,
+          product.id,
+          'product_create',
+          `Initial stock for new product: ${name}`
+        );
+      }
+      
+      saveState();
+      savedMsg.textContent = t('products.saved') || 'Product saved successfully';
+    }
+    
+    savedMsg.className = 'msg ok';
+    savedMsg.style.display = 'block';
+    
+    // Reset form after short delay
+    setTimeout(() => {
+      form.reset();
+      customUnitField.style.display = 'none';
+      medicalFields.style.display = 'none';
+      form.dataset.editId = '';
+      title.textContent = t('products.add_product');
+      sub.textContent = t('products.add_sub');
+      savedMsg.style.display = 'none';
+      showView('view-products');
+    }, 1500);
+  };
+  
+  // Check if editing
+  const editId = form.dataset.editId;
+  if (editId) {
+    const product = getProductById(editId);
+    if (product) {
+      title.textContent = t('products.edit_product') || 'Edit Product';
+      sub.textContent = t('products.edit_sub') || 'Modify product details';
+      
+      document.getElementById('product-name').value = product.name;
+      document.getElementById('product-sku').value = product.sku;
+      document.getElementById('product-barcode').value = product.barcode || '';
+      document.getElementById('product-category').value = product.category;
+      document.getElementById('product-brand').value = product.brand || '';
+      document.getElementById('product-unit').value = product.unit;
+      document.getElementById('product-purchase-price').value = product.purchasePrice;
+      document.getElementById('product-selling-price').value = product.sellingPrice;
+      document.getElementById('product-current-stock').value = product.currentStock;
+      document.getElementById('product-min-stock').value = product.minStockAlert || 0;
+      document.getElementById('product-batch').value = product.batchNumber || '';
+      document.getElementById('product-expiry').value = product.expiryDate || '';
+      document.getElementById('product-manufacturer').value = product.manufacturer || '';
+      document.getElementById('product-supplier').value = product.supplierId || '';
+      document.getElementById('product-status').value = product.status;
+      document.getElementById('product-notes').value = product.notes || '';
+      
+      // Handle custom unit
+      const standardUnits = ['piece', 'kg', 'gram', 'litre', 'ml', 'packet', 'strip', 'box', 'bottle', 'dozen'];
+      if (!standardUnits.includes(product.unit)) {
+        document.getElementById('product-unit').value = 'custom';
+        document.getElementById('product-custom-unit').value = product.unit;
+        customUnitField.style.display = 'block';
+        document.getElementById('product-custom-unit').required = true;
+      }
+      
+      // Handle medical fields
+      if (product.category === 'medical') {
+        medicalFields.style.display = 'block';
+        document.getElementById('product-batch').required = true;
+        document.getElementById('product-expiry').required = true;
+      }
+    }
+  } else {
+    title.textContent = t('products.add_product');
+    sub.textContent = t('products.add_sub');
+    form.reset();
+    customUnitField.style.display = 'none';
+    medicalFields.style.display = 'none';
+  }
+}
+
+/* Edit product */
+function editProduct(id) {
+  const form = document.getElementById('add-product-form');
+  if (!form) return;
+  form.dataset.editId = id;
+  showView('view-add-product');
+}
+
+/* Delete product */
+function deleteProduct(id) {
+  const product = getProductById(id);
+  if (!product) return;
+  
+  if (!confirm(`${t('products.delete_confirm') || 'Delete this product?'}\n\n${escapeHtml(product.name)} (${escapeHtml(product.sku)})`)) {
+    return;
+  }
+  
+  // Check if product has stock movements
+  const hasMovements = stockMovements.some(m => m.productId === id);
+  if (hasMovements) {
+    if (!confirm(`${t('products.delete_with_movements') || 'This product has stock movement history. Deleting will remove the product but keep the movement records. Continue?'}`)) {
+      return;
+    }
+  }
+  
+  products = products.filter(p => p.id !== id);
+  // Also remove related batches
+  batches = batches.filter(b => b.productId !== id);
+  saveState();
+  renderProductsList();
+}
+
+/* Purchase View */
+function renderPurchaseView() {
+  const form = document.getElementById('purchase-form');
+  const supplierSelect = document.getElementById('purchase-supplier');
+  const dateInput = document.getElementById('purchase-date');
+  const paymentModeSelect = document.getElementById('purchase-payment-mode');
+  const cancelBtn = document.getElementById('purchase-cancel-btn');
+  const savedMsg = document.getElementById('purchase-saved-msg');
+  const errorEl = document.getElementById('purchase-form-error');
+  
+  if (!form) return;
+  
+  // Populate supplier dropdown
+  if (supplierSelect) {
+    supplierSelect.innerHTML = `<option value="" disabled selected data-i18n="purchase.select_supplier">${t('purchase.select_supplier')}</option>` +
+      suppliers.filter(s => s.status !== 'inactive').map(s => 
+        `<option value="${s.id}">${escapeHtml(s.name)}</option>`
+      ).join('');
+  }
+  
+  // Set default date
+  if (dateInput) dateInput.value = DEFAULT_DATE;
+  
+  // Initialize purchase table
+  initPurchaseTable();
+  
+  // Cancel button
+  if (cancelBtn) {
+    cancelBtn.onclick = () => {
+      form.reset();
+      if (dateInput) dateInput.value = DEFAULT_DATE;
+      initPurchaseTable();
+      savedMsg.style.display = 'none';
+      errorEl.textContent = '';
+      showView('view-home');
+    };
+  }
+  
+  // Form submit
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    errorEl.textContent = '';
+    savedMsg.style.display = 'none';
+    
+    const supplierId = supplierSelect?.value;
+    const invoiceNo = document.getElementById('purchase-invoice').value.trim();
+    const date = dateInput?.value || DEFAULT_DATE;
+    const paymentMode = paymentModeSelect?.value || 'Cash';
+    const notes = document.getElementById('purchase-notes').value.trim();
+    const discount = parseFloat(document.getElementById('purchase-discount').value) || 0;
+    
+    if (!supplierId) { errorEl.textContent = t('purchase.error_supplier') || 'Select a supplier'; return; }
+    
+    const items = getPurchaseItems();
+    if (items.length === 0) { errorEl.textContent = t('purchase.error_no_items') || 'Add at least one item'; return; }
+    
+    const subtotal = items.reduce((sum, item) => sum + item.amount, 0);
+    const grandTotal = Math.max(0, subtotal - discount);
+    
+    const purchase = {
+      id: uid(),
+      supplierId,
+      invoiceNo,
+      date,
+      items,
+      discount,
+      grandTotal,
+      paymentMode,
+      notes,
+      createdAt: new Date().toISOString(),
+    };
+    
+    purchases.push(purchase);
+    
+    // Create stock movements for each item
+    for (const item of items) {
+      const product = getProductById(item.productId);
+      if (product) {
+        // Update product stock
+        product.currentStock = (product.currentStock || 0) + item.qty;
+        product.updatedAt = new Date().toISOString();
+        
+        // Create batch if medical product with batch/expiry
+        let batchId = null;
+        if (product.category === 'medical' && item.batchNumber && item.expiryDate) {
+          const batch = {
+            id: uid(),
+            productId: product.id,
+            batchNumber: item.batchNumber,
+            expiryDate: item.expiryDate,
+            quantity: item.qty,
+            purchasePrice: item.rate,
+            purchaseId: purchase.id,
+            createdAt: new Date().toISOString(),
+          };
+          batches.push(batch);
+          batchId = batch.id;
+        }
+        
+        // Create stock movement
+        createStockMovement(
+          product.id,
+          'purchase',
+          item.qty,
+          purchase.id,
+          'purchase',
+          `Purchase from supplier: ${getSupplierById(supplierId)?.name || 'Unknown'}`,
+          batchId
+        );
+      }
+    }
+    
+    saveState();
+    savedMsg.textContent = t('purchase.saved') || 'Purchase saved successfully';
+    savedMsg.className = 'msg ok';
+    savedMsg.style.display = 'block';
+    
+    // Reset form
+    setTimeout(() => {
+      form.reset();
+      if (dateInput) dateInput.value = DEFAULT_DATE;
+      initPurchaseTable();
+      savedMsg.style.display = 'none';
+      showView('view-home');
+    }, 1500);
+  };
+}
+
+/* Purchase table functions */
+let purchaseRowCounter = 0;
+
+function initPurchaseTable() {
+  const tbody = document.getElementById('purchase-tbody');
+  const emptyMsg = document.getElementById('purchase-empty');
+  const addBtn = document.getElementById('add-purchase-item-btn');
+  const discountInput = document.getElementById('purchase-discount');
+  
+  if (!tbody || !emptyMsg || !addBtn) return;
+  
+  tbody.innerHTML = '';
+  purchaseRowCounter = 0;
+  emptyMsg.style.display = 'block';
+  
+  addBtn.onclick = () => addPurchaseRow();
+  if (discountInput) discountInput.oninput = updatePurchaseTotals;
+  
+  // Add first row
+  addPurchaseRow();
+}
+
+function addPurchaseRow() {
+  const tbody = document.getElementById('purchase-tbody');
+  const emptyMsg = document.getElementById('purchase-empty');
+  if (!tbody || !emptyMsg) return;
+  
+  purchaseRowCounter++;
+  
+  const row = document.createElement('tr');
+  row.dataset.rowId = purchaseRowCounter;
+  
+  // S.No.
+  const snoCell = document.createElement('td');
+  snoCell.className = 'bill-sno';
+  snoCell.textContent = purchaseRowCounter;
+  row.appendChild(snoCell);
+  
+  // Product (select from active products)
+  const productCell = document.createElement('td');
+  const productSelect = document.createElement('select');
+  productSelect.className = 'bill-input purchase-product';
+  productSelect.required = true;
+  productSelect.innerHTML = `<option value="" disabled selected>${t('purchase.select_product')}</option>` +
+    getActiveProducts().map(p => 
+      `<option value="${p.id}" data-rate="${p.purchasePrice}" data-unit="${p.unit}" data-category="${p.category}">${escapeHtml(p.name)} (${p.sku})</option>`
+    ).join('');
+  productSelect.onchange = () => {
+    const opt = productSelect.options[productSelect.selectedIndex];
+    if (opt.value) {
+      row.querySelector('.purchase-rate').value = opt.dataset.rate || '';
+      row.querySelector('.purchase-unit').textContent = t('products.unit.' + opt.dataset.unit) || opt.dataset.unit;
+      row.querySelector('.purchase-batch-field').style.display = opt.dataset.category === 'medical' ? 'block' : 'none';
+      if (opt.dataset.category === 'medical') {
+        row.querySelector('.purchase-batch').required = true;
+        row.querySelector('.purchase-expiry').required = true;
+      } else {
+        row.querySelector('.purchase-batch').required = false;
+        row.querySelector('.purchase-expiry').required = false;
+      }
+      updateRowAmount(row);
+      updatePurchaseTotals();
+    }
+  };
+  productCell.appendChild(productSelect);
+  row.appendChild(productCell);
+  
+  // Batch Number
+  const batchCell = document.createElement('td');
+  const batchInput = document.createElement('input');
+  batchInput.type = 'text';
+  batchInput.className = 'bill-input purchase-batch';
+  batchInput.placeholder = t('purchase.batch_placeholder') || 'Batch No.';
+  batchInput.style.display = 'none';
+  batchCell.appendChild(batchInput);
+  row.appendChild(batchCell);
+  
+  // Expiry Date
+  const expiryCell = document.createElement('td');
+  const expiryInput = document.createElement('input');
+  expiryInput.type = 'date';
+  expiryInput.className = 'bill-input purchase-expiry';
+  expiryInput.style.display = 'none';
+  expiryCell.appendChild(expiryInput);
+  row.appendChild(expiryCell);
+  
+  // Unit (display only)
+  const unitCell = document.createElement('td');
+  const unitSpan = document.createElement('span');
+  unitSpan.className = 'purchase-unit';
+  unitSpan.textContent = '-';
+  unitCell.appendChild(unitSpan);
+  row.appendChild(unitCell);
+  
+  // Quantity
+  const qtyCell = document.createElement('td');
+  const qtyInput = document.createElement('input');
+  qtyInput.type = 'number';
+  qtyInput.className = 'bill-input purchase-qty';
+  qtyInput.min = '0.01';
+  qtyInput.step = '0.01';
+  qtyInput.value = '1';
+  qtyInput.required = true;
+  qtyInput.oninput = () => { updateRowAmount(row); updatePurchaseTotals(); };
+  qtyCell.appendChild(qtyInput);
+  row.appendChild(qtyCell);
+  
+  // Rate
+  const rateCell = document.createElement('td');
+  const rateInput = document.createElement('input');
+  rateInput.type = 'number';
+  rateInput.className = 'bill-input purchase-rate';
+  rateInput.min = '0';
+  rateInput.step = '0.01';
+  rateInput.placeholder = t('purchase.rate_placeholder') || '0.00';
+  rateInput.required = true;
+  rateInput.oninput = () => { updateRowAmount(row); updatePurchaseTotals(); };
+  rateCell.appendChild(rateInput);
+  row.appendChild(rateCell);
+  
+  // Discount
+  const discountCell = document.createElement('td');
+  const discountInput = document.createElement('input');
+  discountInput.type = 'number';
+  discountInput.className = 'bill-input purchase-discount';
+  discountInput.min = '0';
+  discountInput.step = '0.01';
+  discountInput.value = '0';
+  discountInput.oninput = () => { updateRowAmount(row); updatePurchaseTotals(); };
+  discountCell.appendChild(discountInput);
+  row.appendChild(discountCell);
+  
+  // Amount (read-only)
+  const amountCell = document.createElement('td');
+  const amountSpan = document.createElement('span');
+  amountSpan.className = 'bill-amount';
+  amountSpan.textContent = '₹ 0.00';
+  amountCell.appendChild(amountSpan);
+  row.appendChild(amountCell);
+  
+  // Remove button
+  const removeCell = document.createElement('td');
+  const removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'btn btn-ghost btn-sm bill-remove';
+  removeBtn.textContent = t('billing.remove');
+  removeBtn.setAttribute('data-i18n', 'billing.remove');
+  removeBtn.onclick = () => removePurchaseRow(row);
+  removeCell.appendChild(removeBtn);
+  row.appendChild(removeCell);
+  
+  tbody.appendChild(row);
+  emptyMsg.style.display = 'none';
+  
+  // Mark batch field container
+  const batchFieldContainer = batchInput.parentElement;
+  batchFieldContainer.classList.add('purchase-batch-field');
+  
+  setTimeout(() => productSelect.focus(), 0);
+  updateRowAmount(row);
+  updatePurchaseTotals();
+}
+
+function removePurchaseRow(row) {
+  const tbody = document.getElementById('purchase-tbody');
+  const emptyMsg = document.getElementById('purchase-empty');
+  if (!tbody || !emptyMsg) return;
+  row.remove();
+  const rows = tbody.querySelectorAll('tr');
+  rows.forEach((r, i) => {
+    r.dataset.rowId = i + 1;
+    r.querySelector('.bill-sno').textContent = i + 1;
+  });
+  purchaseRowCounter = rows.length;
+  if (purchaseRowCounter === 0) {
+    emptyMsg.style.display = 'block';
+  }
+  updatePurchaseTotals();
+}
+
+function updateRowAmount(row) {
+  const qtyEl = row.querySelector('.purchase-qty');
+  const rateEl = row.querySelector('.purchase-rate');
+  const discountEl = row.querySelector('.purchase-discount');
+  const amountEl = row.querySelector('.bill-amount');
+  if (!qtyEl || !rateEl || !amountEl) return;
+  const qty = parseFloat(qtyEl.value) || 0;
+  const rate = parseFloat(rateEl.value) || 0;
+  const discount = parseFloat(discountEl?.value) || 0;
+  const amount = Math.max(0, qty * rate - discount);
+  amountEl.textContent = formatMoney2(amount);
+}
+
+function updatePurchaseTotals() {
+  const tbody = document.getElementById('purchase-tbody');
+  if (!tbody) return;
+  const rows = tbody.querySelectorAll('tr');
+  let subtotal = 0;
+  rows.forEach(row => {
+    const qty = parseFloat(row.querySelector('.purchase-qty').value) || 0;
+    const rate = parseFloat(row.querySelector('.purchase-rate').value) || 0;
+    const discount = parseFloat(row.querySelector('.purchase-discount').value) || 0;
+    subtotal += Math.max(0, qty * rate - discount);
+  });
+  
+  const discount = parseFloat(document.getElementById('purchase-discount').value) || 0;
+  const grandTotal = Math.max(0, subtotal - discount);
+  
+  document.getElementById('purchase-subtotal').textContent = '₹ ' + formatMoney2(subtotal);
+  document.getElementById('purchase-grand-total').textContent = '₹ ' + formatMoney2(grandTotal);
+}
+
+function getPurchaseItems() {
+  const tbody = document.getElementById('purchase-tbody');
+  if (!tbody) return [];
+  const rows = tbody.querySelectorAll('tr');
+  const items = [];
+  rows.forEach(row => {
+    const productId = row.querySelector('.purchase-product').value;
+    const qty = parseFloat(row.querySelector('.purchase-qty').value) || 0;
+    const rate = parseFloat(row.querySelector('.purchase-rate').value) || 0;
+    const discount = parseFloat(row.querySelector('.purchase-discount').value) || 0;
+    const amount = Math.max(0, qty * rate - discount);
+    const batchNumber = row.querySelector('.purchase-batch').value.trim();
+    const expiryDate = row.querySelector('.purchase-expiry').value;
+    if (productId && qty > 0 && rate >= 0) {
+      items.push({ productId, qty, rate, discount, amount, batchNumber, expiryDate });
+    }
+  });
+  return items;
+}
+
+/* ---------- Suppliers ---------- */
+
+function renderSuppliersList() {
+  const list = document.getElementById('suppliers-list');
+  const empty = document.getElementById('suppliers-empty');
+  const searchInput = document.getElementById('supplier-search');
+  
+  if (!list) return;
+  
+  const render = () => {
+    const search = (searchInput?.value || '').toLowerCase().trim();
+    
+    let filtered = suppliers;
+    
+    if (search) {
+      filtered = filtered.filter(s => 
+        s.name.toLowerCase().includes(search) ||
+        (s.phone || '').includes(search) ||
+        (s.email || '').toLowerCase().includes(search) ||
+        (s.address || '').toLowerCase().includes(search)
+      );
+    }
+    
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
+    
+    if (filtered.length === 0) {
+      list.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    
+    empty.style.display = 'none';
+    list.innerHTML = filtered.map(s => `
+      <div class="supplier-card" data-supplier-id="${s.id}">
+        <div class="supplier-header">
+          <div class="supplier-name">${escapeHtml(s.name)}</div>
+          <div class="supplier-status ${s.status}">${t('suppliers.status.' + s.status)}</div>
+        </div>
+        <div class="supplier-details">
+          ${s.phone ? `<span><i>📞</i> ${escapeHtml(s.phone)}</span>` : ''}
+          ${s.email ? `<span><i>✉️</i> ${escapeHtml(s.email)}</span>` : ''}
+          ${s.gst ? `<span><i>🏷️</i> ${escapeHtml(s.gst)}</span>` : ''}
+        </div>
+        ${s.address ? `<div class="supplier-address">${escapeHtml(s.address)}</div>` : ''}
+        <div class="supplier-actions">
+          <button class="btn btn-sm edit-supplier" data-id="${s.id}" data-i18n="common.edit">Edit</button>
+          <button class="btn btn-sm btn-danger delete-supplier" data-id="${s.id}" data-i18n="common.delete">Delete</button>
+        </div>
+      </div>
+    `).join('');
+    
+    // Wire up edit/delete buttons
+    list.querySelectorAll('.edit-supplier').forEach(btn => {
+      btn.onclick = (e) => {
+        const id = e.currentTarget.dataset.id;
+        editSupplier(id);
+      };
+    });
+    list.querySelectorAll('.delete-supplier').forEach(btn => {
+      btn.onclick = (e) => {
+        const id = e.currentTarget.dataset.id;
+        deleteSupplier(id);
+      };
+    });
+  };
+  
+  // Initial render
+  render();
+  
+  // Event listeners
+  if (searchInput) {
+    searchInput.oninput = render;
+  }
+  
+  // Add supplier button
+  const addBtn = document.getElementById('add-supplier-from-list-btn');
+  if (addBtn) {
+    addBtn.onclick = () => {
+      document.getElementById('add-supplier-form').reset();
+      document.getElementById('add-supplier-title').textContent = t('suppliers.add_supplier');
+      document.getElementById('add-supplier-sub').textContent = t('suppliers.add_sub');
+      document.getElementById('add-supplier-form').dataset.editId = '';
+      showView('view-add-supplier');
+    };
+  }
+}
+
+function renderAddSupplierView() {
+  const form = document.getElementById('add-supplier-form');
+  const title = document.getElementById('add-supplier-title');
+  const sub = document.getElementById('add-supplier-sub');
+  const cancelBtn = document.getElementById('supplier-cancel-btn');
+  const savedMsg = document.getElementById('supplier-saved-msg');
+  const errorEl = document.getElementById('supplier-form-error');
+  
+  if (!form) return;
+  
+  // Cancel button
+  if (cancelBtn) {
+    cancelBtn.onclick = () => {
+      form.reset();
+      form.dataset.editId = '';
+      title.textContent = t('suppliers.add_supplier');
+      sub.textContent = t('suppliers.add_sub');
+      errorEl.textContent = '';
+      savedMsg.style.display = 'none';
+      showView('view-suppliers');
+    };
+  }
+  
+  // Form submit
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    errorEl.textContent = '';
+    savedMsg.style.display = 'none';
+    
+    const name = document.getElementById('supplier-name').value.trim();
+    const phone = document.getElementById('supplier-phone').value.trim();
+    const email = document.getElementById('supplier-email').value.trim();
+    const gst = document.getElementById('supplier-gst').value.trim().toUpperCase();
+    const address = document.getElementById('supplier-address').value.trim();
+    const contactPerson = document.getElementById('supplier-contact').value.trim();
+    const paymentTerms = document.getElementById('supplier-terms').value.trim();
+    const status = document.getElementById('supplier-status').value;
+    const notes = document.getElementById('supplier-notes').value.trim();
+    
+    // Validation
+    if (!name) { errorEl.textContent = t('suppliers.error_name') || 'Enter supplier name'; return; }
+    if (phone && !/^\d{10}$/.test(phone)) { errorEl.textContent = t('suppliers.error_phone') || 'Phone must be 10 digits'; return; }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorEl.textContent = t('suppliers.error_email') || 'Invalid email format'; return; }
+    if (gst && !/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(gst)) { 
+      errorEl.textContent = t('suppliers.error_gst') || 'Invalid GSTIN format'; 
+      return; 
+    }
+    
+    const now = new Date().toISOString();
+    
+    if (form.dataset.editId) {
+      // Edit existing supplier
+      const idx = suppliers.findIndex(s => s.id === form.dataset.editId);
+      if (idx !== -1) {
+        suppliers[idx] = {
+          ...suppliers[idx],
+          name,
+          phone,
+          email,
+          gst,
+          address,
+          contactPerson,
+          paymentTerms,
+          status,
+          notes,
+          updatedAt: now,
+        };
+        saveState();
+        savedMsg.textContent = t('suppliers.updated') || 'Supplier updated successfully';
+      }
+    } else {
+      // Create new supplier
+      const supplier = {
+        id: uid(),
+        name,
+        phone,
+        email,
+        gst,
+        address,
+        contactPerson,
+        paymentTerms,
+        status,
+        notes,
+        createdAt: now,
+        updatedAt: now,
+      };
+      suppliers.push(supplier);
+      saveState();
+      savedMsg.textContent = t('suppliers.saved') || 'Supplier saved successfully';
+    }
+    
+    savedMsg.className = 'msg ok';
+    savedMsg.style.display = 'block';
+    
+    // Reset form after short delay
+    setTimeout(() => {
+      form.reset();
+      form.dataset.editId = '';
+      title.textContent = t('suppliers.add_supplier');
+      sub.textContent = t('suppliers.add_sub');
+      savedMsg.style.display = 'none';
+      showView('view-suppliers');
+    }, 1500);
+  };
+  
+  // Check if editing
+  const editId = form.dataset.editId;
+  if (editId) {
+    const supplier = getSupplierById(editId);
+    if (supplier) {
+      title.textContent = t('suppliers.edit_supplier') || 'Edit Supplier';
+      sub.textContent = t('suppliers.edit_sub') || 'Modify supplier details';
+      
+      document.getElementById('supplier-name').value = supplier.name;
+      document.getElementById('supplier-phone').value = supplier.phone || '';
+      document.getElementById('supplier-email').value = supplier.email || '';
+      document.getElementById('supplier-gst').value = supplier.gst || '';
+      document.getElementById('supplier-address').value = supplier.address || '';
+      document.getElementById('supplier-contact').value = supplier.contactPerson || '';
+      document.getElementById('supplier-terms').value = supplier.paymentTerms || '';
+      document.getElementById('supplier-status').value = supplier.status;
+      document.getElementById('supplier-notes').value = supplier.notes || '';
+    }
+  } else {
+    title.textContent = t('suppliers.add_supplier');
+    sub.textContent = t('suppliers.add_sub');
+    form.reset();
+  }
+}
+
+function editSupplier(id) {
+  const form = document.getElementById('add-supplier-form');
+  if (!form) return;
+  form.dataset.editId = id;
+  showView('view-add-supplier');
+}
+
+function deleteSupplier(id) {
+  const supplier = getSupplierById(id);
+  if (!supplier) return;
+  
+  if (!confirm(`${t('suppliers.delete_confirm') || 'Delete this supplier?'}\n\n${escapeHtml(supplier.name)}`)) {
+    return;
+  }
+  
+  // Check if supplier has purchases
+  const hasPurchases = purchases.some(p => p.supplierId === id);
+  if (hasPurchases) {
+    if (!confirm(`${t('suppliers.delete_with_purchases') || 'This supplier has purchase history. Deleting will remove the supplier but keep the purchase records. Continue?'}`)) {
+      return;
+    }
+  }
+  
+  suppliers = suppliers.filter(s => s.id !== id);
+  saveState();
+  renderSuppliersList();
+}
+
+/* ---------- Stock Adjustment ---------- */
+
+function renderStockAdjustmentView() {
+  const form = document.getElementById('stock-adjustment-form');
+  const productSelect = document.getElementById('adjustment-product');
+  const adjustmentType = document.getElementById('adjustment-type');
+  const quantityInput = document.getElementById('adjustment-qty');
+  const reasonInput = document.getElementById('adjustment-reason');
+  const savedMsg = document.getElementById('adjustment-saved-msg');
+  const errorEl = document.getElementById('adjustment-form-error');
+  
+  if (!form) return;
+  
+  // Populate product dropdown
+  if (productSelect) {
+    productSelect.innerHTML = `<option value="" disabled selected data-i18n="stock.select_product">${t('stock.select_product')}</option>` +
+      getActiveProducts().map(p => 
+        `<option value="${p.id}">${escapeHtml(p.name)} (${p.sku}) - Stock: ${formatMoney(p.currentStock)} ${p.unit}</option>`
+      ).join('');
+  }
+  
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    errorEl.textContent = '';
+    savedMsg.style.display = 'none';
+    
+    const productId = productSelect?.value;
+    const type = adjustmentType?.value;
+    const quantity = parseFloat(quantityInput?.value) || 0;
+    const reason = reasonInput?.value.trim();
+    
+    if (!productId) { errorEl.textContent = t('stock.error_product') || 'Select a product'; return; }
+    if (!type) { errorEl.textContent = t('stock.error_type') || 'Select adjustment type'; return; }
+    if (quantity <= 0) { errorEl.textContent = t('stock.error_qty') || 'Quantity must be greater than 0'; return; }
+    if (!reason) { errorEl.textContent = t('stock.error_reason') || 'Enter a reason'; return; }
+    
+    const product = getProductById(productId);
+    if (!product) { errorEl.textContent = t('stock.error_product_not_found') || 'Product not found'; return; }
+    
+    const movementType = type === 'increase' ? 'adjustment_increase' : 'adjustment_decrease';
+    
+    // Check if decreasing more than available stock
+    if (movementType === 'adjustment_decrease' && product.currentStock < quantity) {
+      if (!confirm(`${t('stock.confirm_negative') || 'This will make stock negative. Continue?'}`)) {
+        return;
+      }
+    }
+    
+    // Update product stock
+    product.currentStock = Math.max(0, product.currentStock + (type === 'increase' ? quantity : -quantity));
+    product.updatedAt = new Date().toISOString();
+    
+    // Create stock movement
+    createStockMovement(
+      productId,
+      movementType,
+      quantity,
+      productId,
+      'adjustment',
+      reason
+    );
+    
+    saveState();
+    savedMsg.textContent = t('stock.adjusted') || 'Stock adjusted successfully';
+    savedMsg.className = 'msg ok';
+    savedMsg.style.display = 'block';
+    
+    // Reset form
+    setTimeout(() => {
+      form.reset();
+      savedMsg.style.display = 'none';
+      if (productSelect) {
+        productSelect.innerHTML = `<option value="" disabled selected data-i18n="stock.select_product">${t('stock.select_product')}</option>` +
+          getActiveProducts().map(p => 
+            `<option value="${p.id}">${escapeHtml(p.name)} (${p.sku}) - Stock: ${formatMoney(p.currentStock)} ${p.unit}</option>`
+          ).join('');
+      }
+    }, 1500);
+  };
+}
+
+/* ---------- Stock Movement History ---------- */
+
+function renderStockMovementView() {
+  const list = document.getElementById('stock-movement-list');
+  const empty = document.getElementById('stock-movement-empty');
+  const productFilter = document.getElementById('movement-product-filter');
+  const typeFilter = document.getElementById('movement-type-filter');
+  const dateFrom = document.getElementById('movement-date-from');
+  const dateTo = document.getElementById('movement-date-to');
+  
+  if (!list) return;
+  
+  // Populate product filter
+  if (productFilter) {
+    productFilter.innerHTML = `<option value="" data-i18n="stock.all_products">${t('stock.all_products')}</option>` +
+      getActiveProducts().map(p => 
+        `<option value="${p.id}">${escapeHtml(p.name)} (${p.sku})</option>`
+      ).join('');
+  }
+  
+  const render = () => {
+    const productId = productFilter?.value || '';
+    const type = typeFilter?.value || '';
+    const from = dateFrom?.value || '';
+    const to = dateTo?.value || '';
+    
+    let filtered = [...stockMovements].sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    if (productId) {
+      filtered = filtered.filter(m => m.productId === productId);
+    }
+    if (type) {
+      filtered = filtered.filter(m => m.type === type);
+    }
+    if (from) {
+      filtered = filtered.filter(m => m.date >= from);
+    }
+    if (to) {
+      filtered = filtered.filter(m => m.date <= to);
+    }
+    
+    if (filtered.length === 0) {
+      list.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    
+    empty.style.display = 'none';
+    list.innerHTML = filtered.map(m => {
+      const product = getProductById(m.productId);
+      const typeLabels = {
+        purchase: t('stock.type_purchase') || 'Purchase',
+        sale: t('stock.type_sale') || 'Sale',
+        adjustment_increase: t('stock.type_adj_inc') || 'Adjustment (+)',
+        adjustment_decrease: t('stock.type_adj_dec') || 'Adjustment (-)',
+        return: t('stock.type_return') || 'Return',
+        opening: t('stock.type_opening') || 'Opening Stock'
+      };
+      const typeLabel = typeLabels[m.type] || m.type;
+      const isIncrease = ['purchase', 'adjustment_increase', 'return', 'opening'].includes(m.type);
+      
+      return `
+        <div class="movement-row ${isIncrease ? 'increase' : 'decrease'}">
+          <div class="movement-date">${m.date}</div>
+          <div class="movement-product">${escapeHtml(product ? product.name : 'Unknown Product')}</div>
+          <div class="movement-type">${typeLabel}</div>
+          <div class="movement-qty ${isIncrease ? 'pos' : 'neg'}">${isIncrease ? '+' : '-'}${formatMoney(m.quantity)}</div>
+          <div class="movement-ref">${escapeHtml(m.referenceType || '')}: ${escapeHtml(m.referenceId || '')}</div>
+          <div class="movement-notes">${escapeHtml(m.notes || '')}</div>
+        </div>
+      `;
+    }).join('');
+  };
+  
+  // Initial render
+  render();
+  
+  // Event listeners
+  if (productFilter) productFilter.onchange = render;
+  if (typeFilter) typeFilter.onchange = render;
+  if (dateFrom) dateFrom.onchange = render;
+  if (dateTo) dateTo.onchange = render;
+}
+
+/* ---------- Low Stock Alerts ---------- */
+
+function renderLowStockView() {
+  const list = document.getElementById('low-stock-list');
+  const empty = document.getElementById('low-stock-empty');
+  const filter = document.getElementById('low-stock-filter');
+  
+  if (!list) return;
+  
+  const render = () => {
+    const filterVal = filter?.value || 'all';
+    
+    let filtered = getLowStockProducts();
+    if (filterVal === 'out') {
+      filtered = getOutOfStockProducts();
+    }
+    
+    filtered.sort((a, b) => (a.currentStock || 0) - (b.currentStock || 0));
+    
+    if (filtered.length === 0) {
+      list.innerHTML = '';
+      empty.style.display = 'block';
+      empty.innerHTML = filterVal === 'out' 
+        ? `<p class="hint">${t('stock.no_out_of_stock') || 'No out of stock products'}</p>`
+        : `<p class="hint">${t('stock.no_low_stock') || 'No low stock products'}</p>`;
+      return;
+    }
+    
+    empty.style.display = 'none';
+    list.innerHTML = filtered.map(p => {
+      const supplier = p.supplierId ? getSupplierById(p.supplierId) : null;
+      const isOutOfStock = p.currentStock <= 0;
+      const deficit = isOutOfStock ? 0 : (p.minStockAlert - p.currentStock);
+      
+      return `
+        <div class="low-stock-card ${isOutOfStock ? 'out' : 'low'}">
+          <div class="low-stock-header">
+            <div class="low-stock-name">${escapeHtml(p.name)}</div>
+            <div class="low-stock-sku">${escapeHtml(p.sku)}</div>
+          </div>
+          <div class="low-stock-details">
+            <span class="stock-current ${isOutOfStock ? 'out' : ''}">${formatMoney(p.currentStock)} ${t('products.unit.' + p.unit) || p.unit}</span>
+            <span class="stock-min">Min: ${formatMoney(p.minStockAlert)}</span>
+            ${!isOutOfStock ? `<span class="stock-deficit">${t('stock.needs')}: ${formatMoney(deficit)} more</span>` : ''}
+            <span class="stock-category">${t('products.category.' + p.category) || p.category}</span>
+          </div>
+          ${supplier ? `<div class="low-stock-supplier">${t('stock.supplier')}: ${escapeHtml(supplier.name)} ${supplier.phone ? `(${supplier.phone})` : ''}</div>` : ''}
+          <div class="low-stock-actions">
+            <button class="btn btn-sm purchase-for-product" data-product-id="${p.id}" data-i18n="stock.purchase_stock">${t('stock.purchase_stock')}</button>
+            <button class="btn btn-sm btn-secondary adjust-for-product" data-product-id="${p.id}" data-i18n="stock.adjust_stock">${t('stock.adjust_stock')}</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+    
+    // Wire up buttons
+    list.querySelectorAll('.purchase-for-product').forEach(btn => {
+      btn.onclick = (e) => {
+        const id = e.currentTarget.dataset.productId;
+        const product = getProductById(id);
+        if (product) {
+          // Pre-fill purchase form with this product
+          showView('view-purchase');
+          setTimeout(() => {
+            const select = document.querySelector('.purchase-product');
+            if (select) select.value = id;
+            select?.dispatchEvent(new Event('change'));
+          }, 100);
+        }
+      };
+    });
+    list.querySelectorAll('.adjust-for-product').forEach(btn => {
+      btn.onclick = (e) => {
+        const id = e.currentTarget.dataset.productId;
+        showView('view-stock-adjustment');
+        setTimeout(() => {
+          const select = document.getElementById('adjustment-product');
+          if (select) select.value = id;
+        }, 100);
+      };
+    });
+  };
+  
+  // Initial render
+  render();
+  
+  // Event listener
+  if (filter) filter.onchange = render;
+}
+
+/* ---------- Stock Reports ---------- */
+
+function renderStockReportsView() {
+  const reportType = document.getElementById('report-type');
+  const dateFrom = document.getElementById('report-date-from');
+  const dateTo = document.getElementById('report-date-to');
+  const productFilter = document.getElementById('report-product-filter');
+  const generateBtn = document.getElementById('generate-report-btn');
+  const result = document.getElementById('report-result');
+  
+  if (!result) return;
+  
+  // Populate product filter
+  if (productFilter) {
+    productFilter.innerHTML = `<option value="" data-i18n="stock.all_products">${t('stock.all_products')}</option>` +
+      getActiveProducts().map(p => 
+        `<option value="${p.id}">${escapeHtml(p.name)} (${p.sku})</option>`
+      ).join('');
+  }
+  
+  // Set default date range (last 30 days)
+  if (dateFrom && dateTo) {
+    const today = new Date();
+    const thirtyDaysAgo = new Date(today);
+    thirtyDaysAgo.setDate(today.getDate() - 30);
+    dateFrom.value = thirtyDaysAgo.toISOString().slice(0, 10);
+    dateTo.value = today.toISOString().slice(0, 10);
+  }
+  
+  const generateReport = () => {
+    const type = reportType?.value || 'stock_valuation';
+    const from = dateFrom?.value || '';
+    const to = dateTo?.value || '';
+    const productId = productFilter?.value || '';
+    
+    let html = '';
+    
+    if (type === 'stock_valuation') {
+      // Stock Valuation Report
+      let products = getActiveProducts();
+      if (productId) {
+        products = products.filter(p => p.id === productId);
+      }
+      
+      let totalPurchaseValue = 0;
+      let totalSellValue = 0;
+      
+      html = `
+        <h4>${t('stock.report_valuation')}</h4>
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>${t('products.name')}</th>
+              <th>${t('products.sku')}</th>
+              <th>${t('products.category')}</th>
+              <th>${t('stock.current_stock')}</th>
+              <th>${t('products.unit')}</th>
+              <th>${t('stock.purchase_price')}</th>
+              <th>${t('stock.selling_price')}</th>
+              <th>${t('stock.purchase_value')}</th>
+              <th>${t('stock.sell_value')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${products.map(p => {
+              const purchaseValue = (p.currentStock || 0) * (p.purchasePrice || 0);
+              const sellValue = (p.currentStock || 0) * (p.sellingPrice || 0);
+              totalPurchaseValue += purchaseValue;
+              totalSellValue += sellValue;
+              return `
+                <tr>
+                  <td>${escapeHtml(p.name)}</td>
+                  <td>${escapeHtml(p.sku)}</td>
+                  <td>${t('products.category.' + p.category) || p.category}</td>
+                  <td>${formatMoney(p.currentStock)}</td>
+                  <td>${t('products.unit.' + p.unit) || p.unit}</td>
+                  <td>${t('common.currency')} ${formatMoney2(p.purchasePrice)}</td>
+                  <td>${t('common.currency')} ${formatMoney2(p.sellingPrice)}</td>
+                  <td>${t('common.currency')} ${formatMoney2(purchaseValue)}</td>
+                  <td>${t('common.currency')} ${formatMoney2(sellValue)}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="7"><strong>${t('stock.total')}</strong></td>
+              <td><strong>${t('common.currency')} ${formatMoney2(totalPurchaseValue)}</strong></td>
+              <td><strong>${t('common.currency')} ${formatMoney2(totalSellValue)}</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      `;
+    } else if (type === 'stock_movement') {
+      // Stock Movement Report
+      let movements = [...stockMovements].sort((a, b) => new Date(b.date) - new Date(a.date));
+      if (from) movements = movements.filter(m => m.date >= from);
+      if (to) movements = movements.filter(m => m.date <= to);
+      if (productId) movements = movements.filter(m => m.productId === productId);
+      
+      const typeLabels = {
+        purchase: t('stock.type_purchase') || 'Purchase',
+        sale: t('stock.type_sale') || 'Sale',
+        adjustment_increase: t('stock.type_adj_inc') || 'Adjustment (+)',
+        adjustment_decrease: t('stock.type_adj_dec') || 'Adjustment (-)',
+        return: t('stock.type_return') || 'Return',
+        opening: t('stock.type_opening') || 'Opening Stock'
+      };
+      
+      html = `
+        <h4>${t('stock.report_movement')}</h4>
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>${t('stock.date')}</th>
+              <th>${t('products.name')}</th>
+              <th>${t('stock.type')}</th>
+              <th>${t('stock.qty')}</th>
+              <th>${t('stock.reference')}</th>
+              <th>${t('common.notes')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${movements.map(m => {
+              const product = getProductById(m.productId);
+              const typeLabel = typeLabels[m.type] || m.type;
+              const isIncrease = ['purchase', 'adjustment_increase', 'return', 'opening'].includes(m.type);
+              return `
+                <tr class="${isIncrease ? 'increase' : 'decrease'}">
+                  <td>${m.date}</td>
+                  <td>${escapeHtml(product ? product.name : 'Unknown')}</td>
+                  <td>${typeLabel}</td>
+                  <td class="${isIncrease ? 'pos' : 'neg'}">${isIncrease ? '+' : '-'}${formatMoney(m.quantity)}</td>
+                  <td>${escapeHtml(m.referenceType || '')}: ${escapeHtml(m.referenceId || '')}</td>
+                  <td>${escapeHtml(m.notes || '')}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    } else if (type === 'purchase_summary') {
+      // Purchase Summary Report
+      let purchaseList = [...purchases].sort((a, b) => new Date(b.date) - new Date(a.date));
+      if (from) purchaseList = purchaseList.filter(p => p.date >= from);
+      if (to) purchaseList = purchaseList.filter(p => p.date <= to);
+      
+      let totalPurchases = 0;
+      let totalAmount = 0;
+      
+      html = `
+        <h4>${t('stock.report_purchases')}</h4>
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>${t('stock.date')}</th>
+              <th>${t('purchase.invoice_no')}</th>
+              <th>${t('purchase.supplier')}</th>
+              <th>${t('stock.items_count')}</th>
+              <th>${t('purchase.grand_total')}</th>
+              <th>${t('purchase.payment_mode')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${purchaseList.map(p => {
+              const supplier = getSupplierById(p.supplierId);
+              totalPurchases++;
+              totalAmount += p.grandTotal || 0;
+              return `
+                <tr>
+                  <td>${p.date}</td>
+                  <td>${escapeHtml(p.invoiceNo || 'N/A')}</td>
+                  <td>${escapeHtml(supplier ? supplier.name : 'Unknown')}</td>
+                  <td>${p.items?.length || 0}</td>
+                  <td>${t('common.currency')} ${formatMoney2(p.grandTotal)}</td>
+                  <td>${escapeHtml(p.paymentMode || '')}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4"><strong>${t('stock.total_purchases')}: ${totalPurchases}</strong></td>
+              <td><strong>${t('common.currency')} ${formatMoney2(totalAmount)}</strong></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      `;
+    } else if (type === 'expiry_report') {
+      // Expiry Report
+      const expiring = getExpiringProducts(90).sort((a, b) => new Date(a.expiryDate) - new Date(b.expiryDate));
+      
+      if (productId) {
+        const filtered = expiring.filter(b => b.productId === productId);
+        // We need to handle this differently since we filtered by batch
+      }
+      
+      html = `
+        <h4>${t('stock.report_expiry')}</h4>
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>${t('products.name')}</th>
+              <th>${t('stock.batch_number')}</th>
+              <th>${t('stock.expiry_date')}</th>
+              <th>${t('stock.qty')}</th>
+              <th>${t('stock.days_remaining')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${expiring.map(b => {
+              const product = getProductById(b.productId);
+              const today = new Date();
+              const expiry = new Date(b.expiryDate);
+              const daysRemaining = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+              const isExpired = daysRemaining < 0;
+              return `
+                <tr class="${isExpired ? 'expired' : (daysRemaining <= 30 ? 'expiring-soon' : '')}">
+                  <td>${escapeHtml(product ? product.name : 'Unknown')}</td>
+                  <td>${escapeHtml(b.batchNumber)}</td>
+                  <td>${b.expiryDate}</td>
+                  <td>${formatMoney(b.quantity)} ${product ? (t('products.unit.' + product.unit) || product.unit) : ''}</td>
+                  <td>${isExpired ? t('stock.expired') : daysRemaining + ' ' + t('stock.days')}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    } else if (type === 'low_stock_report') {
+      // Low Stock Report
+      const lowStock = getLowStockProducts().sort((a, b) => (a.currentStock || 0) - (b.currentStock || 0));
+      const outOfStock = getOutOfStockProducts();
+      
+      html = `
+        <h4>${t('stock.report_low_stock')}</h4>
+        ${outOfStock.length > 0 ? `
+          <h5>${t('stock.out_of_stock')}</h5>
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>${t('products.name')}</th>
+                <th>${t('products.sku')}</th>
+                <th>${t('products.category')}</th>
+                <th>${t('stock.supplier')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${outOfStock.map(p => {
+                const supplier = p.supplierId ? getSupplierById(p.supplierId) : null;
+                return `
+                  <tr>
+                    <td>${escapeHtml(p.name)}</td>
+                    <td>${escapeHtml(p.sku)}</td>
+                    <td>${t('products.category.' + p.category) || p.category}</td>
+                    <td>${supplier ? escapeHtml(supplier.name) : '-'}</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        ` : ''}
+        
+        <h5>${t('stock.low_stock')}</h5>
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>${t('products.name')}</th>
+              <th>${t('products.sku')}</th>
+              <th>${t('products.category')}</th>
+              <th>${t('stock.current_stock')}</th>
+              <th>${t('stock.min_stock')}</th>
+              <th>${t('stock.deficit')}</th>
+              <th>${t('stock.supplier')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${lowStock.map(p => {
+              const supplier = p.supplierId ? getSupplierById(p.supplierId) : null;
+              const deficit = p.minStockAlert - (p.currentStock || 0);
+              return `
+                <tr>
+                  <td>${escapeHtml(p.name)}</td>
+                  <td>${escapeHtml(p.sku)}</td>
+                  <td>${t('products.category.' + p.category) || p.category}</td>
+                  <td>${formatMoney(p.currentStock)}</td>
+                  <td>${formatMoney(p.minStockAlert)}</td>
+                  <td>${formatMoney(deficit)}</td>
+                  <td>${supplier ? escapeHtml(supplier.name) : '-'}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+    
+    result.innerHTML = html || `<p class="hint">${t('stock.select_report')}</p>`;
+  };
+  
+  // Generate button
+  if (generateBtn) {
+    generateBtn.onclick = generateReport;
+  }
+  
+  // Initial generate
+  generateReport();
+}
+
+/* ---------- Seller Details Form Handler ---------- */
   // Payment QR code upload handler
   if (sellerPaymentQrInput) {
     sellerPaymentQrInput.addEventListener('change', function () {
@@ -3529,7 +6065,6 @@ if (sellerDetailsForm) {
       if (sellerDetailsSub) sellerDetailsSub.textContent = t('seller_details.not_set');
     });
   }
-}
 
 /* ---------- Boot: gate on language selection ---------- */
 try {
